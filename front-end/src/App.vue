@@ -42,6 +42,7 @@
 
 <script>
 // import HelloWorld from "./components/HelloWorld";
+import "./components/css/common.css";
 
 export default {
   name: "App",
