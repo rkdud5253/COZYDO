@@ -11,11 +11,13 @@
 
 @media (min-width: 1281px) {
     .v-application--wrap {
-        background-color: aqua;
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
     }
-
+    .theme--light.v-application {
+        background: #333333 !important; 
+    }
 
 }
 
@@ -32,11 +34,13 @@
 
 @media (min-width: 1025px) and (max-width: 1280px) {
     .v-application--wrap {
-        background-color: rgb(39, 37, 155);
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
     }
-
+    .theme--light.v-application {
+       background: #333333 !important;
+    }
 
 }
 
@@ -53,11 +57,14 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
     .v-application--wrap {
-        background-color: rgb(184, 131, 34);
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
     }
 
+    .theme--light.v-application {
+        background: #333333 !important;
+    }
 
 }
 
@@ -74,11 +81,14 @@
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .v-application--wrap {
-        background-color: rgb(255, 81, 0);
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
     }
 
+    .theme--light.v-application {
+        background: #333333 !important;
+    }
 }
 
 /*
@@ -94,9 +104,13 @@
 
 @media (min-width: 481px) and (max-width: 767px) {
     .v-application--wrap {
-        background-color: rgb(145, 5, 121);
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
+    }
+
+    .theme--light.v-application {
+        background: #333333 !important;
     }
 
 }
@@ -114,9 +128,12 @@
 
 @media (min-width: 320px) and (max-width: 480px) {
     .v-application--wrap {
-        background-color: rgb(145, 5, 121);
+        background-color: white;
         max-width: 480px !important; 
         margin: 0 auto;
     }
 
+    .theme--light.v-application {
+        background: #333333 !important;
+    }
 }
