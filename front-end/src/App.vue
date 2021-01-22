@@ -1,44 +1,93 @@
+
 <template>
   <v-app>
-    <!-- <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-sheet
+      height="100%"
+      class="overflow-hidden"
+      style="position: relative;"
+    >
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+      <v-toolbar
+        color="white"
+        dark
+        flat
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar> -->
 
-    <v-main>
-      <router-view />
-    </v-main>
-    
+      <v-container >
+        <v-toolbar-items>
+            <v-icon 
+              color="pink"
+              dark
+              @click.stop="drawer = !drawer"
+              large
+            >
+              mdi-reorder-horizontal
+            </v-icon>
+
+            <v-img id="logo" src="../public/img/cozydo_logo.png"></v-img>
+
+            <v-icon
+              color="pink"
+              large
+            >
+              mdi-account
+            </v-icon>
+
+        </v-toolbar-items>
+            
+      </v-container>
+
+      </v-toolbar>
+
+
+      <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        temporary
+      >
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>이다운</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list dense>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+          <v-main class="main">
+            <router-view />
+          </v-main>
+    </v-sheet>
+
   </v-app>
 </template>
+
+<style>
+  #logo {
+    max-height : 100px;
+    max-width : 200px;
+    margin : 0 auto;
+  }
+</style>
 
 <script>
 // import HelloWorld from "./components/HelloWorld";
@@ -49,10 +98,20 @@ export default {
 
   components: {
     // HelloWorld,
+    
   },
 
-  data: () => ({
-    //
-  })
+  data () {
+      return {
+        drawer: null,
+        items: [
+          { title: '회원가입', icon: 'mdi-forum' },
+          { title: '로그인', icon: 'mdi-forum' },
+          { title: '로그아웃', icon: 'mdi-forum' },
+          { title: 'Home', icon: 'mdi-view-dashboard' },
+          { title: '코로나 정보', icon: 'mdi-forum' },
+        ],
+      }
+  }
 };
 </script>
