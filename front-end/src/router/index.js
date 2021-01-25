@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import SearchResultList from "../views/search/SearchResultList.vue";
 import SearchResultMap from "../views/search/SearchResultMap.vue";
-
+import PlaceDetail from "../views/place/PlaceDetail.vue";
+import PlaceModify from "../views/place/PlaceModify.vue";
+import PlaceReview from "../views/place/PlaceReview.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -11,21 +13,6 @@ const routes = [
     path: "/",
     name: "Main",
     component: Main
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  },
-  {
-    path: "/about2",
-    name: "About2",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About2.vue")
   },
   {
     path: "/searchResultList",
@@ -36,6 +23,21 @@ const routes = [
     path: "/searchResultMap",
     name: "SearchResultMap",
     component: SearchResultMap
+  },
+  {
+    path: "/placeDetail",
+    name: "PlaceDetail",
+    component: PlaceDetail
+  },
+  {
+    path: "/placeModify",
+    name: "PlaceModify",
+    component: PlaceModify
+  },
+  {
+    path: "/placeReview",
+    name: "PlaceReview",
+    component: PlaceReview
   },
 ];
 
