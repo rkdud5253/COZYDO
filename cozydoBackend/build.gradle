@@ -20,8 +20,14 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
 	
+<<<<<<< HEAD
 	 // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+=======
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	
+>>>>>>> branch 'master' of https://lab.ssafy.com/s04-webmobile2-sub2/s04p12a201.git
 	// https://mvnrepository.com/artifact/com.google.guava/guava
 	implementation group: 'com.google.guava', name: 'guava', version: '30.1-jre'
 	
