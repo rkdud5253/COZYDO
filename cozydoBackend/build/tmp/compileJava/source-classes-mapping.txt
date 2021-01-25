@@ -15,8 +15,6 @@ com/web/corona/crowling/corona.java
  com.web.corona.crowling.corona
 com/cozydo/model/BasicResponse.java
  com.cozydo.model.BasicResponse
-com/cozydo/ServletInitializer.java
- com.cozydo.ServletInitializer
 com/cozydo/config/SwaggerConfig.java
  com.cozydo.config.SwaggerConfig
 com/cozydo/model/user/User.java

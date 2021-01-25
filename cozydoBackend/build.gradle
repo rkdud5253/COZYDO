@@ -35,6 +35,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 
+	// https://mvnrepository.com/artifact/org.javassist/javassist
+	implementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
+
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
 	
