@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import SearchResultList from "../views/search/SearchResultList.vue";
-// import SearchResultMap from "../views/search/SearchResultMap.vue";
+import SearchResultMap from "../views/search/SearchResultMap.vue";
 
 Vue.use(VueRouter);
 
@@ -32,11 +32,11 @@ const routes = [
     name: "SearchResultList",
     component: SearchResultList
   },
-  // {
-  //   path: "/searchResultMap",
-  //   name: "SearchResultMap",
-  //   component: SearchResultMap
-  // },
+  {
+    path: "/searchResultMap",
+    name: "SearchResultMap",
+    component: SearchResultMap
+  },
 ];
 
 const router = new VueRouter({
