@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
 }
 
 group = 'com.cozydo'
@@ -27,7 +26,7 @@ dependencies {
 	implementation group: 'com.google.guava', name: 'guava', version: '30.1-jre'
 	
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
 	annotationProcessor('org.projectlombok:lombok')
 	
 	// https://mvnrepository.com/artifact/javax.validation/validation-api
@@ -48,7 +47,6 @@ dependencies {
 	implementation 'org.jsoup:jsoup:1.13.1'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
