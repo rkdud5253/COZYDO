@@ -42,6 +42,34 @@ export default {
       };
       this.map = new kakao.maps.Map(container, options);
       
+      if (navigator.geolocation) {
+    
+          // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+          navigator.geolocation.getCurrentPosition(function(position) {
+              
+              var lat = position.coords.latitude, // 위도
+                  lon = position.coords.longitude; // 경도
+              
+             
+              var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+              console.log(markerPosition);
+              // 마커를 생성합니다
+              var marker = new kakao.maps.Marker({
+                  position: markerPosition
+              });
+
+              var container = document.getElementById('map');
+              var options = {
+                center: new kakao.maps.LatLng(lat, lon),
+                level: 7,
+              };
+              var map = new kakao.maps.Map(container, options);
+              // // 마커가 지도 위에 표시되도록 설정합니다
+              marker.setMap(map);
+            });
+          
+      }
+
       var zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
     },
