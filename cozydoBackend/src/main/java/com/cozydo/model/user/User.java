@@ -26,6 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class User {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY) //기본키를 설정하는 옵션에 4개중 1개인 identity 가 지금은 적합하지 않은것 같아서 주석처리했습니다.
