@@ -10,7 +10,8 @@
         mdi-chevron-left
       </v-icon>
       <v-btn color="#FF8199" class="searchButton" dark href="/searchResultMap">
-        <v-icon>mdi-format-list-bulleted-square</v-icon>
+        <v-icon>mdi-map</v-icon>
+        <v-spacer></v-spacer>
         지도
       </v-btn>
       <v-text-field class="searchText"
@@ -87,6 +88,7 @@
   margin: 10% auto;
   margin-bottom: -2%;
   display: flex;
+  margin-top: 5%;
 }
 
 .goback {
@@ -115,6 +117,7 @@
   width: 90%;
   display: flex;
   margin-left:5%;
+  margin-top: -3%;
 }
 .theme--light.v-card {
    border: 0.5px solid;
@@ -153,7 +156,7 @@ export default {
   },
   methods: {
     goBack () {
-        this.$router.go(-1)
+        this.$router.push('/')
       },
     onInputKeyword() {
       this.$router.push({name: 'SearchResultList', query: {keyword: this.value}})
