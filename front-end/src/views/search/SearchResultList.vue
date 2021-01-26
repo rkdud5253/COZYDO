@@ -14,10 +14,11 @@
         지도
       </v-btn>
       <v-text-field class="searchText"
-            v-model="word"
+            v-model="value"
             solo
             label="장소검색"
             clearable
+            @keypress.enter="onInputKeyword"
       ></v-text-field>    
     </div>
     
@@ -147,13 +148,16 @@ export default {
       {title: '스타벅스9', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'900m', star:3},
       {title: '스타벅스10', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'1000', star:2},
     ],
-    word : '카페',
+    value: this.$route.query.keyword,
     }
   },
   methods: {
     goBack () {
         this.$router.go(-1)
       },
+    onInputKeyword() {
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.value}})
+    },
   },
 }
 </script>
