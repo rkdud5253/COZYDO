@@ -9,7 +9,7 @@ import com.cozydo.model.place.Place;
 
 public interface PlaceDao extends JpaRepository<Place, Long> {
 
-	List<Place> findByPlaceLonAndPlaceLat(String lon, String lat);
+	List<Place> findByPlaceLatAndPlaceLon(String lat, String lon);
 
 	Place findByPlaceIdx(int placeIdx);
 	
