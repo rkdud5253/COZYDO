@@ -94,7 +94,7 @@
   </v-app>
 </template>
 
-<style>
+<style scoped>
   #logo {
     max-height : 100px;
     max-width : 200px;
