@@ -1,5 +1,6 @@
 package com.cozydo.model.place;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,37 +29,46 @@ import lombok.ToString;
 public class Place {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int place_idx;
+	@Column(name = "place_idx")
+	private int placeIdx;
 
 	@NonNull
 	@NotNull
-	private String place_name; // 상호명
+	@Column(name = "place_name")
+	private String placeName; // 상호명
 	
 	@NonNull
 	@NotNull
-	private String sub_category; // 업종 분류명
+	@Column(name = "sub_category")
+	private String subCategory; // 업종 분류명
 	
 	@NonNull
 	@NotNull
+	@Column(name = "gu")
 	private String gu; // 시군구명
 	
 	@NonNull
 	@NotNull
+	@Column(name = "dong")
 	private String dong; // 법정동명
 	
 	@NonNull
 	@NotNull
-	private String address_name; // 지번주소
+	@Column(name = "address_name")
+	private String addressName; // 지번주소
 	
 	@NonNull
 	@NotNull
-	private String road_address_name; // 도로명 주소
+	@Column(name = "road_address_name")
+	private String roadAddressName; // 도로명 주소
 	
 	@NonNull
 	@NotNull
-	private String place_lon; // 경도
+	@Column(name = "place_lon")
+	private String placeLon; // 경도
 	
 	@NonNull
 	@NotNull
-	private String place_lat; // 위도
+	@Column(name = "place_lat")
+	private String placeLat; // 위도
 }

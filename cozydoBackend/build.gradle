@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
 }
 
 group = 'com.cozydo'
@@ -20,25 +19,24 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
 	
-<<<<<<< HEAD
 	 // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
-=======
-	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
-	
->>>>>>> branch 'master' of https://lab.ssafy.com/s04-webmobile2-sub2/s04p12a201.git
+
 	// https://mvnrepository.com/artifact/com.google.guava/guava
 	implementation group: 'com.google.guava', name: 'guava', version: '30.1-jre'
 	
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+	annotationProcessor('org.projectlombok:lombok')
 	
 	// https://mvnrepository.com/artifact/javax.validation/validation-api
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 	
 	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
+	// https://mvnrepository.com/artifact/org.javassist/javassist
+	implementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
 
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
@@ -52,7 +50,6 @@ dependencies {
 	implementation 'org.jsoup:jsoup:1.13.1'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
