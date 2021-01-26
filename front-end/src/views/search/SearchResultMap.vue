@@ -38,6 +38,7 @@
   margin: 10% auto;
   margin-bottom: -2%;
   display: flex;
+  margin-top: 5%;
 }
 
 .goback {
