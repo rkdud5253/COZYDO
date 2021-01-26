@@ -53,9 +53,13 @@
             single-line
             label="장소, 주소 검색"
             color="pink"
+            @keypress.enter="onInputKeyword"
+            v-model="keyword"
           ></v-text-field>
 
-          <v-btn icon>
+          <v-btn
+            icon
+          >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
 
@@ -146,6 +150,7 @@ export default {
 
       regions: ['서울', '인천', '대전', '광주', '대구', '부산', '울산', '세종', '제주'],
       items: ['1', '1.5', '2', '2.5', '3'],
+      keyword: '',
     };
   },
   mounted() {
@@ -201,6 +206,27 @@ export default {
         'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6489698d36bee11ff3b7992ee0a7981a';
       document.head.appendChild(script);
     },
+
+    // 검색어 입력했을 때
+    onInputKeyword() {
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
+      // console.log(event.target.value)
+      // const inputText = event.target.value
+      // console.log(inputText)
+      // if (inputText) {
+      //   this.$emit('input-change', inputText)
+      // }
+    },
+    // 참고
+    // onInput(event) {
+    //     const ptag = event.target.parentNode;
+    //     const keyword = ptag.querySelector("input")
+    //     const inputText = keyword.value
+    //     if (inputText){
+    //       this.$emit('input-change', inputText)
+    //       keyword.placeholder = keyword.value
+    //       keyword.value = null
+    //     }
   },
 };
 </script>
