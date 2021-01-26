@@ -8,6 +8,7 @@
     >
 
       <v-toolbar
+        class="bar"
         color="white"
         dark
         flat
@@ -25,16 +26,14 @@
             </v-icon>
 
             <v-img id="logo" src="../public/img/cozydo_logo.png"></v-img>
-
-            <v-icon
-              color="pink"
-              large
-            >
-              mdi-account
-            </v-icon>
-
-        </v-toolbar-items>
             
+              <v-icon
+                color="pink"
+                large
+              >
+                mdi-account
+              </v-icon>
+        </v-toolbar-items>
       </v-container>
 
       </v-toolbar>
@@ -47,11 +46,11 @@
       >
         <v-list-item>
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+            <v-img src="https://www.flaticon.com/svg/vstatic/svg/758/758669.svg?token=exp=1611657060~hmac=c95a9b88ae37d132bc6381cc7fbdf0b5"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>이다운</v-list-item-title>
+            <v-list-item-title class="font-weight-bold" style="margin: 15px">신싸피</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -78,8 +77,8 @@
             link
           >
             <v-list-item-content>
-              <v-list-item-title>
-                <v-icon>{{ item.icon }}</v-icon>
+              <v-list-item-title class="font-weight-bold">
+                <v-icon color="pink">{{ item.icon }}</v-icon>
                 {{ item.menu }}
               </v-list-item-title>
             </v-list-item-content>
@@ -94,22 +93,6 @@
   </v-app>
 </template>
 
-<style scoped>
-  #logo {
-    max-height : 100px;
-    max-width : 200px;
-    margin : 0 auto;
-  }
-
-.v-list-item {
-  min-height: 60px !important;
-}
-
-.v-icon {
-  margin-right: 10px;
-}
-
-</style>
 
 <script>
 // import HelloWorld from "./components/HelloWorld";
@@ -124,8 +107,8 @@ export default {
   },
 
   data () {
-      return {
-        drawer: null,
+    return {
+      drawer: null,
         users: [
           { menu: '회원가입'},
           { menu: '로그인'},
@@ -139,3 +122,25 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  #logo {
+    max-height : 100px;
+    max-width : 200px;
+    margin : 0 auto;
+  }
+
+  .v-list-item {
+    min-height: 60px !important;
+  }
+
+  .v-icon {
+    margin-right: 10px;
+  }
+
+  .bar {
+    margin: 10px;
+  }
+
+
+</style>
