@@ -55,20 +55,33 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-spacer></v-spacer>
         <v-divider></v-divider>
+        <v-spacer></v-spacer>
 
         <v-list dense>
+          <v-list-item
+            v-for="user in users"
+            :key="user.menu"
+            link
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ user.menu }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
           <v-list-item
             v-for="item in items"
             :key="item.title"
             link
           >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>
+                <v-icon>{{ item.icon }}</v-icon>
+                {{ item.menu }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -87,6 +100,15 @@
     max-width : 200px;
     margin : 0 auto;
   }
+
+.v-list-item {
+  min-height: 60px !important;
+}
+
+.v-icon {
+  margin-right: 10px;
+}
+
 </style>
 
 <script>
@@ -104,12 +126,14 @@ export default {
   data () {
       return {
         drawer: null,
+        users: [
+          { menu: '회원가입'},
+          { menu: '로그인'},
+          { menu: '로그아웃'},
+        ],
         items: [
-          { title: '회원가입', icon: 'mdi-forum' },
-          { title: '로그인', icon: 'mdi-forum' },
-          { title: '로그아웃', icon: 'mdi-forum' },
-          { title: 'Home', icon: 'mdi-view-dashboard' },
-          { title: '코로나 정보', icon: 'mdi-forum' },
+          { menu: '홈', icon: 'mdi-home' },
+          { menu: '코로나 정보', icon: 'mdi-comment-text-outline' },
         ],
       }
   }
