@@ -148,7 +148,7 @@ export default {
         'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
       imageSize: new kakao.maps.Size(24, 35),
 
-      regions: ['서울', '인천', '대전', '광주', '대구', '부산', '울산', '세종', '제주'],
+      regions: ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북'],
       items: ['1', '1.5', '2', '2.5', '3'],
       keyword: '',
     };
