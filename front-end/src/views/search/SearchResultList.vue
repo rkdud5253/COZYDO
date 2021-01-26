@@ -9,13 +9,13 @@
         >
         mdi-chevron-left
       </v-icon>
-      <v-btn color="#FF8199" class="searchButton" dark href="/searchResultMap">
+      <v-btn color="#FF8199" class="searchButton" dark @click="onChangeMap">
         <v-icon>mdi-map</v-icon>
         <v-spacer></v-spacer>
         지도
       </v-btn>
       <v-text-field class="searchText"
-            v-model="value"
+            v-model="keyword"
             solo
             label="장소검색"
             clearable
@@ -151,7 +151,7 @@ export default {
       {title: '스타벅스9', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'900m', star:3},
       {title: '스타벅스10', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'1000', star:2},
     ],
-    value: this.$route.query.keyword,
+    keyword: this.$route.query.keyword,
     }
   },
   methods: {
@@ -159,7 +159,10 @@ export default {
         this.$router.push('/')
       },
     onInputKeyword() {
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.value}})
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
+    },
+    onChangeMap() {
+      this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
     },
   },
 }

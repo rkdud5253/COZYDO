@@ -9,15 +9,17 @@
         >
         mdi-chevron-left
       </v-icon>
-      <v-btn color="#FF8199" class="searchButton" dark href="/searchResultList">
+      <v-btn color="#FF8199" class="searchButton" dark @click="onChangeList">
         <v-icon>mdi-format-list-bulleted-square</v-icon>
+        <v-spacer></v-spacer>
         리스트
       </v-btn>
       <v-text-field class="searchText"
-            v-model="word"
+            v-model="keyword"
             solo
             label="장소검색"
             clearable
+            @keypress.enter="onInputKeyword"
       ></v-text-field>    
     </div>
     
@@ -67,6 +69,7 @@
   width: 90%;
   display: flex;
   margin-left:5%;
+  margin-top: -3%;
 }
 
 
@@ -84,13 +87,19 @@ export default {
     items: [
       
     ],
-    word : '카페',
+    keyword : this.$route.query.keyword,
     }
   },
   methods: {
     goBack () {
-        this.$router.go(-1)
+        this.$router.push('/')
       },
+    onInputKeyword() {
+      this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
+    },
+    onChangeList() {
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
+    },
   },
 }
 </script>
