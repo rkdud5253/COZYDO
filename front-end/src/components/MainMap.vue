@@ -7,7 +7,7 @@
         <v-row align="center">
           <v-col
             class="d-flex"
-            cols="12"
+            cols="6"
             sm="6"
           >
             <v-select
@@ -17,11 +17,13 @@
               outlined
               hide-details=""
               color="pink"
+              v-model="currentRegion"
+              item-color="pink"
             ></v-select>
           </v-col>
           <v-col
             class="d-flex"
-            cols="12"
+            cols="6"
             sm="6"
           >
             <v-select
@@ -31,6 +33,8 @@
               outlined
               hide-details=""
               color="pink"
+              v-model="currentLevel"
+              item-color="pink"
             ></v-select>
           </v-col>
         </v-row>
@@ -59,6 +63,7 @@
 
           <v-btn
             icon
+            @click="onInputKeyword"
           >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
@@ -77,6 +82,7 @@
               elevation="2"
               small
               color="white"
+              @click="onClinkCatecory"
             >
               <v-icon small color="red">mdi-plus-box</v-icon>
               선별진료소
@@ -86,6 +92,7 @@
               elevation="2"
               small
               color="white"
+              @click="onClinkCatecory"
             >
               <v-icon small color="orange">mdi-silverware-variant</v-icon>
               음식점
@@ -95,6 +102,7 @@
               elevation="2"
               small
               color="white"
+              @click="onClinkCatecory"
             >
               <v-icon small color="brown">mdi-coffee</v-icon>
               카페
@@ -104,6 +112,7 @@
               elevation="2"
               small
               color="white"
+              @click="onClinkCatecory"
             >
               <v-icon small color="blue">mdi-store-24-hour</v-icon>
               편의점
@@ -113,6 +122,7 @@
               elevation="2"
               small
               color="white"
+              @click="onClinkCatecory"
             >
               <v-icon small color="black">mdi-dumbbell</v-icon>
               체육시설
@@ -123,7 +133,8 @@
 
       <!-- 지도 -->
       <div class="map pa-4" id="map"></div>
-
+      <!-- <div id="result">여기</div> -->
+      <!-- {{ currentLat }} -->
     </div>
 
   </v-app>
@@ -136,21 +147,16 @@ export default {
     return {
       map: '',
       initPos: { lat: '37.5665734', lng: '126.978179' },
-      houseLat: '',
-      houseLng: '', // 좌표값 입력 받기
-      dong: '',
-      aptName: '',
-      ps: '',
-      markers: [],
-      selected: '',
-      // infowindow: '',
-      imageSrc:
-        'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-      imageSize: new kakao.maps.Size(24, 35),
 
       regions: ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북'],
       items: ['1', '1.5', '2', '2.5', '3'],
       keyword: '',
+      currentRegion: '서울',
+      currentLevel: '2.5',
+
+      currentLat: '',
+      currentLon: '',
+      location: [],
     };
   },
   mounted() {
@@ -167,14 +173,16 @@ export default {
       };
       this.map = new kakao.maps.Map(container, options);
 
+
       if (navigator.geolocation) {
-        
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
           navigator.geolocation.getCurrentPosition(function(position) {
               
             var lat = position.coords.latitude, // 위도
-                  lon = position.coords.longitude; // 경도
-             
+                lon = position.coords.longitude; // 경도
+
+              // document.getElementById("mapLocation").innerHTML = lat;
+
               var markerPosition  = new kakao.maps.LatLng(lat, lon); 
               console.log(markerPosition);
               // 마커를 생성합니다
@@ -192,9 +200,20 @@ export default {
               
               var zoomControl = new kakao.maps.ZoomControl();
               map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
-            });
-          
+            });        
       }
+      // 현재 경도 위도 넘기기
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.gettingLocation = false;
+        this.location = pos;
+        // console.log(this.location.coords.latitude)
+        this.currentLat = this.location.coords.latitude
+        this.currentLon = this.location.coords.longitude
+      }, err => {
+        this.gettingLocation = false;
+        this.errorStr = err.message;
+      })
+      
 
     },
     addScript() {
@@ -207,27 +226,44 @@ export default {
       document.head.appendChild(script);
     },
 
+    // 카테고리 버튼 클릭했을 때
+    onClinkCatecory: function (event) {
+      // console.log('클릭')
+      // console.log(event.target.innerText)
+      this.keyword = event.target.innerText
+      // console.log(this.keyword)
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat, currentLevel: this.currentLevel}})
+    },
+
     // 검색어 입력했을 때
     onInputKeyword() {
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
-      // console.log(event.target.value)
-      // const inputText = event.target.value
-      // console.log(inputText)
-      // if (inputText) {
-      //   this.$emit('input-change', inputText)
-      // }
+      let center = this.map.getCenter();
+      // console.log(center.getLat())
+      // console.log(center.getLng())
+
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat,  centerLon: center.getLng(), centerLat: center.getLat(), currentLevel: this.currentLevel}})
     },
-    // 참고
-    // onInput(event) {
-    //     const ptag = event.target.parentNode;
-    //     const keyword = ptag.querySelector("input")
-    //     const inputText = keyword.value
-    //     if (inputText){
-    //       this.$emit('input-change', inputText)
-    //       keyword.placeholder = keyword.value
-    //       keyword.value = null
-    //     }
+
   },
+
+  // watch: {
+  //       kakao.maps.event.addListener(map, 'center_changed', function() {
+        
+  //       // 지도의  레벨을 얻어옵니다
+  //       var level = map.getLevel();
+
+  //       // 지도의 중심좌표를 얻어옵니다 
+  //       var latlng = map.getCenter(); 
+
+  //       var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
+  //       message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
+
+  //       var resultDiv = document.getElementById('result');
+  //       resultDiv.innerHTML = message;
+
+  //     });
+  // }
+
 };
 </script>
 <style scoped>
