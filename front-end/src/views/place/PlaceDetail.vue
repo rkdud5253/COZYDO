@@ -24,10 +24,10 @@
           <td rowspan="3" style="max-width:100px;">
             <v-img id="placeIcon" src="../../../public/img/cafe.png"></v-img>
           </td>
-          <td colspan="2" style="float:left;">{{ placeName }}</td>
+          <td colspan="2" style="float:left;">{{items.placeName}}</td>
         </tr>
         <tr>
-          <td colspan="2" style="float:left;">{{ placeLocation }}</td>
+          <td colspan="2" style="float:left;">{{ items.roadAddressName }}</td>
         </tr>
         <tr>
           <td colspan="2" style="float:left;">{{ placePhone }}</td>
@@ -74,7 +74,7 @@
     <v-list two-line>
       <v-subheader>리뷰 {{ reviewNum }}개</v-subheader>
       <v-list-item-group v-model="selected" active-class="pink--text" multiple>
-        <template v-for="(item, index) in items">
+        <template v-for="(item, index) in reviews">
           <v-list-item :key="item.nickname">
             <!-- <template v-slot:default="{ active }"> -->
             <v-list-item-content>
@@ -126,6 +126,9 @@
   </v-main>
 </template>
 <script>
+
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -136,7 +139,10 @@ export default {
       openingHours: "10:00 - 21:00",
       reviewNum: 3,
       rating: 4,
-      items: [
+      placeIdx:this.$route.params.placeIdx, // 다정이가 보내 줄 값
+      items:[
+      ],
+      reviews: [
         {
           nickname: "신꼬맹",
           dates: "21.01.03",
@@ -156,16 +162,31 @@ export default {
       ],
     };
   },
+  created:function(){
+    axios.get('http://i4a201.p.ssafy.io:8080/map/detail', {  //get방식, url 확인
+      params: {                                        // 넘겨줄 파라미터
+        placeIdx:this.placeIdx,
+      }
+    })
+    .then((res) => {                                  // 통신 성공하면
+      console.log(res);
+      this.items = res.data;                          // 데이터 받아온다
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  },
   methods: {
     heartBtn() {
-      this.heartStyle = "color:red";
-      //  var hIcon = document.getElementById("heartIcon");
-      //  hIcon.style.color= "red !important";
+      if(this.heartStyle == "color:red"){
+        this.heartStyle="color:grey";
+      }else{
+        this.heartStyle="color:red";
+      }
     },
     onClickReview(){
         this.$router.replace(`/placeReview`);
     },
-    // onClickReview() {()=>this.$router.replace(`/placeReview`)},
     onClickModify() {
       this.$router.replace(`/placeModify`);
     },

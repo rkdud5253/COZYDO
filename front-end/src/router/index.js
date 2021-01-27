@@ -25,7 +25,7 @@ const routes = [
     component: SearchResultMap
   },
   {
-    path: "/placeDetail",
+    path: "/placeDetail:placeIdx",
     name: "PlaceDetail",
     component: PlaceDetail
   },
