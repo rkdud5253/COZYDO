@@ -5,7 +5,7 @@
 	<select id="findByLatAndLon" parameterType="map" resultType="com.cozydo.model.place.PlaceDto">
 		SELECT p.place_idx as placeIdx, p.place_name as placeName, p.sub_category as subCategory, p.gu, p.dong, p.address_name as addressName,
 				p.road_address_name as roadAddressName, p.place_lon as placeLon, p.place_lat as placeLat,
-				6371*acos(cos(radians(#{lat}))*cos(radians(p.place_lat))*cos(radians(p.place_lon)-radians(#{lon})) +sin(radians(#{lat}))*sin(radians(p.place_lat))) as distance,
+				6371*acos(cos(radians(#{lat}))*cos(radians(p.place_lat))*cos(radians(p.place_lon)-radians(#{lon})) +sin(radians(#{lat}))*sin(radians(p.place_lat))) as distance
 		FROM place p
 		LEFT JOIN category c on p.sub_category = c.sub_category 
 		WHERE place_name LIKE CONCAT('%',#{keyword},'%') OR c.sub_category_name LIKE CONCAT('%',#{keyword},'%')
