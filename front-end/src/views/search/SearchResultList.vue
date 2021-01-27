@@ -42,8 +42,8 @@
           <template v-for="(item, index) in items">
             <v-list-item :key="item.title">
               <template >
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.title"></v-list-item-title>
+                <v-list-item-content @click="onChangeDetail(item.placeIdx)">
+                  <v-list-item-title v-text="item.placeName"></v-list-item-title>
 
                   <v-list-item-subtitle
                     class="text--primary"
@@ -58,13 +58,13 @@
                     size="20"
                     readonly
                   ></v-rating>
-                  <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-text="item.roadAddressName"></v-list-item-subtitle>
                   <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
                   
                 </v-list-item-content>
 
                 <v-list-item-avatar>
-                <v-list-item-subtitle v-text="item.distance"></v-list-item-subtitle>
+                <v-list-item-subtitle v-text="item.distance.substring(0,4)+'m'"></v-list-item-subtitle>
                 </v-list-item-avatar>
                 
               </template>
@@ -131,7 +131,7 @@
 </style>
 
 <script>
-
+import axios from "axios";
 export default {
   name: 'SearchResultList',
   component: {
@@ -140,16 +140,6 @@ export default {
   data: function () {
   return {
     items: [
-      {title: '스타벅스1', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'100m', star:3 },
-      {title: '스타벅스2', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'200m', star:2},
-      {title: '스타벅스3', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'300m', star:1},
-      {title: '스타벅스4', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'400m', star:2},
-      {title: '스타벅스5', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'500m', star:3},
-      {title: '스타벅스6', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'600m', star:4},
-      {title: '스타벅스7', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'700m', star:5},
-      {title: '스타벅스8', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'800m', star:4},
-      {title: '스타벅스9', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'900m', star:3},
-      {title: '스타벅스10', subtitle:'서울시 강남구 역삼동', action: '1588-1588', distance:'1000', star:2},
     ],
     keyword: this.$route.query.keyword,
     }
@@ -159,11 +149,30 @@ export default {
         this.$router.push('/')
       },
     onInputKeyword() {
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
+      this.$router.go(this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}}));
     },
     onChangeMap() {
       this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
     },
+    onChangeDetail(placeIdx){
+      this.$router.push({name: 'PlaceDetail', params: {placeIdx: placeIdx}});
+    }
   },
+  created() {
+    axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
+      params: {
+        keyword: this.keyword,
+        lat: 37.5019530,
+        lon: 127.039651
+      }
+    })
+    .then((res) => {
+      console.log(res);
+      this.items = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 }
 </script>
