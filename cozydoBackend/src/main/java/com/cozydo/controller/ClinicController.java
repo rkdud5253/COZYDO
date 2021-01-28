@@ -37,9 +37,9 @@ public class ClinicController {
 		final BasicResponse result = new BasicResponse();
 //		List<Clinic> list = clinicdao.findAll();
 		String a = "강남구";
-		List<Clinic> list = clinicdao.findClinicOrderByGuDesc(a);
+//		List<Clinic> list = clinicdao.findClinicOrderByGuDesc(a);
 		result.status = true;
-		result.object = list;
+//		result.object = list;
 		result.data = "success";
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
