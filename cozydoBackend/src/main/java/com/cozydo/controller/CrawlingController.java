@@ -58,7 +58,7 @@ public class CrawlingController {
 	CrawlingDao crawlingDao;
 
 	@GetMapping("/crawling/level")
-	@ApiOperation(value = "전국 코로나 단계")
+	@ApiOperation(httpMethod = "GET", value = "크롤링 후 코로나단계 db에 저장", notes = "insert coronalevel")
 	public Object crawlinglevel() throws IOException, ParseException {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
