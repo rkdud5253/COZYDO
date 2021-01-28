@@ -101,7 +101,7 @@ public class CrawlingController {
 		} else {
 			result.status = false;
 			result.data = "false";
-			result.object = "위치가 잘못되었습니다...";
+			result.object = "위치가 잘못되었습니다.";
 			response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
 			return response;
 		}
