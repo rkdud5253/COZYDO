@@ -308,10 +308,8 @@ export default {
         //get방식, url 확인
         params: {
           // 넘겨줄 파라미터
-          // placeIdx: this.placeIdx,
-          // level: this.level,
-          placeIdx: 133,
-          level: 2,
+          placeIdx: this.placeIdx,
+          level: this.level,
         },
       })
       .then((res) => {
@@ -328,10 +326,8 @@ export default {
         //get방식, url 확인
         params: {
           // 넘겨줄 파라미터
-          // placeIdx: this.placeIdx,
-          // level: this.level,
-          placeIdx: 133,
-          level: 2,
+          placeIdx: this.placeIdx,
+          level: 4,
         },
       })
       .then((res) => {
@@ -352,6 +348,10 @@ export default {
       }
     },
     onClickReview() {
+      // this.$router.push({
+      //   name: "placeReview",
+      //   query: { placeIdx: placeIdx, level: level },
+      // });
       this.$router.replace(`/placeReview`);
     },
     onClickModify() {
