@@ -16,9 +16,16 @@
 	</select>
 	
 	<select id="findByIdx" parameterType="map" resultType="com.cozydo.model.place.PlaceDto">
-		SELECT place_idx as placeIdx, place_name as placeName, sub_category as subCategory, gu, p.dong, address_name as addressName,
-				road_address_name as roadAddressName, place_lon as placeLon, place_lat as placeLat
+		SELECT place_idx as placeIdx, place_name as placeName, p.sub_category as subCategory, gu, p.dong, address_name as addressName,
+				road_address_name as roadAddressName, place_lon as placeLon, place_lat as placeLat,
+				IF(#{level} &lt;= g.not_food, 1, 0) as notFood, IF(#{level} &lt;= g.seat_one_apart, 1, 0) as seatOneApart,
+				IF(#{level} &lt;= g.meet_prohibition, 1, 0) as meetProhibition, IF(#{level} &lt;= g.deadline_nine, 1, 0) as deadlineNine,
+				IF(#{level} &lt;= g.qr_code, 1, 0) as qrCode, IF(#{level} &lt;= g.nomorepeople_nine, 1, 0) as nomorepeopleNine,
+				IF(#{level} &lt;= g.twopeople_onehour, 1, 0) as twopeopleOnehour, IF(#{level} &lt;= g.shower_only, 1, 0) as showerOnly,
+				IF(#{level} &lt;= g.lessthan_100, 1, 0) as lessthen100, IF(#{level} &lt;= g.lessthan_50, 1, 0) as lessthen50,
+				IF(#{level} &lt;= g.family_only, 1, 0) as familyOnly, IF(#{level} &lt;= g.not_shower, 1, 0) as notShower
 		FROM place p
+		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_idx = #{placeIdx}
 		
 	</select>

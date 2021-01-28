@@ -40,7 +40,7 @@
         <v-list-item-group>
 
           <template v-for="(item, index) in items">
-            <v-list-item :key="item.title">
+            <v-list-item v-if="index<=30" :key="item.title">
               <template >
                 <v-list-item-content @click="onChangeDetail(item.placeIdx)">
                   <v-list-item-title v-text="item.placeName"></v-list-item-title>
@@ -71,7 +71,7 @@
             </v-list-item>
 
             <v-divider
-              v-if="index < items.length - 1"
+              v-if="index <= 30-1"
               :key="index"
             ></v-divider>
           </template>

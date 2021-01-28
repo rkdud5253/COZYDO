@@ -61,10 +61,12 @@ public class MapController {
 	}
 
 	@GetMapping("/map/detail")
-	@ApiOperation(httpMethod = "GET", value = "Place 상세 조회", notes = "Select Place detail")
-	public PlaceDto getPlace(@RequestParam(required = true) final int placeIdx) {
+	@ApiOperation(httpMethod = "GET", 
+				value = "Place 상세 조회", 
+				notes = "Select Place detail")
+	public PlaceDto getPlace(@RequestParam(required = true) final int level, @RequestParam(required = true) final int placeIdx) {
 
-		PlaceDto response = placeMapper.findByIdx(placeIdx);
+		PlaceDto response = placeMapper.findByIdx(level, placeIdx);
 
 		return response;
 	}
