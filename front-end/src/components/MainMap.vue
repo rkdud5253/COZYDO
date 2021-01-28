@@ -133,7 +133,7 @@
 
       <!-- 지도 -->
       <div class="map pa-4" id="map"></div>
-      <!-- <div id="result">여기</div> -->
+      <!-- <div id="result" style="color: white">여기</div> -->
       <!-- {{ currentLat }} -->
     </div>
 
@@ -141,6 +141,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'SearchMap',
   data: function() {
@@ -151,57 +152,110 @@ export default {
       regions: ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북'],
       items: ['1', '1.5', '2', '2.5', '3'],
       keyword: '',
-      currentRegion: '서울',
-      currentLevel: '2.5',
+      currentRegion: '',
+      currentLevel: '',
+      crawlingLocations: [
+
+      ],
 
       currentLat: '',
       currentLon: '',
       location: [],
+      centerLat: '',
+      centerLon: '',
     };
   },
   mounted() {
     window.kakao && window.kakao.maps
       ? this.initMap()
-      : this.addKakaoMapScript();
+      : this.addScript();
   },
+
   methods: {
+    myLocation() {
+      axios.get('http://i4a201.p.ssafy.io:8080/crawling/location', {
+        params: {
+          lat: this.currentLat,
+          lon: this.currentLon
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        this.crawlingLocations = res.data;
+        if (this.crawlingLocations) {
+          // console.log(this.crawlingLocations.object)
+          this.currentRegion = this.crawlingLocations.object.city
+          this.currentLevel = this.crawlingLocations.object.level
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
     initMap() {
-      var container = document.getElementById('map');
-      var options = {
+      
+      
+      // 현재 위치 마커 추가
+      if (navigator.geolocation) {
+          this.map = this.nowlocation(this.map);
+      }
+      else {
+        var container = document.getElementById('map');
+        var options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
         level: 7,
       };
-      this.map = new kakao.maps.Map(container, options);
+      var map = new kakao.maps.Map(container, options);
+      var zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
+      this.map = map
+      }
 
-
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    },
+    nowlocation(map) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
           navigator.geolocation.getCurrentPosition(function(position) {
+              var lat = position.coords.latitude, // 위도
+                  lon = position.coords.longitude; // 경도
               
-            var lat = position.coords.latitude, // 위도
-                lon = position.coords.longitude; // 경도
-
-              // document.getElementById("mapLocation").innerHTML = lat;
-
-              var markerPosition  = new kakao.maps.LatLng(lat, lon); 
-              console.log(markerPosition);
-              // 마커를 생성합니다
-              var marker = new kakao.maps.Marker({
-                  position: markerPosition
-              });
+              
               var container = document.getElementById('map');
               var options = {
                 center: new kakao.maps.LatLng(lat, lon),
                 level: 7,
               };
-              var map = new kakao.maps.Map(container, options);
+              map = new kakao.maps.Map(container, options);
+                    kakao.maps.event.addListener(map, 'dragend', function() {        
+        
+                  // 지도 중심좌표를 얻어옵니다 
+                  var latlng = map.getCenter(); 
+                  
+                  // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
+                  // message += '경도는 ' + latlng.getLng() + ' 입니다';
+                  
+                  // var resultDiv = document.getElementById('result');  
+                  // resultDiv.innerHTML = message;
+                  
+                  this.centerLat = latlng.getLat()
+                  this.centerLon = latlng.getLng()
+                  console.log(this.centerLat, this.centerLon)
+                  
+              });
+              var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+              // console.log(markerPosition);
+            
+               var marker = new kakao.maps.Marker({
+                  map: map,
+                  position: markerPosition
+              });
               // // 마커가 지도 위에 표시되도록 설정합니다
               marker.setMap(map);
-              
+
+              // this.addMarker();
               var zoomControl = new kakao.maps.ZoomControl();
               map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
-            });        
-      }
+            });
+
       // 현재 경도 위도 넘기기
       navigator.geolocation.getCurrentPosition(pos => {
         this.gettingLocation = false;
@@ -209,12 +263,13 @@ export default {
         // console.log(this.location.coords.latitude)
         this.currentLat = this.location.coords.latitude
         this.currentLon = this.location.coords.longitude
+
+        this.myLocation()
+        
       }, err => {
         this.gettingLocation = false;
         this.errorStr = err.message;
       })
-      
-
     },
     addScript() {
       const script = document.createElement('script');
@@ -232,37 +287,25 @@ export default {
       // console.log(event.target.innerText)
       this.keyword = event.target.innerText
       // console.log(this.keyword)
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat, currentLevel: this.currentLevel}})
+      if (this.keyword != '') {
+        this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat, currentLevel: this.currentLevel}})
+      }
     },
 
     // 검색어 입력했을 때
     onInputKeyword() {
-      let center = this.map.getCenter();
+      // var center = this.map.getCenter();
+      // console.log(this.map.getBounds().toString());
       // console.log(center.getLat())
       // console.log(center.getLng())
 
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat,  centerLon: center.getLng(), centerLat: center.getLat(), currentLevel: this.currentLevel}})
+      // console.log(this.map.getCenter().getLat())
+      // console.log(this.map.getCenter().getLng())
+
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat,  centerLon: this.centerLon, centerLat: this.centerLat, currentLevel: this.currentLevel}})
     },
 
   },
-
-  // watch: {
-  //       kakao.maps.event.addListener(map, 'center_changed', function() {
-        
-  //       // 지도의  레벨을 얻어옵니다
-  //       var level = map.getLevel();
-
-  //       // 지도의 중심좌표를 얻어옵니다 
-  //       var latlng = map.getCenter(); 
-
-  //       var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
-  //       message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
-
-  //       var resultDiv = document.getElementById('result');
-  //       resultDiv.innerHTML = message;
-
-  //     });
-  // }
 
 };
 </script>
