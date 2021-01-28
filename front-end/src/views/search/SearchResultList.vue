@@ -24,10 +24,30 @@
     </div>
     
     <div class="checkbox">
-      <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
-      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox>
+            <v-radio-group
+              v-model="selected"
+              row
+            >
+              <v-radio
+                label="내 위치 중심"
+                color="#88C8FF"
+                value="mylocation"
+                @click="onMyLocation"
+              ></v-radio>
+              <v-radio
+                label="지도 중심"
+                color="#88C8FF"
+                value="mapcenter"
+                @click="onMapCenter"
+                checked
+              ></v-radio>
+              
+            </v-radio-group>
+      <!-- <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
+      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox> -->
     </div>
 
+          
    
     <v-card
       class="overflow-y-auto"
@@ -64,7 +84,7 @@
                 </v-list-item-content>
 
                 <v-list-item-avatar>
-                <v-list-item-subtitle v-text="item.distance.substring(0,4)+'m'"></v-list-item-subtitle>
+                <v-list-item-subtitle v-text="item.distance.substring(2,5)+'m'"></v-list-item-subtitle>
                 </v-list-item-avatar>
                 
               </template>
@@ -142,6 +162,11 @@ export default {
     items: [
     ],
     keyword: this.$route.query.keyword,
+    selected: 'mapcenter',
+    lat: 37.5031784,
+    lon: 126.8798427,
+    centerLat: 37.4968436,
+    centerLng: 127.0328341
     }
   },
   methods: {
@@ -156,23 +181,45 @@ export default {
     },
     onChangeDetail(placeIdx){
       this.$router.push({name: 'PlaceDetail', params: {placeIdx: placeIdx}});
-    }
+    },
+    onMapCenter() {
+      console.log(this.centerLat + " " + this.centerLng)
+        axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
+        params: {
+          keyword: this.keyword,
+            lat: this.centerLat,
+            lon: this.centerLng
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        this.items = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    onMyLocation() {
+      console.log(this.lat + " " + this.lon)
+        axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
+        params: {
+          keyword: this.keyword,
+            lat: this.lat,
+            lon: this.lon
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        this.items = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    
   },
   created() {
-    axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
-      params: {
-        keyword: this.keyword,
-        lat: 37.5019530,
-        lon: 127.039651
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      this.items = res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    this.onMapCenter()
   }
 }
 </script>

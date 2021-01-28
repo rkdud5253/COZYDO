@@ -24,11 +24,28 @@
     </div>
     
     <div class="checkbox">
-      <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
-      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox>
+            <v-radio-group
+              v-model="selected"
+              row
+            >
+              <v-radio
+                label="내 위치 중심"
+                color="#88C8FF"
+                value="mylocation"
+              ></v-radio>
+              <v-radio
+                label="지도 중심"
+                color="#88C8FF"
+                value="mapcenter"
+                checked
+              ></v-radio>
+              
+            </v-radio-group>
+      <!-- <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
+      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox> -->
     </div>
 
-   <SearchMap />
+   <SearchMap :value="selected"/>
     
   </v-app>
 
@@ -88,6 +105,7 @@ export default {
       
     ],
     keyword : this.$route.query.keyword,
+    selected: 'mapcenter',
     }
   },
   methods: {
