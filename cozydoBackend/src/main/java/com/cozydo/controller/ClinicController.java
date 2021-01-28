@@ -31,11 +31,13 @@ public class ClinicController {
 	ClinicDao clinicdao;
 
 	@GetMapping("/clinic/list")
-	@ApiOperation(httpMethod = "GET", value = "Clinic 리스트 조회", notes = "Select Clinic list")
+	@ApiOperation(httpMethod = "GET", value = "경도위도를 받아 구기준으로 먼저 Clinic 리스트 조회", notes = "Select Clinic list")
 	public Object getClinic() {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		List<Clinic> list = clinicdao.findAll();
+//		List<Clinic> list = clinicdao.findAll();
+		String a = "강남구";
+		List<Clinic> list = clinicdao.findClinicOrderByGuDesc(a);
 		result.status = true;
 		result.object = list;
 		result.data = "success";
