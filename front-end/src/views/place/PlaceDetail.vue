@@ -5,7 +5,6 @@
         <tr>
           <td></td>
           <td style="float:right;">
-            <!-- <v-col style="float:right" cols="12" sm="3"> -->
             <v-btn
               id="heartIcon"
               v-on:click="heartBtn"
@@ -95,7 +94,6 @@
                 </v-card>
               </v-dialog>
             </div>
-            <!-- </v-col> -->
           </td>
         </tr>
         <tr>
@@ -112,10 +110,7 @@
         </tr>
         <tr>
           <td colspan="2" style="float:left;">
-            <!-- {{ iconChange() }} -->
-            <!-- <ul style="margin-top:10px;"> -->
             <div style="margin-top:10px;">
-              <!-- <li v-for="(item, index) in items" v-bind:key="index"> -->
               <li
                 class="iconStyle"
                 style="list-style: none;"
@@ -164,12 +159,6 @@
                 </i>
               </li>
             </div>
-            <!-- <i ><h1 v-if="ok">Yes</h1>
-                <i class="material-icons"
-                  >{{ item.iconName }}
-                </i> -->
-            <!-- </li> -->
-            <!-- </ul> -->
           </td>
         </tr>
         <br />
@@ -259,7 +248,7 @@
 </template>
 <script>
 import axios from "axios";
-import "material-design-icons-iconfont/dist/material-design-icons.css"; // Ensure you are using css-loader
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 export default {
   data() {
@@ -270,7 +259,7 @@ export default {
       heartStyle: "color:grey",
       openingHours: "10:00 - 21:00",
       reviewNum: 3,
-      placeIdx: this.$route.params.placeIdx, // // 검색 결과 list에서 넘어오는 장소 Idx
+      placeIdx: this.$route.params.placeIdx, // 검색 결과 list에서 넘어오는 장소 Idx
       level: 4,
       items: [],
       dialog: false,
@@ -320,24 +309,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    axios
-      .get("http://i4a201.p.ssafy.io:8080/map/detail", {
-        //get방식, url 확인
-        params: {
-          // 넘겨줄 파라미터
-          placeIdx: this.placeIdx,
-          level: 4,
-        },
-      })
-      .then((res) => {
-        // 통신 성공하면
-        console.log(res);
-        this.items = res.data; // 데이터 받아온다
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   },
   methods: {
     heartBtn() {
@@ -357,16 +328,6 @@ export default {
     onClickModify() {
       this.$router.replace(`/placeModify`);
     },
-    // iconChange() {
-    //   if (this.items.familyOnly == 1) {
-    //     this.itemIcon.push({
-    //       iconColor: "#ff0055",
-    //       iconName: "family_restroom",
-    //     });
-    //   } else if (this.items.qrCode == 1) {
-    //     this.itemIcon.push({ iconColor: "black", iconName: "qr_code_2" });
-    //   }
-    // },
   },
 };
 </script>
@@ -388,7 +349,6 @@ export default {
 .iconStyle {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
-  /* border : 0; */
   float: left;
   padding-left: 10px;
 }
