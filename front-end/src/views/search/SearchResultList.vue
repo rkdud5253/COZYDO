@@ -1,6 +1,6 @@
 <template>
   <v-app>
-
+    <!-- 상단 메뉴  -->
     <div class="search">
       <v-icon class="goback"
         color="pink"
@@ -43,12 +43,10 @@
               ></v-radio>
               
             </v-radio-group>
-      <!-- <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
-      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox> -->
     </div>
 
           
-   
+   <!-- 장소 리스트화 -->
     <v-card
       class="overflow-y-auto"
       max-height="570"
@@ -84,7 +82,8 @@
                 </v-list-item-content>
 
                 <v-list-item-avatar>
-                <v-list-item-subtitle v-text="item.distance.substring(2,5)+'m'"></v-list-item-subtitle>
+                <v-list-item-subtitle v-if="item.distance.charAt(2) == '0'">{{ item.distance.substring(3,5)+'m' }}</v-list-item-subtitle>
+                <v-list-item-subtitle v-if="item.distance.charAt(2) != '0'">{{ item.distance.substring(2,5)+'m' }}</v-list-item-subtitle>
                 </v-list-item-avatar>
                 
               </template>

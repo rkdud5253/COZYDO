@@ -1,6 +1,6 @@
 <template>
   <v-app>
-
+    <!-- 상단 메뉴 -->
     <div class="search">
       <v-icon class="goback"
         color="pink"
@@ -41,10 +41,8 @@
               ></v-radio>
               
             </v-radio-group>
-      <!-- <v-checkbox class="pr-6" label="내위치중심" value="mylocation" color="#88C8FF"></v-checkbox>
-      <v-checkbox class="pr-6" label="지도중심" value="map" color="#88C8FF"></v-checkbox> -->
     </div>
-
+    <!-- 검색결과(지도) -->
    <SearchMap :value="selected"/>
     
   </v-app>
@@ -102,7 +100,6 @@ export default {
   data: function () {
   return {
     items: [
-      
     ],
     keyword : this.$route.query.keyword,
     selected: 'mapcenter',

@@ -34,7 +34,7 @@ export default {
       var container = document.getElementById('map');
       var options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
-        level: 7,
+        level: 3,
       };
       this.map = new kakao.maps.Map(container, options);
       
@@ -43,7 +43,7 @@ export default {
           this.nowlocation(this.map);
       }
           
-      // this.addMarker();
+     
       var zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
     
@@ -56,7 +56,7 @@ export default {
               
               console.log(typeof(lat));
               var markerPosition  = new kakao.maps.LatLng(lat, lon); 
-              // console.log(markerPosition);
+             
             
                var marker = new kakao.maps.Marker({
                   map: map,
@@ -74,21 +74,18 @@ export default {
     
           // 지도 중심을 이동 시킵니다
           this.map.setCenter(moveLatLon);
-          for(var i=0; i< 10; i++){
+          for(var i=0; i< 20; i++){
               var tmpLat = this.items[i].placeLat;
               var tmpLng = this.items[i].placeLon;
               tmpLat = Number(tmpLat);
               tmpLng = Number(tmpLng);
 
-              console.log(tmpLat + " " + tmpLng);
-              console.log(typeof(tmpLat));
               var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
              
-            
                var marker = new kakao.maps.Marker({
                   map: this.map,
                   position: markerPosition,
-                  title: '새로운마커'
+                  title: this.items[i].placeName
               });
               markers.push(marker)
               // // 마커가 지도 위에 표시되도록 설정합니다
@@ -146,23 +143,6 @@ export default {
       }
     }
   },
-  // created() {
-  //   axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
-  //     params: {
-  //       keyword: this.keyword,
-  //       lat: 37.5019530,
-  //       lon: 127.039651
-  //     }
-  //   })
-  //   .then((res) => {
-  //     // console.log(res);
-  //     this.items = res.data;
-  //     this.addMarker();
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // }
 };
 </script>
 <style scoped>
