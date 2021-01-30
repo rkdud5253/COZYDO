@@ -6,6 +6,8 @@ import SearchResultMap from "../views/search/SearchResultMap.vue";
 import PlaceDetail from "../views/place/PlaceDetail.vue";
 import PlaceModify from "../views/place/PlaceModify.vue";
 import PlaceReview from "../views/place/PlaceReview.vue";
+import Register from "../views/member/Register.vue";
+import Login from "../views/member/Login.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -38,6 +40,16 @@ const routes = [
     path: "/placeReview",
     name: "PlaceReview",
     component: PlaceReview
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login
   },
 ];
 
