@@ -8,6 +8,13 @@
 
 ##Screen = 1281px 이상 해상도 데스크탑
 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.v-application--wrap {
+       font-family: 'Nanum Gothic', sans-serif;
+
+       font-weight: 500;
+}
+
 
 @media (min-width: 1281px) {
     .v-application--wrap {
@@ -130,6 +137,18 @@
     .v-application--wrap {
         background-color: white;
         max-width: 480px !important; 
+        margin: 0 auto;
+    }
+
+    .theme--light.v-application {
+        background: #333333 !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+    .v-application--wrap {
+        background-color: white;
+        max-width: 375px !important; 
         margin: 0 auto;
     }
 
