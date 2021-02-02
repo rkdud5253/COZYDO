@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cozydo.dao.ClinicDao;
-import com.cozydo.dao.CronaLevelDao;
+import com.cozydo.dao.CoronaLevelDao;
 import com.cozydo.dao.PlaceDao;
 import com.cozydo.mapper.PlaceMapper;
 import com.cozydo.model.BasicResponse;

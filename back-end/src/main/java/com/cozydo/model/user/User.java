@@ -17,6 +17,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -27,12 +28,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_idx")
-	private int userIdx; // autoincrase
+	private long userIdx; // autoincrase
 
 	@NonNull
 	@NotNull
@@ -43,6 +45,7 @@ public class User {
 	@NotNull
 	@Column(name = "user_password")
 	private String password;
+	
 	@NonNull
 	@NotNull
 	@Column(name = "user_name")
@@ -52,10 +55,9 @@ public class User {
 	@NotNull
 	@Column(name = "user_nickname")
 	private String nickname;
-
-	@NonNull
-	@NotNull
-	@Column(name = "user_arlam")
-	private String arlam;
+	
+	
+	@Column(name = "user_arlam",insertable = false)
+	private int arlam;
 
 }
