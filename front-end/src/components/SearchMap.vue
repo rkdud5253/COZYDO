@@ -21,6 +21,7 @@ export default {
       lon: 126.8798427,
       centerLat: 37.4968436,
       centerLng: 127.0328341,
+      markers: [],
     };
   },
   props: ['value'],
@@ -68,31 +69,53 @@ export default {
     },
     addMarker(lat, lon) {
       // 검색결과 마커 추가
-          var markers = [];
-          
+        
           var moveLatLon = new kakao.maps.LatLng(lat, lon);
-    
+
           // 지도 중심을 이동 시킵니다
           this.map.setCenter(moveLatLon);
+
+          // 마커 20개 생성
           for(var i=0; i< 20; i++){
               var tmpLat = this.items[i].placeLat;
               var tmpLng = this.items[i].placeLon;
               tmpLat = Number(tmpLat);
               tmpLng = Number(tmpLng);
-
+             
               var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
              
-               var marker = new kakao.maps.Marker({
+              var marker = new kakao.maps.Marker({
                   map: this.map,
                   position: markerPosition,
-                  title: this.items[i].placeName
+                  title: this.items[i].placeName,
               });
-              markers.push(marker)
+
+              if(marker.getMap()){
+                console.log(this.items[i].placeName)
+              }
+              var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
+              // 마커에 표시할 인포윈도우를 생성합니다 
+              var infowindow = new kakao.maps.InfoWindow({
+                  content: content, // 인포윈도우에 표시할 내용
+                  removable : true // true 시 삭제 가능
+              });
+
+              this.markers.push(marker)
               // // 마커가 지도 위에 표시되도록 설정합니다
-              markers[i].setMap(this.map);
+              // this.markers[i].setMap(this.map);
+              marker.setMap(this.map);
+              kakao.maps.event.addListener(marker, 'click', this.makeOverListener(this.map, marker, infowindow));
+              
           }
-          
+
+
     },
+   makeOverListener : function(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+  },
+  
     addScript() {
       const script = document.createElement('script');
       /* global kakao */
@@ -103,6 +126,7 @@ export default {
       document.head.appendChild(script);
     },
     onChangeMap(value){
+        
       if(value=='mapcenter'){
           axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
           params: {
@@ -117,6 +141,10 @@ export default {
           console.log(this.items)
           // this.addMarker();
           this.addMarker(this.centerLat, this.centerLng);
+          // 최근 받아온 마커 20개를 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-20; j++){
+             this.markers[j].setMap(null)
+           }
         })
         .catch((err) => {
           console.log(err);
@@ -136,6 +164,10 @@ export default {
           console.log(this.items)
           // this.addMarker();
           this.addMarker(this.lat, this.lon);
+          // 최근 받아온 마커 20개를 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-20; j++){
+             this.markers[j].setMap(null)
+           }
         })
         .catch((err) => {
           console.log(err);
