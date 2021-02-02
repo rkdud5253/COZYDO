@@ -162,10 +162,11 @@ export default {
     ],
     keyword: this.$route.query.keyword,
     selected: 'mapcenter',
-    lat: 37.5031784,
-    lon: 126.8798427,
+    lat: this.$route.query.lat,
+    lon: this.$route.query.lon,
     centerLat: 37.4968436,
-    centerLng: 127.0328341
+    centerLng: 127.0328341,
+    level: this.$route.query.currentLevel,
     }
   },
   methods: {
@@ -173,21 +174,22 @@ export default {
         this.$router.push('/')
       },
     onInputKeyword() {
-      this.$router.go(this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}}));
+      this.$router.go(this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.currentLon, lat: this.currentLat, currentLevel: this.currentLevel}}));
     },
     onChangeMap() {
       this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
     },
     onChangeDetail(placeIdx){
-      this.$router.push({name: 'PlaceDetail', params: {placeIdx: placeIdx}});
+      this.$router.push({name: 'PlaceDetail', params: {placeIdx: placeIdx, level: this.level}});
     },
     onMapCenter() {
-      console.log(this.centerLat + " " + this.centerLng)
+      console.log(this.level)
         axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
         params: {
           keyword: this.keyword,
             lat: this.centerLat,
-            lon: this.centerLng
+            lon: this.centerLng,
+          level: this.level
         }
       })
       .then((res) => {
@@ -199,12 +201,13 @@ export default {
       });
     },
     onMyLocation() {
-      console.log(this.lat + " " + this.lon)
+      console.log(this.level)
         axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
         params: {
           keyword: this.keyword,
             lat: this.lat,
-            lon: this.lon
+            lon: this.lon,
+          level: this.level
         }
       })
       .then((res) => {
