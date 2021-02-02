@@ -13,6 +13,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 @Configuration
 @MapperScan(basePackages = {"com.cozydo.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
 public class MybatisConfig {
+	
 	@Bean(name="sqlSessionFactory")
 	public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -21,4 +22,5 @@ public class MybatisConfig {
 		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/database/*_query.xml"));
 		return sqlSessionFactoryBean.getObject();
 	}
+	
 }

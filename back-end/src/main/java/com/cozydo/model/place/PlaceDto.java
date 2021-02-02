@@ -11,32 +11,14 @@ public class PlaceDto {
 	private String roadAddressName; // 도로명 주소
 	private String placeLon; // 경도
 	private String placeLat; // 위도
-	private String distance;
-	private int notFood;
-	private int seatOneApart;
-	private int meetProhibition;
-	private int deadlineNine;
-	private int qrCode;
-	private int nomorepeopleNine;
-	private int twopeopleOnehour;
-	private int showerOnly;
-	private int lessthan100;
-	private int lessthan50;
-	private int familyOnly;
-	private int notShower;
-	
-
+	private String distance; //거리
 	
 	public PlaceDto() {
 		super();
 	}
-	
-	
 
 	public PlaceDto(int placeIdx, String placeName, String subCategory, String gu, String dong, String addressName,
-			String roadAddressName, String placeLon, String placeLat, String distance, int notFood, int seatOneApart,
-			int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine, int twopeopleOnehour,
-			int showerOnly, int lessthan100, int lessthan50, int familyOnly, int notShower) {
+			String roadAddressName, String placeLon, String placeLat, String distance) {
 		super();
 		this.placeIdx = placeIdx;
 		this.placeName = placeName;
@@ -48,21 +30,7 @@ public class PlaceDto {
 		this.placeLon = placeLon;
 		this.placeLat = placeLat;
 		this.distance = distance;
-		this.notFood = notFood;
-		this.seatOneApart = seatOneApart;
-		this.meetProhibition = meetProhibition;
-		this.deadlineNine = deadlineNine;
-		this.qrCode = qrCode;
-		this.nomorepeopleNine = nomorepeopleNine;
-		this.twopeopleOnehour = twopeopleOnehour;
-		this.showerOnly = showerOnly;
-		this.lessthan100 = lessthan100;
-		this.lessthan50 = lessthan50;
-		this.familyOnly = familyOnly;
-		this.notShower = notShower;
 	}
-
-
 
 	public int getPlaceIdx() {
 		return placeIdx;
@@ -142,102 +110,6 @@ public class PlaceDto {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
-	}
-
-	public int getNotFood() {
-		return notFood;
-	}
-
-	public void setNotFood(int notFood) {
-		this.notFood = notFood;
-	}
-
-	public int getSeatOneApart() {
-		return seatOneApart;
-	}
-
-	public void setSeatOneApart(int seatOneApart) {
-		this.seatOneApart = seatOneApart;
-	}
-
-	public int getMeetProhibition() {
-		return meetProhibition;
-	}
-
-	public void setMeetProhibition(int meetProhibition) {
-		this.meetProhibition = meetProhibition;
-	}
-
-	public int getDeadlineNine() {
-		return deadlineNine;
-	}
-
-	public void setDeadlineNine(int deadlineNine) {
-		this.deadlineNine = deadlineNine;
-	}
-
-	public int getQrCode() {
-		return qrCode;
-	}
-
-	public void setQrCode(int qrCode) {
-		this.qrCode = qrCode;
-	}
-
-	public int getNomorepeopleNine() {
-		return nomorepeopleNine;
-	}
-
-	public void setNomorepeopleNine(int nomorepeopleNine) {
-		this.nomorepeopleNine = nomorepeopleNine;
-	}
-
-	public int getTwopeopleOnehour() {
-		return twopeopleOnehour;
-	}
-
-	public void setTwopeopleOnehour(int twopeopleOnehour) {
-		this.twopeopleOnehour = twopeopleOnehour;
-	}
-
-	public int getShowerOnly() {
-		return showerOnly;
-	}
-
-	public void setShowerOnly(int showerOnly) {
-		this.showerOnly = showerOnly;
-	}
-
-	public int getLessthan100() {
-		return lessthan100;
-	}
-
-	public void setLessthan100(int lessthan100) {
-		this.lessthan100 = lessthan100;
-	}
-
-	public int getLessthan50() {
-		return lessthan50;
-	}
-
-	public void setLessthan50(int lessthan50) {
-		this.lessthan50 = lessthan50;
-	}
-
-	public int getFamilyOnly() {
-		return familyOnly;
-	}
-
-	public void setFamilyOnly(int familyOnly) {
-		this.familyOnly = familyOnly;
-	}
-
-	public int getNotShower() {
-		return notShower;
-	}
-
-	public void setNotShower(int notShower) {
-		this.notShower = notShower;
 	}
 
 }

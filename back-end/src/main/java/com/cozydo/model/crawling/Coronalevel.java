@@ -1,4 +1,4 @@
-package com.cozydo.model.place;
+package com.cozydo.model.crawling;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
