@@ -12,5 +12,5 @@ public interface PlaceMapper {
 
 	List<PlaceDto> findByLatAndLon(@Param("keyword") String keyword, @Param("lat") String lat, @Param("lon") String lon);
 
-	PlaceDto findByIdx(@Param("level") int level, @Param("placeIdx") int placeIdx);
+	PlaceDto findByIdx(int placeIdx);
 }

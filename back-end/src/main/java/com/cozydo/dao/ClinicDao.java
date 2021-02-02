@@ -1,16 +1,11 @@
-
 package com.cozydo.dao;
-
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.cozydo.model.place.Clinic;
+import com.cozydo.model.place.ClinicDto;
 
-public interface ClinicDao extends JpaRepository<Clinic, Long> {
-	Clinic findClinicByClinicIdx(int clinicIdx);
-	
-//	List<Clinic> findClinicOrderByGuDesc(String gu);
-	
+public interface ClinicDao {
+	Clinic findClinicByClinicIdx(int idx);
+	List<ClinicDto> GetDistanceByLatandLon(String lat, String lon);
 }

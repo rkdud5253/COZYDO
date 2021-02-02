@@ -6,9 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sun.istack.NotNull;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,36 +18,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Data
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Review {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "place_idx")
-	private int placeIdx;
 
-	@NotNull
-	@Column(name = "user_idx")
-	private int userIdx;
-
-	@NotNull
-	@Column(name = "review_score")
-	private int reviewScore;
-
+public class ClinicDto {
 	@NonNull
-	@NotNull
-	private String content; 
-
+	private int clinicIdx; // 보건소명
 	@NonNull
-	@NotNull
-	@Column(name = "write_time")
-	private String writeTime; 
-
+	private String clinicName; // 보건소명
+	@NonNull
+	private String clinicAddress; // 주소
+	@NonNull
+	private String tel; // 전화번호
+	@NonNull
+	private Double distance; // 거리
 }

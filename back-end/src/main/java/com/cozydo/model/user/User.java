@@ -4,15 +4,19 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -24,18 +28,34 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 public class User {
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY) //기본키를 설정하는 옵션에 4개중 1개인 identity 가 지금은 적합하지 않은것 같아서 주석처리했습니다.
-    //이 부분이 주석이 처리가 되지 않으면 sql에서 넣을때 sqlException 납니다..
-    private String uid;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_idx")
+	private int userIdx; // autoincrase
 
-    @JsonIgnore
-    private String password;
-    private String email;
+	@NonNull
+	@NotNull
+	@Column(name = "user_email")
+	private String email;
 
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime createDate;
+	@NonNull
+	@NotNull
+	@Column(name = "user_password")
+	private String password;
+	@NonNull
+	@NotNull
+	@Column(name = "user_name")
+	private String name;
+
+	@NonNull
+	@NotNull
+	@Column(name = "user_nickname")
+	private String nickname;
+
+	@NonNull
+	@NotNull
+	@Column(name = "user_arlam")
+	private String arlam;
 
 }
