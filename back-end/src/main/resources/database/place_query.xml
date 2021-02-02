@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="getReview" parameterType="map" resultType="com.cozydo.model.place.Review">
-		SELECT *
+		SELECT review_idx as reviewIdx, place_idx as placeIdx, user_idx as userIdx, review_score as reviewScore, content, write_time as writeTime
 		FROM review
 		WHERE place_idx = #{placeIdx}
 	</select>

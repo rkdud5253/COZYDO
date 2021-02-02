@@ -1,10 +1,13 @@
 package com.cozydo.model.place;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sun.istack.NotNull;
@@ -29,6 +32,9 @@ public class Review {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "review_idx")
+	private long reviewIdx;
+	
 	@Column(name = "place_idx")
 	private int placeIdx;
 
@@ -47,6 +53,11 @@ public class Review {
 	@NonNull
 	@NotNull
 	@Column(name = "write_time")
-	private String writeTime; 
+	private LocalDateTime  writeTime; 
+	
+	@PrePersist
+    public void createdAt() {
+        this.writeTime = LocalDateTime.now();
+    }
 
 }
