@@ -16,4 +16,5 @@ public interface PlaceMapper {
 	PlaceDto findByIdx(@Param("level") int level, @Param("placeIdx") int placeIdx);
 
 	List<Review> getReview(int placeIdx);
+
 }

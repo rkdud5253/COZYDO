@@ -20,7 +20,6 @@ import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cozydo.dao.PlaceDao;
-import com.cozydo.dao.UserDao;
 import com.cozydo.model.place.Place;
 
 public class Excel {

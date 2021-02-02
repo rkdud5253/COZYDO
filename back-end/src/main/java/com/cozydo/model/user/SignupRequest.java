@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.ToString;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Pattern;
 public class SignupRequest {
     @ApiModelProperty(required = true)
     @NotNull
+    @Email
     String email;
     @ApiModelProperty(required = true)
     @NotNull
