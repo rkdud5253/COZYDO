@@ -4,11 +4,11 @@
     <div class="table">
       <v-card flat>
         <v-tabs
-          color="pink"
+          color="#fc355d"
           fixed-tabs
         >
-          <v-tab>Map</v-tab>
-          <v-tab>Information</v-tab>
+          <v-tab><h4>Map</h4></v-tab>
+          <v-tab><h4>Information</h4></v-tab>
 
           <v-tab-item>
             <MainMap />
