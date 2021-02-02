@@ -13,6 +13,7 @@ public class PlaceServiceImpl implements PlaceService {
 
 	@Autowired
 	PlaceMapper placeMapper;
+
 	@Override
 	public List<PlaceDto> findByLatAndLon(String keyword, String level, String lat, String lon) {
 		return placeMapper.findByLatAndLon(keyword, level, lat, lon);
