@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cozydo.dao.UserDao;
 import com.cozydo.dao.PlaceDao;
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.place.Place;
