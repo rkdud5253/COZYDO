@@ -14,13 +14,15 @@ public class PlaceServiceImpl implements PlaceService {
 	@Autowired
 	PlaceMapper placeMapper;
 	@Override
-	public List<PlaceDto> findByLatAndLon(String keyword, String lat, String lon) {
-		return placeMapper.findByLatAndLon(keyword, lat, lon);
+	public List<PlaceDto> findByLatAndLon(String keyword, String level, String lat, String lon) {
+		return placeMapper.findByLatAndLon(keyword, level, lat, lon);
 	}
 
 	@Override
 	public PlaceDto findByIdx(int level, int placeIdx) {
-		return placeMapper.findByIdx(level, placeIdx);
+		PlaceDto placeDto = placeMapper.findByIdx(level, placeIdx);
+		placeDto.setReviewList(placeMapper.getReview(placeIdx));
+		return placeDto;
 	}
 
 }

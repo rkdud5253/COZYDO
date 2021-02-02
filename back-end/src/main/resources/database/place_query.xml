@@ -4,10 +4,11 @@
 
 	<select id="findByLatAndLon" parameterType="map" resultType="com.cozydo.model.place.PlaceDto">
 		SELECT p.place_idx as placeIdx, p.place_name as placeName, p.sub_category as subCategory, p.gu, p.dong, p.address_name as addressName,
-				p.road_address_name as roadAddressName, p.place_lon as placeLon, p.place_lat as placeLat,
+				p.road_address_name as roadAddressName, p.place_lon as placeLon, p.place_lat as placeLat, IF(#{level} &gt;= g.meet_prohibition AND g.meet_prohibition != 0, 1, 0) as meetProhibition,
 				6371*acos(cos(radians(#{lat}))*cos(radians(p.place_lat))*cos(radians(p.place_lon)-radians(#{lon})) +sin(radians(#{lat}))*sin(radians(p.place_lat))) as distance
 		FROM place p
 		LEFT JOIN category c on p.sub_category = c.sub_category 
+		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_name LIKE CONCAT('%',#{keyword},'%') OR c.sub_category_name LIKE CONCAT('%',#{keyword},'%')
 		HAVING distance &lt;= 0.5
 		ORDER BY distance
@@ -17,7 +18,7 @@
 	
 	<select id="findByIdx" parameterType="map" resultType="com.cozydo.model.place.PlaceDto">
 		SELECT place_idx as placeIdx, place_name as placeName, p.sub_category as subCategory, gu, p.dong, address_name as addressName,
-				road_address_name as roadAddressName, place_lon as placeLon, place_lat as placeLat,
+				road_address_name as roadAddressName, place_lon as placeLon, place_lat as placeLat, p.tel as tel,
 				IF(#{level} &gt;= g.not_food AND g.not_food != 0 , 1, 0) as notFood, IF(#{level} &gt;= g.seat_one_apart AND g.seat_one_apart != 0, 1, 0) as seatOneApart,
 				IF(#{level} &gt;= g.meet_prohibition AND g.meet_prohibition != 0, 1, 0) as meetProhibition, IF(#{level} &gt;= g.deadline_nine AND g.deadline_nine != 0, 1, 0) as deadlineNine,
 				IF(#{level} &gt;= g.qr_code AND g.qr_code != 0, 1, 0) as qrCode, IF(#{level} &gt;= g.nomorepeople_nine AND g.nomorepeople_nine != 0, 1, 0) as nomorepeopleNine,
@@ -28,5 +29,11 @@
 		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_idx = #{placeIdx}
 		
+	</select>
+	
+	<select id="getReview" parameterType="map" resultType="com.cozydo.model.place.Review">
+		SELECT *
+		FROM review
+		WHERE place_idx = #{placeIdx}
 	</select>
 </mapper>

@@ -31,11 +31,11 @@ public class MapController {
 
 	@GetMapping("/map/list")
 	@ApiOperation(httpMethod = "GET", value = "Place 리스트 조회", notes = "Select Place List", response = Place.class, responseContainer = "ArrayList")
-	public List<PlaceDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword,
+	public List<PlaceDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword, @RequestParam(required = true) final String level,
 			@RequestParam(required = true) final String lat, @RequestParam(required = true) final String lon) {
 
 		List<PlaceDto> response = null;
-		response = service.findByLatAndLon(keyword, lat, lon);
+		response = service.findByLatAndLon(keyword, level, lat, lon);
 
 		return response;
 	}

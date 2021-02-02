@@ -1,5 +1,7 @@
 package com.cozydo.model.place;
 
+import java.util.List;
+
 public class PlaceDto {
 
 	private int placeIdx;
@@ -11,6 +13,7 @@ public class PlaceDto {
 	private String roadAddressName; // 도로명 주소
 	private String placeLon; // 경도
 	private String placeLat; // 위도
+	private String tel;
 	private String distance;
 	private int notFood;
 	private int seatOneApart;
@@ -24,19 +27,13 @@ public class PlaceDto {
 	private int lessthan50;
 	private int familyOnly;
 	private int notShower;
-	
-
-	
-	public PlaceDto() {
-		super();
-	}
-	
-	
+	private List<Review> reviewList;
 
 	public PlaceDto(int placeIdx, String placeName, String subCategory, String gu, String dong, String addressName,
-			String roadAddressName, String placeLon, String placeLat, String distance, int notFood, int seatOneApart,
-			int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine, int twopeopleOnehour,
-			int showerOnly, int lessthan100, int lessthan50, int familyOnly, int notShower) {
+			String roadAddressName, String placeLon, String placeLat, String tel, String distance, int notFood,
+			int seatOneApart, int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine,
+			int twopeopleOnehour, int showerOnly, int lessthan100, int lessthan50, int familyOnly, int notShower,
+			List<Review> reviewList) {
 		super();
 		this.placeIdx = placeIdx;
 		this.placeName = placeName;
@@ -47,6 +44,7 @@ public class PlaceDto {
 		this.roadAddressName = roadAddressName;
 		this.placeLon = placeLon;
 		this.placeLat = placeLat;
+		this.tel = tel;
 		this.distance = distance;
 		this.notFood = notFood;
 		this.seatOneApart = seatOneApart;
@@ -60,9 +58,12 @@ public class PlaceDto {
 		this.lessthan50 = lessthan50;
 		this.familyOnly = familyOnly;
 		this.notShower = notShower;
+		this.reviewList = reviewList;
 	}
 
-
+	public PlaceDto() {
+		super();
+	}
 
 	public int getPlaceIdx() {
 		return placeIdx;
@@ -134,6 +135,14 @@ public class PlaceDto {
 
 	public void setPlaceLat(String placeLat) {
 		this.placeLat = placeLat;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 	public String getDistance() {
@@ -238,6 +247,14 @@ public class PlaceDto {
 
 	public void setNotShower(int notShower) {
 		this.notShower = notShower;
+	}
+
+	public List<Review> getReviewList() {
+		return reviewList;
+	}
+
+	public void setReviewList(List<Review> reviewList) {
+		this.reviewList = reviewList;
 	}
 
 }
