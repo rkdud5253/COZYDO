@@ -12,10 +12,11 @@ import com.cozydo.dao.ClinicDao;
 import com.cozydo.dao.CoronaLevelDao;
 import com.cozydo.dao.PlaceDao;
 import com.cozydo.mapper.PlaceMapper;
+
 import com.cozydo.model.BasicResponse;
-import com.cozydo.model.place.Clinic;
 import com.cozydo.model.place.Place;
 import com.cozydo.model.place.PlaceDto;
+import com.cozydo.service.PlaceService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,8 +32,8 @@ import io.swagger.annotations.ApiResponses;
 public class MapController {
 
 	@Autowired
-	PlaceMapper placeMapper;
-	
+	PlaceService service;
+
 //	@GetMapping("/map/list")
 //
 //	@ApiOperation(httpMethod = "GET", 
@@ -52,19 +53,23 @@ public class MapController {
 	@GetMapping("/map/list")
 	@ApiOperation(httpMethod = "GET", value = "Place 리스트 조회", notes = "Select Place List", response = Place.class, responseContainer = "ArrayList")
 	public List<PlaceDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword,
-			@RequestParam(required = true) final String lat, @RequestParam(required = true) final String lon) {
+			@RequestParam(required = true) final String level, @RequestParam(required = true) final String lat,
+			@RequestParam(required = true) final String lon) {
 
 		List<PlaceDto> response = null;
-		response = placeMapper.findByLatAndLon(keyword, lat, lon);
+
+		response = service.findByLatAndLon(keyword, level, lat, lon);
 
 		return response;
 	}
 
 	@GetMapping("/map/detail")
 	@ApiOperation(httpMethod = "GET", value = "Place 상세 조회", notes = "Select Place detail")
-	public PlaceDto getPlace(@RequestParam(required = true) final int placeIdx) {
 
-		PlaceDto response = placeMapper.findByIdx(placeIdx);
+	public PlaceDto getPlace(@RequestParam(required = true) final String level,
+			@RequestParam(required = true) final int placeIdx) {
+
+		PlaceDto response = service.findByIdx(level, placeIdx);
 
 		return response;
 	}
