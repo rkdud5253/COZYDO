@@ -124,7 +124,7 @@ export default {
   data: function() {
     return {
       map: "",
-      initPos: { lat: "37.5665734", lng: "126.978179" },
+      initPos: { lat: "37.5013068", lng: "127.0385654" },
 
       regions: [
         "강원",
@@ -216,13 +216,16 @@ export default {
         var moveLatLon = new kakao.maps.LatLng(lat, lon);
         map.setCenter(moveLatLon);
 
+        this.centerLat = lat
+        this.centerLon = lon
+
         kakao.maps.event.addListener(map, "dragend", () => {
           // 지도 중심좌표를 얻어옵니다
           var latlng = map.getCenter();
 
           this.centerLat = latlng.getLat();
           this.centerLon = latlng.getLng();
-          console.log(this.centerLat, this.centerLon);
+          // console.log(this.centerLat, this.centerLon);
         });
         var markerPosition = new kakao.maps.LatLng(lat, lon);
         // console.log(markerPosition);
@@ -344,7 +347,7 @@ input {
     .btn {
       height: 20px;
       min-width: 36px;
-      padding: 4px !important;
+      padding: 5px !important;
       font-size: 5px;
     }
 }
