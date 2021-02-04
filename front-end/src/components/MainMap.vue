@@ -206,32 +206,20 @@ export default {
     },
     nowlocation(map) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      console.log('1')
-      navigator.geolocation.getCurrentPosition(function(position) {
-        console.log('2')
+
+      // arrow function을 써야 함수 밖에서도 this값에 손댈 수 있음
+      navigator.geolocation.getCurrentPosition((position) =>{
+
         var lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
 
         var moveLatLon = new kakao.maps.LatLng(lat, lon);
         map.setCenter(moveLatLon);
-        // var container = document.getElementById("map");
-        // var options = {
-        //   center: new kakao.maps.LatLng(lat, lon),
-        //   level: 7,
-        // };
-        // map = new kakao.maps.Map(container, options);
-        kakao.maps.event.addListener(map, "dragend", function() {
+
+        kakao.maps.event.addListener(map, "dragend", () => {
           // 지도 중심좌표를 얻어옵니다
           var latlng = map.getCenter();
-          // map.setCenter(latlng);
 
-          // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
-          // message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-          // var resultDiv = document.getElementById('result');
-          // resultDiv.innerHTML = message;
-
-          // 지도 이동할 때마다 위도, 경도 center값에 넣어주기
           this.centerLat = latlng.getLat();
           this.centerLon = latlng.getLng();
           console.log(this.centerLat, this.centerLon);
@@ -291,6 +279,8 @@ export default {
             keyword: this.keyword,
             lon: this.currentLon,
             lat: this.currentLat,
+            centerLon: this.centerLon,
+            centerLat: this.centerLat,
             currentLevel: this.currentLevel,
           },
         });
@@ -299,13 +289,8 @@ export default {
 
     // 검색어 입력했을 때
     onInputKeyword() {
-      // var center = this.map.getCenter();
-      // console.log(this.map.getBounds().toString());
-      // console.log(center.getLat())
-      // console.log(center.getLng())
 
-      // console.log(this.map.getCenter().getLat())
-      // console.log(this.map.getCenter().getLng())
+      // console.log(this.centerLat, this.centerLon) 
 
       this.$router.push({
         name: "SearchResultList",
@@ -359,7 +344,7 @@ input {
     .btn {
       height: 20px;
       min-width: 36px;
-      padding: 5px !important;
+      padding: 4px !important;
       font-size: 5px;
     }
 }
