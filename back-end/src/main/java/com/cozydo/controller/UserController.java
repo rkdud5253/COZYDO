@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,17 +52,23 @@ public class UserController {
 	}
 
 	@PutMapping("/user/update")
-	@ApiOperation(httpMethod = "POST", value = "회원정보를 받아 회원정보를 수정", notes = "update user information")
+	@ApiOperation(httpMethod = "PUT", value = "회원정보를 받아 회원정보를 수정", notes = "update user information")
 	public Object Update(@Valid @RequestBody SignupRequest request, BindingResult bindingResult) {
 
 		return userService.Update(request, bindingResult);
 	}
 
 	@DeleteMapping("/user/delete")
-	@ApiOperation(httpMethod = "GET", value = "회원 아이디와 비밀번호를 받아 회원 삭제", notes = "delete user")
+	@ApiOperation(httpMethod = "DELETE", value = "회원 아이디와 비밀번호를 받아 회원 삭제", notes = "delete user")
 	public Object Delete(@RequestParam(required = true) final String email,
 			@RequestParam(required = true) final String password) {
-
 		return userService.Delete(email, password);
+	}
+
+	@GetMapping("/user/findpw")
+	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
+	public Object FindPassword(@RequestParam(required = true) final String email,
+			@RequestParam(required = true) final String name) {
+		return userService.FindPW(email, name);
 	}
 }

@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cozydo.corona.crawling.Kakao;
 import com.cozydo.dao.CoronaLevelDao;
+import com.cozydo.mail.EmailUtil;
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.crawling.Coronalevel;
 import com.cozydo.service.CoronaLevelService;
-import com.web.corona.crowling.CoronaCrawling;
-import com.web.corona.crowling.Kakao;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,9 +35,11 @@ public class CrawlingController {
 	@Autowired
 	CoronaLevelService CoronaLevelService;
 
+
 	@GetMapping("/crawling/level")
 	@ApiOperation(httpMethod = "GET", value = "크롤링 후 코로나단계 db에 저장", notes = "insert coronalevel")
 	public Object SaveCrawling() throws IOException, ParseException {
+
 		return CoronaLevelService.SaveAll();
 	}
 

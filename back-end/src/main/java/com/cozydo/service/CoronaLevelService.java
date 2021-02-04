@@ -12,10 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.cozydo.corona.crawling.Kakao;
 import com.cozydo.dao.CoronaLevelDao;
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.crawling.Coronalevel;
-import com.web.corona.crowling.Kakao;
 
 @Service
 public class CoronaLevelService {

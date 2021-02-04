@@ -1,4 +1,4 @@
-package com.web.corona.crowling;
+package com.cozydo.corona.crawling;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
