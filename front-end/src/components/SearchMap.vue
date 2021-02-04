@@ -17,10 +17,11 @@ export default {
       items: [
       ],
       keyword: this.$route.query.keyword,
-      lat: 37.5031784,
-      lon: 126.8798427,
+      lat: this.$route.query.lat,
+      lon: this.$route.query.lon,
       centerLat: 37.4968436,
       centerLng: 127.0328341,
+      level: this.$route.query.currentLevel,
       markers: [],
     };
   },
@@ -54,8 +55,7 @@ export default {
           navigator.geolocation.getCurrentPosition(function(position) {
               var lat = position.coords.latitude, // 위도
                   lon = position.coords.longitude; // 경도
-              
-              console.log(typeof(lat));
+        
               var markerPosition  = new kakao.maps.LatLng(lat, lon); 
              
             
@@ -71,12 +71,20 @@ export default {
       // 검색결과 마커 추가
         
           var moveLatLon = new kakao.maps.LatLng(lat, lon);
-
           // 지도 중심을 이동 시킵니다
           this.map.setCenter(moveLatLon);
 
+
+          // 마커 커스텀 이미지
+          var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
+          var imageSize = new kakao.maps.Size(42, 43);
+          var imageOption = {offset: new kakao.maps.Point(27, 69)};
+
+          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
           // 마커 20개 생성
-          for(var i=0; i< 20; i++){
+          for(var i=0; i< this.items.length; i++){
               var tmpLat = this.items[i].placeLat;
               var tmpLng = this.items[i].placeLon;
               tmpLat = Number(tmpLat);
@@ -88,12 +96,12 @@ export default {
                   map: this.map,
                   position: markerPosition,
                   title: this.items[i].placeName,
+                  image: markerImage
               });
 
-              if(marker.getMap()){
-                console.log(this.items[i].placeName)
-              }
-              var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
+              // var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
+              // var content = '<div v-on:click="onChangeDetail('+this.items[i].placeIdx+')">'+this.items[i].placeName+'</div>';
+              var content = this.items[i].placeName;
               // 마커에 표시할 인포윈도우를 생성합니다 
               var infowindow = new kakao.maps.InfoWindow({
                   content: content, // 인포윈도우에 표시할 내용
@@ -132,17 +140,18 @@ export default {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
-            lon: this.centerLng
+            lon: this.centerLng,
+            level : this.level
           }
         })
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          console.log(this.items)
+          var size = this.items.length
           // this.addMarker();
           this.addMarker(this.centerLat, this.centerLng);
-          // 최근 받아온 마커 20개를 제외한 모든 마커 삭제
-           for(var j=0; j<this.markers.length-20; j++){
+          // 최근 받아온 마커들을 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-size; j++){
              this.markers[j].setMap(null)
            }
         })
@@ -155,17 +164,18 @@ export default {
           params: {
             keyword: this.keyword,
             lat: this.lat,
-            lon: this.lon
+            lon: this.lon,
+            level : this.level
           }
         })
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          console.log(this.items)
+          var size = this.items.length
           // this.addMarker();
           this.addMarker(this.lat, this.lon);
-          // 최근 받아온 마커 20개를 제외한 모든 마커 삭제
-           for(var j=0; j<this.markers.length-20; j++){
+          // 최근 받아온 마커들을 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-size; j++){
              this.markers[j].setMap(null)
            }
         })
@@ -173,6 +183,13 @@ export default {
           console.log(err);
         });
       }
+    },
+    onChangeDetail(placeIdx) {
+      console.log('detail로 가기')
+      this.$router.push({
+        name: "PlaceDetail",
+        params: { placeIdx: placeIdx, level: this.level },
+      });
     }
   },
 };
