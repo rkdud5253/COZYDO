@@ -13,7 +13,7 @@ export default {
   data: function() {
     return {
       map: '',
-      initPos: { lat: '37.4942585', lng: '126.884217' },
+      initPos: { lat: '37.5013068', lng: '127.0385654' },
       items: [
       ],
       keyword: this.$route.query.keyword,
