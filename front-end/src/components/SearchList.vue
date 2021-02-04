@@ -111,7 +111,7 @@ export default {
       lat: this.$route.query.lat,
       lon: this.$route.query.lon,
       centerLat: this.$route.query.centerLat,
-      centerLng: this.$route.query.centerLng,
+      centerLon: this.$route.query.centerLon,
       level: this.$route.query.currentLevel,
       oldValue: "",
     };
@@ -138,7 +138,7 @@ export default {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
-            lon: this.centerLng,
+            lon: this.centerLon,
             level: this.level,
           },
         })
