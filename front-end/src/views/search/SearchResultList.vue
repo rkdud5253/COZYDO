@@ -142,8 +142,8 @@ export default {
             lon: this.lon,
             lat: this.lat,
             currentLevel: this.level,
-            currentLat: this.currentLat,
-            currentLon: this.currentLon
+            centerLat: this.centerLat,
+            centerLon: this.centerLon
           },
         })
       );
