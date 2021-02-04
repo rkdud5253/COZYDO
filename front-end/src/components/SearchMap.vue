@@ -19,8 +19,8 @@ export default {
       keyword: this.$route.query.keyword,
       lat: this.$route.query.lat,
       lon: this.$route.query.lon,
-      centerLat: 37.4968436,
-      centerLng: 127.0328341,
+      centerLat: this.$route.query.centerLat,
+      centerLon: this.$route.query.centerLon,
       level: this.$route.query.currentLevel,
       markers: [],
     };
@@ -36,7 +36,7 @@ export default {
       var container = document.getElementById('map');
       var options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
-        level: 3,
+        level: 4,
       };
       this.map = new kakao.maps.Map(container, options);
       
@@ -140,7 +140,7 @@ export default {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
-            lon: this.centerLng,
+            lon: this.centerLon,
             level : this.level
           }
         })
@@ -149,7 +149,7 @@ export default {
           this.items = res.data;
           var size = this.items.length
           // this.addMarker();
-          this.addMarker(this.centerLat, this.centerLng);
+          this.addMarker(this.centerLat, this.centerLon);
           // 최근 받아온 마커들을 제외한 모든 마커 삭제
            for(var j=0; j<this.markers.length-size; j++){
              this.markers[j].setMap(null)

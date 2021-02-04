@@ -125,7 +125,7 @@ export default {
       lat: this.$route.query.lat,
       lon: this.$route.query.lon,
       centerLat: this.$route.query.centerLat,
-      centerLng: this.$route.query.centerLng,
+      centerLon: this.$route.query.centerLon,
       level: this.$route.query.currentLevel,
     };
   },
@@ -156,8 +156,8 @@ export default {
           lon: this.lon,
           lat: this.lat,
           currentLevel: this.level,
-          currentLat: this.currentLat,
-          currentLon: this.currentLon
+          centerLat: this.centerLat,
+          centerLon: this.centerLon
         },
       });
     },
