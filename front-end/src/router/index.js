@@ -8,6 +8,7 @@ import PlaceModify from "../views/place/PlaceModify.vue";
 import PlaceReview from "../views/place/PlaceReview.vue";
 import Register from "../views/member/Register.vue";
 import Login from "../views/member/Login.vue";
+import Information from "../views/Information.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: "/information",
+    name: "Information",
+    component: Information
   },
 ];
 
