@@ -36,7 +36,10 @@
         </v-btn>
       </div>
 
-      <v-btn class="botton">
+      <v-btn 
+        class="botton"
+        @click="goMyPage"
+      >
         <span><h4>My Page</h4></span>
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
@@ -56,6 +59,9 @@ export default {
     },
     goInformaion() {
       this.$router.go(this.$router.push({name: 'Information'}))
+    },
+    goMyPage() {
+      this.$router.go(this.$router.push({name: 'MyPage'}))
     },
   }
 };
