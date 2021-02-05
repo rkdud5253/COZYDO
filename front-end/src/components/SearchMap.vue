@@ -13,14 +13,16 @@ export default {
   data: function() {
     return {
       map: '',
-      initPos: { lat: '37.4942585', lng: '126.884217' },
+      initPos: { lat: '37.5013068', lng: '127.0385654' },
       items: [
       ],
       keyword: this.$route.query.keyword,
-      lat: 37.5031784,
-      lon: 126.8798427,
-      centerLat: 37.4968436,
-      centerLng: 127.0328341,
+      lat: this.$route.query.lat,
+      lon: this.$route.query.lon,
+      centerLat: this.$route.query.centerLat,
+      centerLon: this.$route.query.centerLon,
+      level: this.$route.query.currentLevel,
+      markers: [],
     };
   },
   props: ['value'],
@@ -34,7 +36,7 @@ export default {
       var container = document.getElementById('map');
       var options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
-        level: 3,
+        level: 4,
       };
       this.map = new kakao.maps.Map(container, options);
       
@@ -53,8 +55,7 @@ export default {
           navigator.geolocation.getCurrentPosition(function(position) {
               var lat = position.coords.latitude, // 위도
                   lon = position.coords.longitude; // 경도
-              
-              console.log(typeof(lat));
+        
               var markerPosition  = new kakao.maps.LatLng(lat, lon); 
              
             
@@ -68,31 +69,61 @@ export default {
     },
     addMarker(lat, lon) {
       // 검색결과 마커 추가
-          var markers = [];
-          
+        
           var moveLatLon = new kakao.maps.LatLng(lat, lon);
-    
           // 지도 중심을 이동 시킵니다
           this.map.setCenter(moveLatLon);
-          for(var i=0; i< 20; i++){
+
+
+          // 마커 커스텀 이미지
+          var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
+          var imageSize = new kakao.maps.Size(42, 43);
+          var imageOption = {offset: new kakao.maps.Point(27, 69)};
+
+          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+          // 마커 20개 생성
+          for(var i=0; i< this.items.length; i++){
               var tmpLat = this.items[i].placeLat;
               var tmpLng = this.items[i].placeLon;
               tmpLat = Number(tmpLat);
               tmpLng = Number(tmpLng);
-
+             
               var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
              
-               var marker = new kakao.maps.Marker({
+              var marker = new kakao.maps.Marker({
                   map: this.map,
                   position: markerPosition,
-                  title: this.items[i].placeName
+                  title: this.items[i].placeName,
+                  image: markerImage
               });
-              markers.push(marker)
+
+              // var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
+              // var content = '<div v-on:click="onChangeDetail('+this.items[i].placeIdx+')">'+this.items[i].placeName+'</div>';
+              var content = this.items[i].placeName;
+              // 마커에 표시할 인포윈도우를 생성합니다 
+              var infowindow = new kakao.maps.InfoWindow({
+                  content: content, // 인포윈도우에 표시할 내용
+                  removable : true // true 시 삭제 가능
+              });
+
+              this.markers.push(marker)
               // // 마커가 지도 위에 표시되도록 설정합니다
-              markers[i].setMap(this.map);
+              // this.markers[i].setMap(this.map);
+              marker.setMap(this.map);
+              kakao.maps.event.addListener(marker, 'click', this.makeOverListener(this.map, marker, infowindow));
+              
           }
-          
+
+
     },
+   makeOverListener : function(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+  },
+  
     addScript() {
       const script = document.createElement('script');
       /* global kakao */
@@ -103,20 +134,26 @@ export default {
       document.head.appendChild(script);
     },
     onChangeMap(value){
+        
       if(value=='mapcenter'){
           axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
-            lon: this.centerLng
+            lon: this.centerLon,
+            level : this.level
           }
         })
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          console.log(this.items)
+          var size = this.items.length
           // this.addMarker();
-          this.addMarker(this.centerLat, this.centerLng);
+          this.addMarker(this.centerLat, this.centerLon);
+          // 최근 받아온 마커들을 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-size; j++){
+             this.markers[j].setMap(null)
+           }
         })
         .catch((err) => {
           console.log(err);
@@ -127,20 +164,32 @@ export default {
           params: {
             keyword: this.keyword,
             lat: this.lat,
-            lon: this.lon
+            lon: this.lon,
+            level : this.level
           }
         })
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          console.log(this.items)
+          var size = this.items.length
           // this.addMarker();
           this.addMarker(this.lat, this.lon);
+          // 최근 받아온 마커들을 제외한 모든 마커 삭제
+           for(var j=0; j<this.markers.length-size; j++){
+             this.markers[j].setMap(null)
+           }
         })
         .catch((err) => {
           console.log(err);
         });
       }
+    },
+    onChangeDetail(placeIdx) {
+      console.log('detail로 가기')
+      this.$router.push({
+        name: "PlaceDetail",
+        params: { placeIdx: placeIdx, level: this.level },
+      });
     }
   },
 };
