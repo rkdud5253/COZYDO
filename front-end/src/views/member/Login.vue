@@ -42,7 +42,7 @@
         <!-- style="height:50px; object-fit:contain;background-size: cover;" -->
         <!-- <v-img style="" src="../../../public/img/final_naver_login.png"></v-img> -->
   
-   <div id="kakao-login">
+   <!-- <div id="kakao-login">
 
         <button @click="kakaoLogin">
             <svg
@@ -72,7 +72,7 @@
             </svg>
 
         </button>
-    </div>
+    </div> -->
     <!-- <v-btn
       style="width: 100%; margin-top: 20px; padding:25px 0;"
       color="#FFE812"
@@ -112,7 +112,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+// import axios from "axios";
 export default {
     data() {
         return {
@@ -138,48 +138,48 @@ export default {
 //     password: "",
 //   }),
   methods: {
-    kakaoLogin() {
-                // console.log(window.Kakao);
-                window.Kakao.Auth.login({
-                    scope : 'account_email, gender',
-                    success: this.GetMe,
-                });
-            },
-            GetMe(authObj){
-                // console.log(authObj);
-                window.Kakao.API.request({
-                    url:'/v2/user/me',
-                    success : res => {
-                        const kakao_account = res.kakao_account;
-                        const userInfo = {
-                            nickname : kakao_account.profile.nickname,
-                            email : kakao_account.email,
-                            password : '',
-                            account_type : 2,
-                        }
+    // kakaoLogin() {
+    //             // console.log(window.Kakao);
+    //             window.Kakao.Auth.login({
+    //                 scope : 'account_email, gender',
+    //                 success: this.GetMe,
+    //             });
+    //         },
+    //         GetMe(authObj){
+    //             // console.log(authObj);
+    //             window.Kakao.API.request({
+    //                 url:'/v2/user/me',
+    //                 success : res => {
+    //                     const kakao_account = res.kakao_account;
+    //                     const userInfo = {
+    //                         nickname : kakao_account.profile.nickname,
+    //                         email : kakao_account.email,
+    //                         password : '',
+    //                         account_type : 2,
+    //                     }
 
-                         axios.post(`http://localhost:8080/account/kakao`,{
-                             email : userInfo.email,
-                             nickname : userInfo.nickname
-                         })
-                         .then(res => {
-                            console.log(res);
-                            console.log("데이터베이스에 회원 정보가 있음!");
-                         })
-                         .catch(err => {
-                             console.log(err);
-                            console.log("데이터베이스에 회원 정보가 없음!");
-                         })
-                        console.log(userInfo);
-                        alert("로그인 성공!");
-                        this.$bvModal.hide("bv-modal-example");
-                    },
-                    fail : error => {
-                        this.$router.push("/errorPage");
-                        console.log(error);
-                    }
-                })
-            },
+    //                      axios.post(`http://localhost:8080/account/kakao`,{
+    //                          email : userInfo.email,
+    //                          nickname : userInfo.nickname
+    //                      })
+    //                      .then(res => {
+    //                         console.log(res);
+    //                         console.log("데이터베이스에 회원 정보가 있음!");
+    //                      })
+    //                      .catch(err => {
+    //                          console.log(err);
+    //                         console.log("데이터베이스에 회원 정보가 없음!");
+    //                      })
+    //                     console.log(userInfo);
+    //                     alert("로그인 성공!");
+    //                     this.$bvModal.hide("bv-modal-example");
+    //                 },
+    //                 fail : error => {
+    //                     this.$router.push("/errorPage");
+    //                     console.log(error);
+    //                 }
+    //             })
+    //         },
     // onSubmit() {
     //   console.log(this.uid);
     //   console.log(this.password);
