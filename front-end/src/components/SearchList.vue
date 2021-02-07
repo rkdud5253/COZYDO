@@ -134,7 +134,7 @@ export default {
       if(value=='mapcenter'){
         this.items = [],
         axios
-        .get("http://i4a201.p.ssafy.io:8080/map/list", {
+        .get("https://i4a201.p.ssafy.io:8080/map/list", {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
@@ -155,7 +155,7 @@ export default {
       else if(value=='mylocation'){
         this.items = [],
         axios
-        .get("http://i4a201.p.ssafy.io:8080/map/list", {
+        .get("https://i4a201.p.ssafy.io:8080/map/list", {
           params: {
             keyword: this.keyword,
             lat: this.lat,
