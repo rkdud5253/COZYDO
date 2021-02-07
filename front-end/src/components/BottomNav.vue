@@ -8,15 +8,14 @@
       grow
       app
       height="50px"
-      color="#fc355d"
-      background-color="#F5F5F5"
+      background-color="white"
     >
       <v-btn
         class="botton"
         @click="goInformaion"
       >
         <span><h4>Infomation</h4></span>
-        <v-icon>mdi-comment-text-outline</v-icon>
+        <v-icon >mdi-comment-text-outline</v-icon>
       </v-btn>
 
       <div class="botton mx-4">
@@ -40,7 +39,7 @@
         class="botton"
         @click="goMyPage"
       >
-        <span><h4>My Page</h4></span>
+        <span><h4>User</h4></span>
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -70,5 +69,8 @@ export default {
 <style scoped>
   .botton {
     height: 50px !important;
+  }
+  .theme--light.v-btn.v-btn--has-bg {
+    background-color: white;
   }
 </style>

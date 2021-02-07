@@ -166,7 +166,7 @@ export default {
     // 내 현재 위치 백이랑 통신
     myLocation() {
       axios
-        .get("http://i4a201.p.ssafy.io:8080/crawling/location", {
+        .get("https://i4a201.p.ssafy.io:8080/crawling/location", {
           params: {
             lat: this.currentLat,
             lon: this.currentLon,
