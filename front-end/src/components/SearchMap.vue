@@ -136,7 +136,7 @@ export default {
     onChangeMap(value){
         
       if(value=='mapcenter'){
-          axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
+          axios.get('https://i4a201.p.ssafy.io:8080/map/list', {
           params: {
             keyword: this.keyword,
             lat: this.centerLat,
@@ -160,7 +160,7 @@ export default {
         });
       }
       else if(value=='mylocation'){
-         axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
+         axios.get('https://i4a201.p.ssafy.io:8080/map/list', {
           params: {
             keyword: this.keyword,
             lat: this.lat,
