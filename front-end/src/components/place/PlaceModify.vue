@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+   <v-main><!--
     <v-container style="margin-top: 30px">
       <h2 style="font-weight: bold; text-align: center; margin-bottom: 10px">
         수정 제안
@@ -42,16 +42,16 @@
           >작성 완료
         </v-btn>
       </div></v-container
-    ></v-main
-  >
+    >--></v-main
+  > 
 </template>
 <script>
-export default {
-  data: () => ({
-    rating: 0,
-    message1: "10:00 - 21:00",
-    rules: [(v) => v.length <= 300 || "Max 300 characters"],
-    toggle_exclusive: 1,
-  }),
-};
+// export default {
+//   data: () => ({
+//     rating: 0,
+//     message1: "10:00 - 21:00",
+//     rules: [(v) => v.length <= 300 || "Max 300 characters"],
+//     toggle_exclusive: 1,
+//   }),
+// };
 </script>
