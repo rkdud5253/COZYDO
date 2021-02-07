@@ -483,7 +483,7 @@ export default {
 
   created: function() {
     axios
-      .get("http://i4a201.p.ssafy.io:8080/map/detail", {
+      .get("https://i4a201.p.ssafy.io:8080/map/detail", {
         //get방식, url 확인
         params: {
           // 넘겨줄 파라미터
@@ -510,7 +510,7 @@ export default {
     },
     reviewSubmit() {
       console.log(this.content + this.rating);
-      axios.post("http://i4a201.p.ssafy.io:8080/review/save", {
+      axios.post("https://i4a201.p.ssafy.io:8080/review/save", {
         content: this.content,
         placeIdx: this.placeIdx,
         reviewScore: this.rating,
