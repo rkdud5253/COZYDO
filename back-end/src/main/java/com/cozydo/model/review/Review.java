@@ -35,6 +35,7 @@ public class Review {
 	@Column(name = "review_idx")
 	private long reviewIdx;
 	
+	
 	@Column(name = "place_idx")
 	private int placeIdx;
 

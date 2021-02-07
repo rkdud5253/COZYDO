@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cozydo.dao.ClinicDao;
+import com.cozydo.dao.CoronaLevelDao;
+import com.cozydo.dao.PlaceDao;
+import com.cozydo.mapper.PlaceMapper;
+
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.place.Place;
 import com.cozydo.model.place.PlaceDto;
@@ -28,7 +33,7 @@ public class MapController {
 
 	@Autowired
 	PlaceService service;
-	
+
 //	@GetMapping("/map/list")
 //
 //	@ApiOperation(httpMethod = "GET", 
@@ -55,7 +60,6 @@ public class MapController {
 
 		response = service.findByLatAndLon(keyword, level, lat, lon);
 
-
 		return response;
 	}
 
@@ -64,7 +68,6 @@ public class MapController {
 
 	public PlaceDto getPlace(@RequestParam(required = true) final String level,
 			@RequestParam(required = true) final int placeIdx) {
-
 
 		PlaceDto response = service.findByIdx(level, placeIdx);
 

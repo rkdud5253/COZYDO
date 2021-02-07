@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cozydo.model.crawling.Coronalevel;
 
-public interface CronaLevelDao extends JpaRepository<Coronalevel, String> {
+public interface CoronaLevelDao extends JpaRepository<Coronalevel, String> {
 	Coronalevel getCoronalevelByCity(String city);
 }
