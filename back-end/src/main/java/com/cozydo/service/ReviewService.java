@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cozydo.dao.ReviewDao;
-import com.cozydo.model.place.Review;
+import com.cozydo.model.review.Review;
 
 @Service
 public class ReviewService {

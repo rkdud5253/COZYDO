@@ -21,6 +21,7 @@ public class PlaceServiceImpl implements PlaceService {
 
 	@Override
 	public PlaceDto findByIdx(String level, int placeIdx) {
+
 		PlaceDto placeDto = placeMapper.findByIdx(level, placeIdx);
 		placeDto.setReviewList(placeMapper.getReview(placeIdx));
 		return placeDto;

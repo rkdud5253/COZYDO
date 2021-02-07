@@ -2,6 +2,8 @@ package com.cozydo.model.place;
 
 import java.util.List;
 
+import com.cozydo.model.review.Review;
+
 public class PlaceDto {
 
 	private int placeIdx;

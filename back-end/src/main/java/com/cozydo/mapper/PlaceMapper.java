@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.cozydo.model.place.PlaceDto;
-import com.cozydo.model.place.Review;
+import com.cozydo.model.review.Review;
 
 @Mapper
 public interface PlaceMapper {

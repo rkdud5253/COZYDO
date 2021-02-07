@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cozydo.model.BasicResponse;
-import com.cozydo.model.place.Review;
+import com.cozydo.model.review.Review;
 import com.cozydo.service.ReviewService;
 
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.cozydo.model.place;
+package com.cozydo.model.review;
 
 import java.time.LocalDateTime;
 
