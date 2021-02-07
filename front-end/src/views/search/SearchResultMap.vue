@@ -103,6 +103,11 @@ export default {
     ],
     keyword : this.$route.query.keyword,
     selected: 'mapcenter',
+    lat: this.$route.query.lat,
+    lon: this.$route.query.lon,
+    centerLat: this.$route.query.centerLat,
+    centerLon: this.$route.query.centerLon,
+    level: this.$route.query.currentLevel,
     }
   },
   methods: {
@@ -110,10 +115,10 @@ export default {
         this.$router.push('/')
       },
     onInputKeyword() {
-      this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
+        this.$router.go(this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword, lon: this.lon, lat: this.lat, currentLevel: this.level, centerLat: this.centerLat, centerLon: this.centerLon}}));
     },
     onChangeList() {
-      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}})
+      this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword, lon: this.lon, lat: this.lat, currentLevel: this.level, centerLat: this.centerLat, centerLon: this.centerLon}})
     },
   },
 }

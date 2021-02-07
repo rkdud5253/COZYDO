@@ -2,11 +2,7 @@
   <v-app>
     <!-- 상단 메뉴  -->
     <div class="search">
-      <v-icon class="goback"
-        color="pink"
-        large
-        @click="goBack"
-        >
+      <v-icon class="goback" color="pink" large @click="goBack">
         mdi-chevron-left
       </v-icon>
       <v-btn color="#FF8199" class="searchButton" dark @click="onChangeMap">
@@ -14,92 +10,36 @@
         <v-spacer></v-spacer>
         지도
       </v-btn>
-      <v-text-field class="searchText"
-            v-model="keyword"
-            solo
-            label="장소검색"
-            clearable
-            @keypress.enter="onInputKeyword"
-      ></v-text-field>    
+      <v-text-field
+        class="searchText"
+        v-model="keyword"
+        solo
+        label="장소검색"
+        clearable
+        @keypress.enter="onInputKeyword"
+      ></v-text-field>
     </div>
-    
+
     <div class="checkbox">
-            <v-radio-group
-              v-model="selected"
-              row
-            >
-              <v-radio
-                label="내 위치 중심"
-                color="#88C8FF"
-                value="mylocation"
-                @click="onMyLocation"
-              ></v-radio>
-              <v-radio
-                label="지도 중심"
-                color="#88C8FF"
-                value="mapcenter"
-                @click="onMapCenter"
-                checked
-              ></v-radio>
-              
-            </v-radio-group>
+      <v-radio-group v-model="selected" row>
+        <v-radio
+          label="내 위치 중심"
+          color="#88C8FF"
+          value="mylocation"
+        ></v-radio>
+        <v-radio
+          label="지도 중심"
+          color="#88C8FF"
+          value="mapcenter"
+          checked
+        ></v-radio>
+      </v-radio-group>
     </div>
 
-          
-   <!-- 장소 리스트화 -->
-    <v-card
-      class="overflow-y-auto"
-      max-height="570"
-      outlined
-    >
-      <v-list>
-        <v-subheader>장소</v-subheader>
-        <v-divider></v-divider>
-        <v-list-item-group>
-
-          <template v-for="(item, index) in items">
-            <v-list-item v-if="index<=30" :key="item.title">
-              <template >
-                <v-list-item-content @click="onChangeDetail(item.placeIdx)">
-                  <v-list-item-title v-text="item.placeName"></v-list-item-title>
-
-                  <v-list-item-subtitle
-                    class="text--primary"
-                    v-text="item.headline"
-                  ></v-list-item-subtitle>
-                  <v-rating
-                    :value="item.star"
-                    background-color="red lighten-3"
-                    length="5"
-                    dense
-                    color="red"
-                    size="20"
-                    readonly
-                  ></v-rating>
-                  <v-list-item-subtitle v-text="item.roadAddressName"></v-list-item-subtitle>
-                  <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
-                  
-                </v-list-item-content>
-
-                <v-list-item-avatar>
-                <v-list-item-subtitle v-if="item.distance.charAt(2) == '0'">{{ item.distance.substring(3,5)+'m' }}</v-list-item-subtitle>
-                <v-list-item-subtitle v-if="item.distance.charAt(2) != '0'">{{ item.distance.substring(2,5)+'m' }}</v-list-item-subtitle>
-                </v-list-item-avatar>
-                
-              </template>
-            </v-list-item>
-
-            <v-divider
-              v-if="index <= 30-1"
-              :key="index"
-            ></v-divider>
-          </template>
-        </v-list-item-group>
-      </v-list>
-    </v-card>
-  </v-app>
-
+    <!-- 검색결과(리스트) -->
+   <SearchList :value="selected"/>
   
+  </v-app>
 </template>
 <style scoped>
 .search {
@@ -111,22 +51,22 @@
 }
 
 .goback {
-   margin-bottom : 5%;
+  margin-bottom: 5%;
 }
 
 .searchButton {
-  float : left;
+  float: left;
   width: 20%;
   height: 45px !important;
   box-sizing: border-box;
-  border: 0 auto; 
+  border: 0 auto;
   margin-left: 3%;
-  margin-right : 7%;
-  margin-top : 0.5%;
+  margin-right: 7%;
+  margin-top: 0.5%;
 }
 
 .searchText {
-  float : left;
+  float: left;
   width: 30%;
   box-sizing: border-box;
   margin-right: 3% !important;
@@ -135,90 +75,93 @@
 .checkbox {
   width: 90%;
   display: flex;
-  margin-left:5%;
+  margin-left: 5%;
   margin-top: -3%;
 }
-.theme--light.v-card {
-   border: 0.5px solid;
-}
+/* .theme--light.v-card {
+} */
 
 .v-divider {
-  border: 0.5px solid;
   border-width: thin 0 0 0;
 }
 
+.v-rating{
+  max-width: 25px;
+  padding-right: 30px;
+}
+
+.v-list--nav .v-list-item {
+    border-radius: 10px;
+    margin: 7px;
+}
+
+v-list-item-group {
+  margin-top: 10px;
+}
+/* .v-list--nav.v-list--dense {
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+} */
+
+.v-list-item.v-list-item {
+  background: white;
+}
+
+.v-item-group {
+  background: lightgray;
+}
 </style>
 
 <script>
-import axios from "axios";
+import SearchList from "@/components/SearchList.vue";
 export default {
-  name: 'SearchResultList',
-  component: {
-
-  },
-  data: function () {
-  return {
-    items: [
-    ],
-    keyword: this.$route.query.keyword,
-    selected: 'mapcenter',
-    lat: 37.5031784,
-    lon: 126.8798427,
-    centerLat: 37.4968436,
-    centerLng: 127.0328341
-    }
+  name: "SearchResultList",
+  components: {SearchList},
+  data: function() {
+    return {
+      items: [],
+      keyword: this.$route.query.keyword,
+      selected: "mapcenter",
+      lat: this.$route.query.lat,
+      lon: this.$route.query.lon,
+      centerLat: this.$route.query.centerLat,
+      centerLon: this.$route.query.centerLon,
+      level: this.$route.query.currentLevel,
+    };
   },
   methods: {
-    goBack () {
-        this.$router.push('/')
-      },
+    goBack() {
+      this.$router.push("/");
+    },
     onInputKeyword() {
-      this.$router.go(this.$router.push({name: 'SearchResultList', query: {keyword: this.keyword}}));
+      this.$router.go(
+        this.$router.push({
+          name: "SearchResultList",
+          query: {
+            keyword: this.keyword,
+            lon: this.lon,
+            lat: this.lat,
+            currentLevel: this.level,
+            centerLat: this.centerLat,
+            centerLon: this.centerLon
+          },
+        })
+      );
     },
     onChangeMap() {
-      this.$router.push({name: 'SearchResultMap', query: {keyword: this.keyword}})
-    },
-    onChangeDetail(placeIdx){
-      this.$router.push({name: 'PlaceDetail', params: {placeIdx: placeIdx}});
-    },
-    onMapCenter() {
-      console.log(this.centerLat + " " + this.centerLng)
-        axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
-        params: {
+      this.$router.push({
+        name: "SearchResultMap",
+        query: {
           keyword: this.keyword,
-            lat: this.centerLat,
-            lon: this.centerLng
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        this.items = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    },
-    onMyLocation() {
-      console.log(this.lat + " " + this.lon)
-        axios.get('http://i4a201.p.ssafy.io:8080/map/list', {
-        params: {
-          keyword: this.keyword,
-            lat: this.lat,
-            lon: this.lon
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        this.items = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
+          lon: this.lon,
+          lat: this.lat,
+          currentLevel: this.level,
+          centerLat: this.centerLat,
+          centerLon: this.centerLon
+        },
       });
     },
     
   },
-  created() {
-    this.onMapCenter()
-  }
-}
+};
 </script>

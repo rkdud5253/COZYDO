@@ -3,11 +3,13 @@ import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import SearchResultList from "../views/search/SearchResultList.vue";
 import SearchResultMap from "../views/search/SearchResultMap.vue";
-import PlaceDetail from "../views/place/PlaceDetail.vue";
-import PlaceModify from "../views/place/PlaceModify.vue";
-import PlaceReview from "../views/place/PlaceReview.vue";
+import PlaceDetail from "../components/place/PlaceDetail.vue";
+import PlaceModify from "../components/place/PlaceModify.vue";
+import PlaceReview from "../components/place/PlaceReview.vue";
 import Register from "../views/member/Register.vue";
 import Login from "../views/member/Login.vue";
+import Information from "../views/Information.vue";
+import MyPage from "../views/member/MyPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -50,6 +52,16 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: "/information",
+    name: "Information",
+    component: Information
+  },
+  {
+    path: "/myPage",
+    name: "MyPage",
+    component: MyPage
   },
 ];
 
