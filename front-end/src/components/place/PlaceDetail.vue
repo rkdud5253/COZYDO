@@ -2,7 +2,7 @@
   <v-main>
     <v-container>
       <!-- 3단계 집합금지일 때, modal 창 구현 -->
-      <v-dialog v-if="this.level == '3'" width="500">
+      <v-dialog v-if="items.meetProhibition" width="500">
         <v-card>
           <v-card-title style="color:pink;" class="headline grey lighten-2">
             3단계 집합 금지
@@ -454,6 +454,7 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 export default {
   data() {
     return {
+      Publishers: {},
       heartStyle: "color:grey",
       openingHours: "10:00 - 21:00",
       placeIdx: this.$route.params.placeIdx, // 검색 결과 list에서 넘어오는 장소 Idx
@@ -481,26 +482,29 @@ export default {
     };
   },
 
-  created: function() {
-    axios
-      .get("https://i4a201.p.ssafy.io:8080/map/detail", {
-        //get방식, url 확인
-        params: {
-          // 넘겨줄 파라미터
-          placeIdx: this.placeIdx,
-          level: this.level,
-        },
-      })
-      .then((res) => {
-        // 통신 성공하면
-        console.log(res);
-        this.items = res.data; // 데이터 받아온다
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  created() {
+    this.loadPublishers();
   },
   methods: {
+    loadPublishers() {
+      axios
+        .get("https://i4a201.p.ssafy.io:8080/map/detail", {
+          //get방식, url 확인
+          params: {
+            // 넘겨줄 파라미터
+            placeIdx: this.placeIdx,
+            level: this.level,
+          },
+        })
+        .then((res) => {
+          // 통신 성공하면
+          console.log(res);
+          this.items = res.data; // 데이터 받아온다
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     heartBtn() {
       if (this.heartStyle == "color:red") {
         this.heartStyle = "color:grey";
@@ -510,12 +514,21 @@ export default {
     },
     reviewSubmit() {
       console.log(this.content + this.rating);
-      axios.post("https://i4a201.p.ssafy.io:8080/review/save", {
-        content: this.content,
-        placeIdx: this.placeIdx,
-        reviewScore: this.rating,
-        userIdx: 1,
-      });
+      axios
+        .post("https://i4a201.p.ssafy.io:8080/review/save", {
+          content: this.content,
+          placeIdx: this.placeIdx,
+          reviewScore: this.rating,
+          userIdx: 1,
+        })
+        .then(() => {
+          // 리뷰 등록하면 장소상세페이지 refresh
+          console.log("안녕")
+          this.$router.go({
+            name: "PlaceDetail",
+            params: { placeIdx: this.placeIdx, level: this.level },
+          });
+        });
 
       this.reviewDialog = false;
       this.content = "";

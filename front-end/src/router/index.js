@@ -29,7 +29,7 @@ const routes = [
     component: SearchResultMap
   },
   {
-    path: "/placeDetail/:placeIdx",
+    path: "/placeDetail/:placeIdx/:level",
     name: "PlaceDetail",
     component: PlaceDetail
   },
