@@ -34,22 +34,6 @@ public class MapController {
 	@Autowired
 	PlaceService service;
 
-//	@GetMapping("/map/list")
-//
-//	@ApiOperation(httpMethod = "GET", 
-//				value = "Place 리스트 조회", 
-//				notes = "Select Place List", 
-//				response = Place.class, 
-//				responseContainer = "ArrayList")
-//	public List<Place> getPlaceList(@RequestParam(required = true) final String lat,
-//			@RequestParam(required = true) final String lon) {
-//
-//		List<Place> response = null;
-//		response = placeDao.findByPlaceLatAndPlaceLon(lat, lon);
-//
-//		return response;
-//	}
-
 	@GetMapping("/map/list")
 	@ApiOperation(httpMethod = "GET", value = "Place 리스트 조회", notes = "Select Place List", response = Place.class, responseContainer = "ArrayList")
 	public List<PlaceDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword,
@@ -67,11 +51,10 @@ public class MapController {
 	@ApiOperation(httpMethod = "GET", value = "Place 상세 조회", notes = "Select Place detail")
 
 	public PlaceDto getPlace(@RequestParam(required = true) final String level,
-			@RequestParam(required = true) final int placeIdx) {
+			@RequestParam(required = true) final int placeIdx, @RequestParam(required = true) final int userIdx) {
 
-		PlaceDto response = service.findByIdx(level, placeIdx);
+		PlaceDto response = service.findByIdx(level, placeIdx, userIdx);
 
 		return response;
 	}
-
 }
