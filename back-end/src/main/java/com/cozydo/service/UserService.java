@@ -56,11 +56,11 @@ public class UserService {
 	public Object Login(String email, String password) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		Optional<List<User>> user = userDao.findUserByEmailAndPassword(email, password);
+		Optional<User> user = userDao.findUserByEmailAndPassword(email, password);
 
 		if (user.isPresent()) {
 			result.status = true;
-			result.data = "success";
+			result.data = user.get().getNickname();
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			result.status = false;
@@ -81,15 +81,15 @@ public class UserService {
 			response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
 			return response;
 		}
-		Optional<List<User>> user = userDao.findUserByEmailAndPassword(request.getEmail(), request.getPassword());
+		Optional<User> user = userDao.findUserByEmailAndPassword(request.getEmail(), request.getPassword());
 		if (user.isPresent()) {
-//			user.ifPresent(UpdateUser -> {
-//				UpdateUser.setEmail(request.getEmail());
-//				UpdateUser.setPassword(request.getPassword());
-//				UpdateUser.setName(request.getName());
-//				UpdateUser.setNickname(request.getNickname());
-//				User newUser = userDao.save(UpdateUser);
-//			});
+			user.ifPresent(UpdateUser -> {
+				UpdateUser.setEmail(request.getEmail());
+				UpdateUser.setPassword(request.getPassword());
+				UpdateUser.setName(request.getName());
+				UpdateUser.setNickname(request.getNickname());
+				User newUser = userDao.save(UpdateUser);
+			});
 			result.status = true;
 			result.data = "success";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -104,10 +104,10 @@ public class UserService {
 	public Object Delete(String email, String password) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		Optional<List<User>> user = userDao.findUserByEmailAndPassword(email, password);
+		Optional<User> user = userDao.findUserByEmailAndPassword(email, password);
 
 		if (user.isPresent()) {
-//			userDao.deleteById((long) user.get().getUserIdx());
+			userDao.deleteById((long) user.get().getUserIdx());
 			result.status = true;
 			result.data = "success";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -126,12 +126,13 @@ public class UserService {
 		if (user.isPresent()) {
 			String imsipw = emailUtil.GetRandomPW();
 
-			user.ifPresent(UpdateUser -> {// 비번 임시비번으로 변경
+			user.ifPresent(UpdateUser -> {//비번 임시비번으로 변경
 				UpdateUser.setPassword(imsipw);
 				User newUser = userDao.save(UpdateUser);
 			});
-			emailUtil.sendEmail("xoghks11397@naver.com", "Cozydo홈페이지에서 " + name + "님께 보낸 임시비밀번호 입니다.", imsipw);
-
+			emailUtil.sendEmail("xoghks11397@naver.com", "Cozydo홈페이지에서 " + name + "님께 보낸 임시비밀번호 입니다.",
+					imsipw);
+			
 			result.status = true;
 			result.data = "success";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
