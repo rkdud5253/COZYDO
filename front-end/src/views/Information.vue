@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CoronaInformation from "@/components/CoronaInformation.vue";
+import CoronaInformation from "@/components/corona/CoronaInformation.vue";
 export default {
   name: "Information",
   components: {
