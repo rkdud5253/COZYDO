@@ -1,5 +1,7 @@
 package com.cozydo.controller;
 
+import java.net.URLDecoder;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +49,9 @@ public class UserController {
 	@ApiOperation(httpMethod = "POST", value = "email,password을 받아 로그인 성공여부 판단", notes = "insert user information")
 	public Object Login(@RequestParam(required = true) final String email,
 			@RequestParam(required = true) final String password) {
-
-		return userService.Login(email, password);
+		String email2 = email.replaceAll(email, "test@test.com");
+		
+		return userService.Login(email2, password);
 	}
 
 	@PutMapping(value = "/user/update", produces = { MediaType.APPLICATION_JSON_VALUE })
