@@ -40,7 +40,6 @@ public class UserService {
 			result.data = "이메일이 중복됩니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else if (userDao.getUserBynickname(request.getNickname()) != null) { // userDao 에서 닉네임통해 찾아낸 user가 있으면 중복된 거 !
-			System.out.println(userDao.getUserBynickname(request.getNickname()));
 			result.status = false;
 			result.data = "닉네임이 중복됩니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);

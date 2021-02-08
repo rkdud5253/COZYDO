@@ -55,9 +55,4 @@ public class User {
 	@NotNull
 	@Column(name = "user_nickname")
 	private String nickname;
-	
-	
-	@Column(name = "user_arlam",insertable = false)
-	private int arlam;
-
 }

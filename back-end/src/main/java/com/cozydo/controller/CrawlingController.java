@@ -16,7 +16,7 @@ import com.cozydo.dao.CoronaLevelDao;
 import com.cozydo.mail.EmailUtil;
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.crawling.Coronalevel;
-import com.cozydo.service.CoronaLevelService;
+import com.cozydo.service.CoronaService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,8 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class CrawlingController {
 
 	@Autowired
-	CoronaLevelService CoronaLevelService;
-
+	CoronaService CoronaLevelService;
 
 	@GetMapping("/crawling/level")
 	@ApiOperation(httpMethod = "GET", value = "크롤링 후 코로나단계 db에 저장", notes = "insert coronalevel")
@@ -48,5 +47,23 @@ public class CrawlingController {
 	public Object Location(@RequestParam(required = true) final String lat,
 			@RequestParam(required = true) final String lon) throws IOException {
 		return CoronaLevelService.Location(lat, lon);
+	}
+
+	@GetMapping("/crawling/todayconfirmed")
+	@ApiOperation(httpMethod = "GET", value = "코로나 누적 수와 당일 확진자 수", notes = "파라미터x, 누적 수 + 당일 확진자 수 Object반환")
+	public Object todayconfirmed() throws IOException {
+		return CoronaLevelService.TodayConfirmed("today");
+	}
+
+	@GetMapping("/crawling/sidoconfirmed")
+	@ApiOperation(httpMethod = "GET", value = "시도별 코로나 누적 수와 당일 확진자 수", notes = "파라미터x, 시도별 누적 수 + 당일 확진자 Object반환")
+	public Object sidoconfirmed() throws IOException {
+		return CoronaLevelService.SidoConfirmed("sido");
+	}
+
+	@GetMapping("/crawling/weekconfirmed")
+	@ApiOperation(httpMethod = "GET", value = "주별 코로나 누적 수와 당일 확진자 수", notes = "파라미터x, 주별 누적 수 + 당일 확진자 수  Object반환")
+	public Object weekconfirmed() throws IOException {
+		return CoronaLevelService.WeekConfirmed("week");
 	}
 }

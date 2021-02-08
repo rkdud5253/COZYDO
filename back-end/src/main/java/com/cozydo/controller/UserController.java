@@ -3,7 +3,7 @@ package com.cozydo.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +36,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping("/user/signup")
+	@PostMapping(value = "/user/signup", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "POST", value = "email,password,name,nickname을 받아 회원 가입", notes = "insert user information")
 	public Object Signup(@Valid @RequestBody SignupRequest request, BindingResult bindingResult) {
 
@@ -51,7 +51,7 @@ public class UserController {
 		return userService.Login(email, password);
 	}
 
-	@PutMapping("/user/update")
+	@PutMapping(value = "/user/update", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "PUT", value = "회원정보를 받아 회원정보를 수정", notes = "update user information")
 	public Object Update(@Valid @RequestBody SignupRequest request, BindingResult bindingResult) {
 
