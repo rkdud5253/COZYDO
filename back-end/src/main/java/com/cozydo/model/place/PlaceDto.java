@@ -3,6 +3,7 @@ package com.cozydo.model.place;
 import java.util.List;
 
 import com.cozydo.model.review.Review;
+import com.cozydo.model.review.ReviewResponseDto;
 
 public class PlaceDto {
 
@@ -29,13 +30,13 @@ public class PlaceDto {
 	private int lessthan50;
 	private int familyOnly;
 	private int notShower;
-	private List<Review> reviewList;
+	private List<ReviewResponseDto> reviewList;
 
 	public PlaceDto(int placeIdx, String placeName, String subCategory, String gu, String dong, String addressName,
 			String roadAddressName, String placeLon, String placeLat, String tel, String distance, int notFood,
 			int seatOneApart, int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine,
 			int twopeopleOnehour, int showerOnly, int lessthan100, int lessthan50, int familyOnly, int notShower,
-			List<Review> reviewList) {
+			List<ReviewResponseDto> reviewList) {
 		super();
 		this.placeIdx = placeIdx;
 		this.placeName = placeName;
@@ -251,11 +252,11 @@ public class PlaceDto {
 		this.notShower = notShower;
 	}
 
-	public List<Review> getReviewList() {
+	public List<ReviewResponseDto> getReviewList() {
 		return reviewList;
 	}
 
-	public void setReviewList(List<Review> reviewList) {
+	public void setReviewList(List<ReviewResponseDto> reviewList) {
 		this.reviewList = reviewList;
 	}
 

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.cozydo.model.place.PlaceDto;
-import com.cozydo.model.review.Review;
+import com.cozydo.model.review.ReviewResponseDto;
 
 @Mapper
 public interface PlaceMapper {
@@ -15,6 +15,6 @@ public interface PlaceMapper {
 
 	PlaceDto findByIdx(@Param("level") String level, @Param("placeIdx") int placeIdx);
 
-	List<Review> getReview(int placeIdx);
+	List<ReviewResponseDto> getReview(int placeIdx);
 
 }

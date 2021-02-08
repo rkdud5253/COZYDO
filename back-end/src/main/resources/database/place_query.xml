@@ -4,10 +4,11 @@
 
 	<select id="findByLatAndLon" parameterType="map" resultType="com.cozydo.model.place.PlaceDto">
 		SELECT p.place_idx as placeIdx, p.place_name as placeName, p.sub_category as subCategory, p.gu, p.dong, p.address_name as addressName,
-				p.road_address_name as roadAddressName, p.place_lon as placeLon, p.place_lat as placeLat,
+				p.road_address_name as roadAddressName, p.place_lon as placeLon, p.place_lat as placeLat, IF(#{level} &gt;= g.meet_prohibition AND g.meet_prohibition != 0, 1, 0) as meetProhibition,
 				6371*acos(cos(radians(#{lat}))*cos(radians(p.place_lat))*cos(radians(p.place_lon)-radians(#{lon})) +sin(radians(#{lat}))*sin(radians(p.place_lat))) as distance
 		FROM place p
 		LEFT JOIN category c on p.sub_category = c.sub_category 
+		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_name LIKE CONCAT('%',#{keyword},'%') OR c.sub_category_name LIKE CONCAT('%',#{keyword},'%')
 		HAVING distance &lt;= 0.5
 		ORDER BY distance
@@ -30,9 +31,10 @@
 		
 	</select>
 	
-	<select id="getReview" parameterType="map" resultType="com.cozydo.model.review.Review">
-		SELECT review_idx as reviewIdx, place_idx as placeIdx, user_idx as userIdx, review_score as reviewScore, content, write_time as writeTime
-		FROM review
+	<select id="getReview" parameterType="map" resultType="com.cozydo.model.review.ReviewResponseDto">
+		SELECT r.review_idx as reviewIdx, r.place_idx as placeIdx, r.user_idx as userIdx, u.user_nickname as userNickname, r.review_score as reviewScore, r.content, r.write_time as writeTime
+		FROM review r
+		LEFT JOIN user u on u.user_idx = r.user_idx
 		WHERE place_idx = #{placeIdx}
 	</select>
 </mapper>
