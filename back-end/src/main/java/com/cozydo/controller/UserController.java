@@ -48,10 +48,8 @@ public class UserController {
 	@PostMapping("/user/login")
 	@ApiOperation(httpMethod = "POST", value = "email,password을 받아 로그인 성공여부 판단", notes = "insert user information")
 	public Object Login(@RequestParam(required = true) final String email,
-			@RequestParam(required = true) final String password) {
-		String email2 = email.replaceAll(email, "test@test.com");
-		
-		return userService.Login(email2, password);
+			@RequestParam(required = true) final String password) {	
+		return userService.Login(email, password);
 	}
 
 	@PutMapping(value = "/user/update", produces = { MediaType.APPLICATION_JSON_VALUE })
