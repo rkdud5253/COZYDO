@@ -2,7 +2,7 @@
   <v-app>
 
     <v-card
-    class="mx-3 my-3"
+    class="mx-5 mt-4 mb-2"
     outlined
     >
       <v-list-item three-line>
@@ -36,14 +36,53 @@
     <MyPageReview />
 
     <v-btn
-      class="user_delete_btn"
+      class="user_delete_btn mt-8"
       color="#fc355d"
       dark
       small
       depressed
+      @click.stop="dialog = true"
     >
       회원탈퇴
     </v-btn>
+
+    <!-- 탈퇴 모달창 -->
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title></v-card-title>
+
+        <v-card-text class="user_delete_modal_text">
+          <h4>정말 탈퇴하시겠습니까?</h4>
+        </v-card-text>
+
+        <v-card-actions class="user_delete_modal_btn">
+          <v-btn
+            class="mb-3"
+            color="grey lighten-1"
+            dark
+            depressed
+            small
+            @click="dialog = false"
+          >
+            취소하기
+          </v-btn>
+
+          <v-btn
+            class="mb-3"
+            color="#fc355d"
+            dark
+            depressed
+            small
+            @click="dialog = false"
+          >
+            탈퇴하기
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </v-app>
 </template>
@@ -57,12 +96,23 @@ export default {
     MyPagePlace,
     MyPageReview,
   },
+  data () {
+      return {
+        dialog: false,
+      }
+  },
 };
 </script>
 
-<style>
+<style scoped>
   .user_delete_btn {
     max-width: 70px;
     align-self: center;
+  }
+  .user_delete_modal_text {
+    text-align: center;
+  }
+  .user_delete_modal_btn {
+    justify-content: center;
   }
 </style>

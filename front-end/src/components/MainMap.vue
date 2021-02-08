@@ -275,6 +275,11 @@ export default {
       // console.log(event.target.innerText)
       this.keyword = event.target.innerText;
       // console.log(this.keyword)
+
+      // 1, 1.5, 2, 2.5, 3 -> 1, 2, 3, 4, 5
+      // console.log(this.currentLevel)
+      // console.log(parseFloat(this.currentLevel)*2-1)
+
       if (this.keyword != "") {
         this.$router.push({
           name: "SearchResultList",
@@ -284,7 +289,7 @@ export default {
             lat: this.currentLat,
             centerLon: this.centerLon,
             centerLat: this.centerLat,
-            currentLevel: this.currentLevel,
+            currentLevel: parseFloat(this.currentLevel)*2-1,
           },
         });
       }
@@ -303,7 +308,7 @@ export default {
           lat: this.currentLat,
           centerLon: this.centerLon,
           centerLat: this.centerLat,
-          currentLevel: this.currentLevel,
+          currentLevel: parseFloat(this.currentLevel)*2-1,
         },
       });
     },

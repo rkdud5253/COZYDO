@@ -31,7 +31,7 @@ public class UserService {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			result.status = false;
 			result.data = "조건에 맞게 작성하여 주세요.";
-			response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 
@@ -65,7 +65,7 @@ public class UserService {
 		} else {
 			result.status = false;
 			result.data = "false";
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
@@ -78,7 +78,7 @@ public class UserService {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			result.status = false;
 			result.data = "조건에 맞게 작성하여 주세요.";
-			response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 		Optional<User> user = userDao.findUserByEmailAndPassword(request.getEmail(), request.getPassword());
@@ -96,7 +96,7 @@ public class UserService {
 		} else {
 			result.status = false;
 			result.data = "false";
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
@@ -114,7 +114,7 @@ public class UserService {
 		} else {
 			result.status = false;
 			result.data = "false";
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
@@ -139,7 +139,7 @@ public class UserService {
 		} else {
 			result.status = false;
 			result.data = "false";
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
