@@ -6,30 +6,31 @@
       v-model="valid"
       lazy-validation
     >
-    <v-text-field
-      v-model="member.id"
-      :rules="nameRules"
-      label="아이디"
-      required
-      type="text"
-      prepend-icon="mdi-account"
-    ></v-text-field>
-    <v-text-field
-      :rules="passwordRules"
-      required
-      v-model="member.password"
-      label="비밀번호"
-      type="password"
-      prepend-icon="mdi-lock"
-    ></v-text-field>
-    <v-btn
-      style="width: 100%; margin-top: 45px; padding:25px 0;"
-      color="#F85F6A"
-      dark
-      @click="loginRequest"
-      >로그인</v-btn
-    >
-<!--     
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="이메일"
+        required
+        type="text"
+        prepend-icon="mdi-account"
+      ></v-text-field>
+      <v-text-field
+        :rules="passwordRules"
+        required
+        v-model="password"
+        label="비밀번호"
+        type="password"
+        prepend-icon="mdi-lock"
+        @keypress.enter="loginRequest"
+      ></v-text-field>
+      <v-btn
+        style="width: 100%; margin-top: 45px; padding:25px 0;"
+        color="#F85F6A"
+        dark
+        @click="loginRequest"
+        >로그인</v-btn
+      >
+      <!--     
 <v-btn
       style="width: 100%; margin-top: 20px; padding:25px 0;"
       color="#2DB400"
@@ -37,12 +38,12 @@
       @click="naverLogin"
       >네이버로 로그인</v-btn
     > -->
-    <!-- <v-btn @click="redirect_to_login"><img src="../../../public/img/final-naver-login.png">
+      <!-- <v-btn @click="redirect_to_login"><img src="../../../public/img/final-naver-login.png">
         </v-btn> -->
-        <!-- style="height:50px; object-fit:contain;background-size: cover;" -->
-        <!-- <v-img style="" src="../../../public/img/final_naver_login.png"></v-img> -->
-  
-   <!-- <div id="kakao-login">
+      <!-- style="height:50px; object-fit:contain;background-size: cover;" -->
+      <!-- <v-img style="" src="../../../public/img/final_naver_login.png"></v-img> -->
+
+      <!-- <div id="kakao-login">
 
         <button @click="kakaoLogin">
             <svg
@@ -73,28 +74,21 @@
 
         </button>
     </div> -->
-    <!-- <v-btn
+      <!-- <v-btn
       style="width: 100%; margin-top: 20px; padding:25px 0;"
       color="#FFE812"
       dark
       @click="kakaoLogin"
       >카카오계정으로 로그인</v-btn
     > -->
-    <div style="width:100%; margin-top:30px;">
-        <v-btn style="width:49%;"
-      text
-      color="grey"
-    >
-      비밀번호 찾기
-    </v-btn>
-    <v-btn 
-    style="width:49%;"
-      text
-      color="#F85F6A"
-    >
-      회원가입
-    </v-btn>
-    </div>
+      <div style="width:100%; margin-top:30px;">
+        <v-btn style="width:49%;" text color="grey">
+          비밀번호 찾기
+        </v-btn>
+        <v-btn style="width:49%;" text color="#F85F6A">
+          회원가입
+        </v-btn>
+      </div>
       <!-- <v-text-field
       v-model="member.id"
       :counter="12"
@@ -112,80 +106,168 @@
   </div>
 </template>
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
-    data() {
-        return {
-            valid: true,
+  name: "Login",
+  data() {
+    return {
+      valid: true,
       name: "",
-      nameRules: [
-        (v) => !!v || "Name is required",
-        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      // nameRules: [
+      //   (v) => !!v || "Name is required",
+      //   (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      // ],
+      emailRules: [
+        (v) => !!v || "이메일을 입력해주세요",
+        (v) => /.+@.+\..+/.test(v) || "유효한 이메일이 아닙니다",
       ],
-      passwordRules: [(v) => !!v || "Password is required"],
-      member: {
-        id: "",
-        password: "",
-        name: "",
-        nickname: "",
-        role: "USER",
-      },
-        }
-    },
+      passwordRules: [
+        (v) => !!v || "비밀번호를 입력해주세요",
+        // (v) => (v && v.length >= 8 && v.length <= 20) || "8~20자리 입력",
+        (v) =>
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,20}$/.test(v) ||
+          "문자, 숫자 조합 8~20자리 입력",
+      ],
+      // passwordRules: [(v) => !!v || "Password is required"],
+      // user: {
+      email: "",
+      password: "",
+      // name: "",
+      // nickname: "",
+      // role: "USER",
+      // },
+      message: "",
+    };
+  },
 
-//   data: () => ({
-//     uid: "",
-//     password: "",
-//   }),
+  //   data: () => ({
+  //     uid: "",
+  //     password: "",
+  //   }),
+  // computed: {
+  //             nextRoute() {
+  //               console.log("하이");
+  //               // console.log(this.$route.params.nextRoute)
+  //                 return this.$route.params.nextRoute
+  //                     ? this.$route.params.nextRoute
+  //                     : "";
+  //             }
+  //         },
   methods: {
-    // kakaoLogin() {
-    //             // console.log(window.Kakao);
-    //             window.Kakao.Auth.login({
-    //                 scope : 'account_email, gender',
-    //                 success: this.GetMe,
-    //             });
-    //         },
-    //         GetMe(authObj){
-    //             // console.log(authObj);
-    //             window.Kakao.API.request({
-    //                 url:'/v2/user/me',
-    //                 success : res => {
-    //                     const kakao_account = res.kakao_account;
-    //                     const userInfo = {
-    //                         nickname : kakao_account.profile.nickname,
-    //                         email : kakao_account.email,
-    //                         password : '',
-    //                         account_type : 2,
-    //                     }
+    loginRequest: function() {
+      console.log(this.email);
+      // console.log(typeOf(this.email))
+      // LOGIN 액션 실행 서버와 통신(axios)을 해 토큰값을 얻어야 하므로 Actions를 호출.
+      // this
+      //     .$store
+      //     .dispatch("LOGIN", {email = this.email, password = this.password})
+      //     .then(() => (this.$store.state.loginChk == true)?this.$router.replace(`/${this.nextRoute}`):
+      //       this.$router.replace(`/`)
+      //     )
+      //     .catch(({message}) => (this.msg = message));
+      axios({
+        method: "post",
+        url: "https://i4a201.p.ssafy.io:8080/user/login",
 
-    //                      axios.post(`http://localhost:8080/account/kakao`,{
-    //                          email : userInfo.email,
-    //                          nickname : userInfo.nickname
-    //                      })
-    //                      .then(res => {
-    //                         console.log(res);
-    //                         console.log("데이터베이스에 회원 정보가 있음!");
-    //                      })
-    //                      .catch(err => {
-    //                          console.log(err);
-    //                         console.log("데이터베이스에 회원 정보가 없음!");
-    //                      })
-    //                     console.log(userInfo);
-    //                     alert("로그인 성공!");
-    //                     this.$bvModal.hide("bv-modal-example");
-    //                 },
-    //                 fail : error => {
-    //                     this.$router.push("/errorPage");
-    //                     console.log(error);
-    //                 }
-    //             })
-    //         },
-    // onSubmit() {
-    //   console.log(this.uid);
-    //   console.log(this.password);
-    // },
-    validate() {
-      this.$refs.form.validate();
+        params: {
+          email: this.email,
+          password: this.password,
+        },
+      })
+        .then((res) => {
+          // console.log(res);
+          // console.log(res.data.status);
+          // console.log("로그인 완료");
+          // this.$router.replace(`/`);
+          if (res.data.status == true) {
+            console.log("로그인 완료");
+            this.$router.replace(`/`);
+          } else if (res.data.status == false) {
+            // this.email = "";
+            // this.password = "";
+            alert("로그인 실패");
+            console.log("로그인 실패");
+            // this.$router.go(`/login`);
+           history.go(0);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // axios.post("https://i4a201.p.ssafy.io:8080/user/login", {
+      //         'email': this.email,
+      //         password: this.password,
+      //         // reviewScore: this.rating,
+      //         // userIdx: 1,
+      //       }).then(()=>{
+      //         console.log("로그인 완료");
+      //         this.$router.replace(`/`);
+      //       }).catch((err) => {
+      //           console.log(err);
+      //         });
+
+      // },
+
+      //     redirect(){
+      //       const { search } = window.location
+      // const tokens = search.replace(/^\?/, "").split("&")
+      // const { returnPath } = tokens.reduce((qs, tkn) => {
+      //   const pair = tkn.split("=")
+      //   qs[pair[0]] = decodeURIComponent(pair[1])
+      //   return qs
+      // }, {})
+
+      // // 리다이렉트 처리
+      // this.$router.push(returnPath)
+      //     },
+      // kakaoLogin() {
+      //             // console.log(window.Kakao);
+      //             window.Kakao.Auth.login({
+      //                 scope : 'account_email, gender',
+      //                 success: this.GetMe,
+      //             });
+      //         },
+      //         GetMe(authObj){
+      //             // console.log(authObj);
+      //             window.Kakao.API.request({
+      //                 url:'/v2/user/me',
+      //                 success : res => {
+      //                     const kakao_account = res.kakao_account;
+      //                     const userInfo = {
+      //                         nickname : kakao_account.profile.nickname,
+      //                         email : kakao_account.email,
+      //                         password : '',
+      //                         account_type : 2,
+      //                     }
+
+      //                      axios.post(`http://localhost:8080/account/kakao`,{
+      //                          email : userInfo.email,
+      //                          nickname : userInfo.nickname
+      //                      })
+      //                      .then(res => {
+      //                         console.log(res);
+      //                         console.log("데이터베이스에 회원 정보가 있음!");
+      //                      })
+      //                      .catch(err => {
+      //                          console.log(err);
+      //                         console.log("데이터베이스에 회원 정보가 없음!");
+      //                      })
+      //                     console.log(userInfo);
+      //                     alert("로그인 성공!");
+      //                     this.$bvModal.hide("bv-modal-example");
+      //                 },
+      //                 fail : error => {
+      //                     this.$router.push("/errorPage");
+      //                     console.log(error);
+      //                 }
+      //             })
+      //         },
+      // onSubmit() {
+      //   console.log(this.uid);
+      //   console.log(this.password);
+      // },
+      // validate() {
+      //   this.$refs.form.validate();
     },
   },
 };
