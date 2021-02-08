@@ -2,7 +2,6 @@ package com.cozydo.model.place;
 
 import java.util.List;
 
-import com.cozydo.model.review.Review;
 import com.cozydo.model.review.ReviewResponseDto;
 
 public class PlaceDto {
@@ -18,6 +17,7 @@ public class PlaceDto {
 	private String placeLat; // 위도
 	private String tel;
 	private String distance;
+	private int isLike;
 	private int notFood;
 	private int seatOneApart;
 	private int meetProhibition;
@@ -33,8 +33,8 @@ public class PlaceDto {
 	private List<ReviewResponseDto> reviewList;
 
 	public PlaceDto(int placeIdx, String placeName, String subCategory, String gu, String dong, String addressName,
-			String roadAddressName, String placeLon, String placeLat, String tel, String distance, int notFood,
-			int seatOneApart, int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine,
+			String roadAddressName, String placeLon, String placeLat, String tel, String distance, int isLike,
+			int notFood, int seatOneApart, int meetProhibition, int deadlineNine, int qrCode, int nomorepeopleNine,
 			int twopeopleOnehour, int showerOnly, int lessthan100, int lessthan50, int familyOnly, int notShower,
 			List<ReviewResponseDto> reviewList) {
 		super();
@@ -49,6 +49,7 @@ public class PlaceDto {
 		this.placeLat = placeLat;
 		this.tel = tel;
 		this.distance = distance;
+		this.isLike = isLike;
 		this.notFood = notFood;
 		this.seatOneApart = seatOneApart;
 		this.meetProhibition = meetProhibition;
@@ -154,6 +155,14 @@ public class PlaceDto {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
+	}
+
+	public int getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(int isLike) {
+		this.isLike = isLike;
 	}
 
 	public int getNotFood() {

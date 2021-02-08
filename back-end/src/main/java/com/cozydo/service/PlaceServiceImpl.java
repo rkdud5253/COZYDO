@@ -20,9 +20,9 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public PlaceDto findByIdx(String level, int placeIdx) {
-
+	public PlaceDto findByIdx(String level, int placeIdx, int userIdx) {
 		PlaceDto placeDto = placeMapper.findByIdx(level, placeIdx);
+		placeDto.setIsLike(placeMapper.getLikes(userIdx, placeIdx));
 		placeDto.setReviewList(placeMapper.getReview(placeIdx));
 		return placeDto;
 	}

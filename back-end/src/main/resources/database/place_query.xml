@@ -31,6 +31,12 @@
 		
 	</select>
 	
+	<select id="getLikes" parameterType="map" resultType="int">
+		SELECT if(count(*) = 1, 1, 0)
+		FROM likes 
+		WHERE user_idx = #{userIdx} AND place_idx = #{placeIdx};
+	</select>
+	
 	<select id="getReview" parameterType="map" resultType="com.cozydo.model.review.ReviewResponseDto">
 		SELECT r.review_idx as reviewIdx, r.place_idx as placeIdx, r.user_idx as userIdx, u.user_nickname as userNickname, r.review_score as reviewScore, r.content, r.write_time as writeTime
 		FROM review r

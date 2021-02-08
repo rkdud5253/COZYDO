@@ -8,6 +8,6 @@ public interface PlaceService {
 
 	List<PlaceDto> findByLatAndLon(String keyword, String level, String lat, String lon);
 
-	PlaceDto findByIdx(String level, int placeIdx);
+	PlaceDto findByIdx(String level, int placeIdx, int userIdx);
 
 }

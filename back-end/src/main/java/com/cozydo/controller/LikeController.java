@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cozydo.model.BasicResponse;
+import com.cozydo.model.likes.Likes;
 import com.cozydo.model.review.Review;
+import com.cozydo.service.LikesService;
 import com.cozydo.service.ReviewService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,35 +29,34 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = { "*" })
 @RestController()
-public class ReviewController {
+public class LikeController {
 
 	@Autowired
-	ReviewService service;
+	LikesService service;
 
-	@PostMapping(value = "/review/save", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(value = "/likes/save", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "POST", 
-				value = "Review 작성 조회", 
-				notes = "Save review", 
-				response = Review.class, 
+				value = "likes 추가", 
+				notes = "Save likes", 
+				response = Likes.class, 
 				responseContainer = "ArrayList")
-    public ResponseEntity<Long> save(@RequestBody Review review) {
+    public ResponseEntity<Long> save(@RequestBody Likes likes) {
  
-        Long savedReviewSeq = service.save(review);
+        Long savedLikesSeq = service.save(likes);
  
-        return new ResponseEntity<Long>(savedReviewSeq, HttpStatus.CREATED);
+        return new ResponseEntity<Long>(savedLikesSeq, HttpStatus.CREATED);
     }
 	
-	@DeleteMapping(value = "/review/delete/{reviewIdx}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping(value = "/likes/delete", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "DELETE", 
-			value = "Review 삭제", 
-			notes = "Delete review", 
-			response = Long.class, 
-			responseContainer = "ArrayList")
+			value = "likes 삭제", 
+			notes = "Delete likes", 
+			response = Long.class)
 	/** 게시글 - 삭제 */
-    public ResponseEntity<Long> delete(@PathVariable("reviewIdx") Long reviewIdx) {
+    public ResponseEntity<Long> delete(@RequestParam("userIdx") int userIdx, @RequestParam("placeIdx") int placeIdx) {
  
-    	service.delete(reviewIdx);
+    	service.delete(userIdx, placeIdx);
  
-        return new ResponseEntity<Long>(reviewIdx, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Long>((long) placeIdx, HttpStatus.NO_CONTENT);
     }
 }
