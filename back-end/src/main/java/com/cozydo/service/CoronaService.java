@@ -126,6 +126,7 @@ public class CoronaService {
 			result.status = true;
 			result.data = "success";
 			result.object = corona;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
@@ -170,6 +171,7 @@ public class CoronaService {
 			result.status = true;
 			result.data = "success";
 			result.object = info;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
@@ -186,7 +188,7 @@ public class CoronaService {
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
-			int size = (list.size() % 2 == 0) ? 7 : 8;
+			int size = 7;
 			String gubun = "";
 			String date = "";
 			int DeathCnt = 0;
