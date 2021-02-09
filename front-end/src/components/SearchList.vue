@@ -47,11 +47,8 @@
 
 
                 <v-list-item-avatar>
-                  <v-list-item-subtitle v-if="item.distance.charAt(2) == '0'">{{
-                    item.distance.substring(3, 5) + "m"
-                  }}</v-list-item-subtitle>
-                  <v-list-item-subtitle v-if="item.distance.charAt(2) != '0'">{{
-                    item.distance.substring(2, 5) + "m"
+                  <v-list-item-subtitle>
+                    {{Math.round(parseFloat(item.distance)*1000)+'m'
                   }}</v-list-item-subtitle>
                 </v-list-item-avatar>
               </template>
@@ -94,6 +91,10 @@ v-list-item-group {
 
 .v-item-group {
   background: lightgray;
+}
+
+.v-list-item__avatar {
+  width: 60px !important;
 }
 </style>
 
