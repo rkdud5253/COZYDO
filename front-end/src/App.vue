@@ -14,11 +14,9 @@
       >
         <v-container >
           <v-toolbar-items>
-              <v-img id="logo" src="../public/img/cozydo_logo.png"></v-img>
+            <v-img @click="goHome" id="logo" src="../public/img/cozydo_logo.png"></v-img>
           </v-toolbar-items>
-          <v-toolbar-items style="justify-content: center">
-            <h6>일일확진자 <span style="color: #fc355d">451▲</span></h6>
-          </v-toolbar-items>
+          <CoronaTopNav />
         </v-container>
       </v-toolbar>
 
@@ -36,18 +34,25 @@
 // import HelloWorld from "./components/HelloWorld";
 import "./components/css/common.css";
 import BottomNav from "@/components/BottomNav.vue";
+import CoronaTopNav from "@/components/corona/CoronaTopNav.vue";
 
 export default {
   name: "App",
 
   components: {
     BottomNav,
+    CoronaTopNav,
   },
 
   data () {
     return {
 
       }
+  },
+  methods: {
+    goHome() {
+      this.$router.go(this.$router.push({name: 'Main'}))
+    },
   }
 };
 </script>
@@ -57,6 +62,7 @@ export default {
     max-height : 100px;
     max-width : 200px;
     margin : 5px auto;
+    margin-bottom: auto;
   }
 
   .bar {
