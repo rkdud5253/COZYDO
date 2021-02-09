@@ -72,4 +72,11 @@ public class UserController {
 			@RequestParam(required = true) final String name) {
 		return userService.FindPW(email, name);
 	}
+	
+	@GetMapping("/user/authentication")
+	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
+	public Object Authentication(@RequestParam(required = true) final String email,
+			@RequestParam(required = true) final String authkey) {
+		return userService.FindAuthkey(email, authkey);
+	}
 }
