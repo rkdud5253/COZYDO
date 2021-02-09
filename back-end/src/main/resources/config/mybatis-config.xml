@@ -10,5 +10,6 @@
 
     <mappers>
         <mapper resource="database/place_query.xml" />
+        <mapper resource="database/mypage_query.xml" />
     </mappers>
 </configuration>

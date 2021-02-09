@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cozydo.mapper.MypageMapper">
+
+	<select id="getMyReivewList" parameterType="map" resultType="com.cozydo.model.review.MyReviewResponseDto">
+		SELECT r.user_idx as userIdx, r.place_idx as placeIdx, r.content as content, p.place_name as placeName
+		FROM review r
+		LEFT JOIN place p on p.place_idx = r.place_idx
+		WHERE r.user_idx = #{userIdx}
+	</select>
+	
+	<select id="getMyLikesList" parameterType="map" resultType="com.cozydo.model.likes.MyLikesResponseDto">
+		SELECT l.user_idx as userIdx, l.place_idx as placeIdx, p.place_name as placeName
+		FROM likes l
+		LEFT JOIN place p on p.place_idx = l.place_idx
+		WHERE l.user_idx = #{userIdx}
+	</select>
+	
+</mapper>
