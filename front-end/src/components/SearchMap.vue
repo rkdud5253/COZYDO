@@ -76,13 +76,14 @@ export default {
 
 
           // 마커 커스텀 이미지
-          // var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
-          var imageSrc2 = 'https://ifh.cc/g/MrAjpC.png';
+          var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
+          var imageSrc2 = 'https://ifh.cc/g/1iFQaF.png';
           var imageSize = new kakao.maps.Size(42, 43);
           var imageOption = {offset: new kakao.maps.Point(27, 69)};
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          var markerImage = new kakao.maps.MarkerImage(imageSrc2, imageSize, imageOption);
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+          var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize, imageOption);
 
           // 마커 20개 생성
           for(var i=0; i< this.items.length; i++){
@@ -92,14 +93,23 @@ export default {
               tmpLng = Number(tmpLng);
              
               var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
-             
-              var marker = new kakao.maps.Marker({
+              var marker = null
+             if(this.items[i].meetProhibition === 0) {
+               marker = new kakao.maps.Marker({
                   map: this.map,
                   position: markerPosition,
                   title: this.items[i].placeName,
                   image: markerImage
               });
-
+             }
+             else if(this.items[i].meetProhibition === 1){
+               marker = new kakao.maps.Marker({
+                  map: this.map,
+                  position: markerPosition,
+                  title: this.items[i].placeName,
+                  image: markerImage2
+              });
+             }
               // var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
               // var content = '<div v-on:click="onChangeDetail('+this.items[i].placeIdx+')">'+this.items[i].placeName+'</div>';
               var content = '<div class="overlay_info" style="background-color:#fff; border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;">'+
