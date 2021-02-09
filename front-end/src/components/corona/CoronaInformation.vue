@@ -130,6 +130,7 @@
           </v-col>
 
         </v-row>
+
     </div>
 
   </div>
@@ -215,24 +216,24 @@ export default {
   .today_DecideCnt {
     color: #F50057;
     background-color: #FCE4EC;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 35px;
+    margin-right: 35px;
     border-radius: 6px;
     margin-top: 2px;
   }
   .today_Clearcnt {
     color: #1565C0;
     background-color: #E1F5FE;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 35px;
+    margin-right: 35px;
     border-radius: 6px;
     margin-top: 2px;
   }
   .today_DeathCnt {
     color: #424242;
     background-color: #EEEEEE;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 35px;
+    margin-right: 35px;
     border-radius: 6px;
     margin-top: 2px;
   }
