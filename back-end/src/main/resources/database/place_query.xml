@@ -10,7 +10,7 @@
 		LEFT JOIN category c on p.sub_category = c.sub_category 
 		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_name LIKE CONCAT('%',#{keyword},'%') OR c.sub_category_name LIKE CONCAT('%',#{keyword},'%')
-		HAVING distance &lt;= 0.5
+		HAVING distance &lt;= 5
 		ORDER BY distance
 		LIMIT 30
 		
@@ -28,7 +28,6 @@
 		FROM place p
 		LEFT JOIN guide_line g on p.sub_category = g.sub_category
 		WHERE place_idx = #{placeIdx}
-		
 	</select>
 	
 	<select id="getLikes" parameterType="map" resultType="int">
