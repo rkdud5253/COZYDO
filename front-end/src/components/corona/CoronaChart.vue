@@ -1,9 +1,9 @@
 <template>
-    <v-app>
-        <div class="column" style="margin:20px">
-        <bar-chart v-bind:local="local" v-bind:overflow="overflow" v-bind:datetime="datetime" v-if="loaded"></bar-chart>
-        </div>
-    </v-app>
+    
+   <div class="column" style="margin:20px;">
+        <bar-chart style="height:350px;" v-bind:local="local" v-bind:overflow="overflow" v-bind:datetime="datetime" v-if="loaded"></bar-chart>
+   </div>     
+   
 </template>
 
 <script>
