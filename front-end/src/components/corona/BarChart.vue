@@ -68,6 +68,7 @@
               ticks: {
                 beginAtZero: true,
                 display: true,
+                stepSize: 100
               },
               gridLines: {
                 display: true
