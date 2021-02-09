@@ -16,6 +16,8 @@ public class PlaceServiceImpl implements PlaceService {
 
 	@Override
 	public List<PlaceDto> findByLatAndLon(String keyword, String level, String lat, String lon) {
+		if(keyword.equals("체육시설"))
+			keyword = "스포츠";
 		return placeMapper.findByLatAndLon(keyword, level, lat, lon);
 	}
 
