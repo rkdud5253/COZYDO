@@ -23,7 +23,7 @@ import com.cozydo.model.user.SignupRequest;
 import com.cozydo.model.user.User;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
 	public Object Login(String email, String password) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		
+
 		Optional<User> user = userDao.getUserByEmail(email);
 		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
 			if (user.get().getAuthStatus() != 1) { // 인증이 안됬다면
@@ -183,10 +183,5 @@ public class UserService implements UserDetailsService {
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
-	}
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userDao.getUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 	}
 }
