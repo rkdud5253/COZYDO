@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <CoronaInformation />
-    <CoronaChart />
+    <CoronaChart /> 
     <CoronaSidoList />
   </v-app>
 </template>
