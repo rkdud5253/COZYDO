@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
 	public Object Login(String email, String password) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-
+		
 		Optional<User> user = userDao.getUserByEmail(email);
 		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
 			if (user.get().getAuthStatus() != 1) { // 인증이 안됬다면
