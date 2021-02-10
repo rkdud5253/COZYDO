@@ -1,19 +1,22 @@
 package com.cozydo.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
@@ -24,10 +27,15 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-	private String secretKey = "webfirewood";
+	private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+
+	@Value("${cozydo.jwtSecret}")
+	private String secretKey;
+	@Value("${cozydo.jwtExpirationMs}")
+	private int ValidityInSeconds;
 
 	// 토큰 유효시간 30분
-	private long tokenValidTime = 30 * 60 * 1000L;
+	private long tokenValidTime = ValidityInSeconds * 1000;
 
 	private final UserDetailsService userDetailsService;
 
@@ -38,14 +46,15 @@ public class JwtTokenProvider {
 	}
 
 	// JWT 토큰 생성
-	public String createToken(String userPk, List<GrantedAuthority> roles) {
+	public String createToken(String userPk, List<String> roles) {
 		Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
 		claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
 		Date now = new Date();
+		System.out.println(ValidityInSeconds * 1000);
 		return Jwts.builder().setClaims(claims) // 정보 저장
 				.setIssuedAt(now) // 토큰 발행 시간 정보
-				.setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-				.signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과
+				.setExpiration(new Date(now.getTime() + ValidityInSeconds * 1000)) // set Expire Time
+				.signWith(SignatureAlgorithm.HS512, secretKey) // 사용할 암호화 알고리즘과
 																// signature 에 들어갈 secret값 세팅
 				.compact();
 	}
@@ -70,9 +79,16 @@ public class JwtTokenProvider {
 	public boolean validateToken(String jwtToken) {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-			return !claims.getBody().getExpiration().before(new Date());
-		} catch (Exception e) {
-			return false;
+			return true;
+		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+			logger.info("잘못된 JWT 서명입니다.");
+		} catch (ExpiredJwtException e) {
+			logger.info("만료된 JWT 토큰입니다.");
+		} catch (UnsupportedJwtException e) {
+			logger.info("지원되지 않는 JWT 토큰입니다.");
+		} catch (IllegalArgumentException e) {
+			logger.info("JWT 토큰이 잘못되었습니다.");
 		}
+		return false;
 	}
 }

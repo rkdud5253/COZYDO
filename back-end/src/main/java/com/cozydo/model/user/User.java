@@ -31,7 +31,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Data
 @Getter
 @Setter
 @ToString
@@ -74,11 +73,13 @@ public class User implements UserDetails {
 	@Column(name = "user_authstatus")
 	private int authStatus;
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Builder.Default
+	private List<String> roles = new ArrayList<>();
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		return authorities;
+		return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 
 	@Override
