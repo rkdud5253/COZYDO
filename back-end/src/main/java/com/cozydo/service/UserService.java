@@ -11,22 +11,34 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import com.cozydo.dao.UserDao;
+import com.cozydo.jwt.JwtTokenProvider;
 import com.cozydo.mail.EmailUtil;
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.user.SignupRequest;
 import com.cozydo.model.user.User;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired
 	private EmailUtil emailUtil;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 
 	public Object Signup(SignupRequest request, BindingResult bindingResult) {
 		ResponseEntity response = null;
@@ -51,6 +63,11 @@ public class UserService {
 			String Authkey = emailUtil.GetRandom(); // 회원 인증 번호 완성
 //			emailUtil.sendEmailToEmail(request.getEmail(), "Cozydo홈페이지에서 " + request.getName() + "님에게 회원 인증 요청 이메일입니다.",
 //					Authkey);
+			userDao.save(
+					User.builder().email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
+							.name(request.getName()).nickname(request.getNickname()).authkey(Authkey)
+							.roles(Collections.singletonList("ROLE_USER")).build())
+					.getUserIdx();
 			result.status = true;
 			result.data = "이메일을 통해 회원 인증 후 로그인 해주세요.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -64,15 +81,16 @@ public class UserService {
 
 		Optional<User> user = userDao.getUserByEmail(email);
 
-		if (user.isPresent()) {
+		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
 			if (user.get().getAuthStatus() != 1) { // 인증이 안됬다면
 				result.status = false;
 				result.data = "이메일 인증 후 로그인 해주세요.";
 				response = new ResponseEntity<>(result, HttpStatus.OK);
 			} else { // 인증이 된 아이디라면
+
 				result.status = true;
 				result.data = user.get().getNickname();
-				result.object = null;
+				result.object = jwtTokenProvider.createToken(user.get().getUsername(), user.get().getRoles());
 				response = new ResponseEntity<>(result, HttpStatus.OK);
 			}
 		} else {
@@ -174,5 +192,10 @@ public class UserService {
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userDao.getUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 	}
 }

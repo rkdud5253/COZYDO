@@ -40,7 +40,7 @@ public class CoronaApi implements CoronaApiDao {
 		String eve = "";
 		String serviceKey1 = "KNAn2%2FZ4AHleCgBLRpkWG%2BSaaTMYFaEgKcFVpxEOgG7oLurUhSyFNykiFfPti%2Bj3DWIJ%2BShGa7gELJTMcu5yvg%3D%3D";
 		String serviceKey2 = "aXJ8BHN7sNEi101DUimfRvfH%2FRD73I9Fy9YUIyXtKDJO24g9N1IcSoz6mhiXiwVxxH7o0Lh7pxg5f3%2FPmkeYbw%3D%3D";
-
+		String serviceKey3 = "O8U8oKgWVITgeL0tyopjnlko2qLn6oOq2PNPE%2BzKvy2u49xTmiFUku%2FbfZDebH8ev9Bsq9TaLQuYaEo9t3DyvA%3D%3D";
 		if (Classification.equals("today")) { // 누적
 			eve = "-2";
 			try {
@@ -52,7 +52,7 @@ public class CoronaApi implements CoronaApiDao {
 		} else if (Classification.equals("sido")) {
 			eve = "-2";
 			try {
-				return Sido(Confirmed(eve, serviceKey1));
+				return Sido(Confirmed(eve, serviceKey2));
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,7 +60,7 @@ public class CoronaApi implements CoronaApiDao {
 		} else { // 일주일
 			eve = "-8";
 			try {
-				return Week(Confirmed(eve, serviceKey2));
+				return Week(Confirmed(eve, serviceKey3));
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -100,7 +100,8 @@ public class CoronaApi implements CoronaApiDao {
 		return list;
 	}
 
-	private List<String[]> Confirmed(String eve,String serviceKey) throws ParserConfigurationException, SAXException, IOException {
+	private List<String[]> Confirmed(String eve, String serviceKey)
+			throws ParserConfigurationException, SAXException, IOException {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");
