@@ -25,11 +25,11 @@
         hover
       >
         <v-expansion-panel
-          v-for="(item,i) in 3"
+          v-for="(likePlace,i) in likePlaces"
           :key="i"
         >
           <v-expansion-panel-header disable-icon-rotate>
-            <h4>스타벅스</h4>
+            <h4>{{ likePlace.placeName }}</h4>
             <template v-slot:actions>
               <v-icon color="white">
                 mdi-arrow-right
@@ -46,8 +46,34 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "MyPagePlace",
+  data: function() {
+    return {
+      userIdx: 1,
+      likePlaces: [],
+    }
+  },
+  created() {
+    this.loadPlace();
+  },
+  methods: {
+    loadPlace() {
+      axios.get("https://i4a201.p.ssafy.io:8080/mypage/likes/list", {
+          params: {
+            userIdx: this.userIdx,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.likePlaces = res.data
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },
 };
 </script>
 

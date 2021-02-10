@@ -25,14 +25,14 @@
         hover
       >
         <v-expansion-panel
-          v-for="(item,i) in 3"
+          v-for="(placeReview,i) in placeReviews"
           :key="i"
         >
           <v-expansion-panel-header>
-            <h4>스타벅스</h4>
+            <h4>{{ placeReview.placeName }}</h4>
           </v-expansion-panel-header>
           <v-expansion-panel-content class="mt-1">
-            9시까지 하는 줄 알았는데 저희 동네는 8시까지 하더라구요. 참고하세요!
+            {{ placeReview.content }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -43,8 +43,34 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "MyPageReview",
+  data: function() {
+    return {
+      userIdx: 1,
+      placeReviews: [],
+    }
+  },
+  created() {
+    this.loadReview();
+  },
+  methods: {
+    loadReview() {
+      axios.get("https://i4a201.p.ssafy.io:8080/mypage/review/list", {
+          params: {
+            userIdx: this.userIdx,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.placeReviews = res.data
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },
 };
 </script>
 
