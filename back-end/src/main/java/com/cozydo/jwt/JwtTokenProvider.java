@@ -16,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
+import com.cozydo.service.UserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +36,11 @@ public class JwtTokenProvider implements InitializingBean {
 	// 토큰 유효시간 30분
 	private int tokenValidTime;
 
-	@Autowired
-	private final UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 
 	public JwtTokenProvider(@Value("${cozydo.jwtSecret}") String secretKey,
-			@Value("${cozydo.jwtExpirationMs}") int ValidityInSeconds) {
-		this.userDetailsService = null;
+			@Value("${cozydo.jwtExpirationMs}") int ValidityInSeconds, UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
 		this.secretKey = secretKey;
 		this.tokenValidTime = ValidityInSeconds * 1000;
 	}
@@ -54,7 +56,6 @@ public class JwtTokenProvider implements InitializingBean {
 		Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
 		claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
 		Date now = new Date();
-		System.out.println(tokenValidTime);
 		return Jwts.builder().setClaims(claims) // 정보 저장
 				.setIssuedAt(now) // 토큰 발행 시간 정보
 				.setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
@@ -66,16 +67,20 @@ public class JwtTokenProvider implements InitializingBean {
 	// JWT 토큰에서 인증 정보 조회
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+		System.out.println("!@#" + userDetails);
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
 	// 토큰에서 회원 정보 추출
 	public String getUserPk(String token) {
+		System.out
+				.println("USER" + Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 
 	// Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
 	public String resolveToken(HttpServletRequest request) {
+		System.out.println("TOKEN : " + request.getHeader("X-AUTH-TOKEN"));
 		return request.getHeader("X-AUTH-TOKEN");
 	}
 
