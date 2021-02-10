@@ -16,12 +16,12 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
-	@Autowired
-	private final JwtTokenProvider jwtTokenProvider;
 
-//	public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
-//		this.jwtTokenProvider = jwtTokenProvider;
-//	}
+	private JwtTokenProvider jwtTokenProvider;
+
+	public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
