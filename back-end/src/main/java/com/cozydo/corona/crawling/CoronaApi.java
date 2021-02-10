@@ -122,7 +122,6 @@ public class CoronaApi implements CoronaApiDao {
 		urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
 				+ URLEncoder.encode(today, "UTF-8")); /* 검색할 생성일 범위의 종료 */
 		String allurl = urlBuilder.toString();
-		System.out.println("AA" + allurl);
 		DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
 		Document doc = dBuilder.parse(allurl);
