@@ -120,7 +120,6 @@ public class CoronaService {
 			int Today_Clearcnt = Integer.parseInt(list.get(0)[5]) - Integer.parseInt(list.get(1)[5]);
 			int Local = Integer.parseInt(list.get(0)[6]);
 			int Overflow = Integer.parseInt(list.get(0)[7]);
-			System.out.println(gubun);
 			CoronaInfomation corona = new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt,
 					Today_DecideCnt, Today_Clearcnt, Local, Overflow);
 
