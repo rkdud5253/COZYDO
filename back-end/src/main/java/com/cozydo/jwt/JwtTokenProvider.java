@@ -67,20 +67,16 @@ public class JwtTokenProvider implements InitializingBean {
 	// JWT 토큰에서 인증 정보 조회
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-		System.out.println("!@#" + userDetails);
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
 	// 토큰에서 회원 정보 추출
 	public String getUserPk(String token) {
-		System.out
-				.println("USER" + Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 
 	// Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
 	public String resolveToken(HttpServletRequest request) {
-		System.out.println("TOKEN : " + request.getHeader("X-AUTH-TOKEN"));
 		return request.getHeader("X-AUTH-TOKEN");
 	}
 
