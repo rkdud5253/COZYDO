@@ -7,8 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
-import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,33 +18,35 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements InitializingBean {
 
 	private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-	@Value("${cozydo.jwtSecret}")
 	private String secretKey;
-	@Value("${cozydo.jwtExpirationMs}")
-	private int ValidityInSeconds;
 
 	// 토큰 유효시간 30분
-	private long tokenValidTime = ValidityInSeconds * 1000;
+	private int tokenValidTime;
 
 	@Autowired
 	private final UserDetailsService userDetailsService;
 
+	public JwtTokenProvider(@Value("${cozydo.jwtSecret}") String secretKey,
+			@Value("${cozydo.jwtExpirationMs}") int ValidityInSeconds) {
+		this.userDetailsService = null;
+		this.secretKey = secretKey;
+		this.tokenValidTime = ValidityInSeconds * 1000;
+	}
+
 	// 객체 초기화, secretKey를 Base64로 인코딩한다.
-	@PostConstruct
-	protected void init() {
-		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
 	// JWT 토큰 생성
@@ -52,10 +54,10 @@ public class JwtTokenProvider {
 		Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
 		claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
 		Date now = new Date();
-		System.out.println(ValidityInSeconds * 1000);
+		System.out.println(tokenValidTime);
 		return Jwts.builder().setClaims(claims) // 정보 저장
 				.setIssuedAt(now) // 토큰 발행 시간 정보
-				.setExpiration(new Date(now.getTime() + ValidityInSeconds * 1000)) // set Expire Time
+				.setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
 				.signWith(SignatureAlgorithm.HS512, secretKey) // 사용할 암호화 알고리즘과
 																// signature 에 들어갈 secret값 세팅
 				.compact();

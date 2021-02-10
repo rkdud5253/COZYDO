@@ -80,8 +80,10 @@ public class UserService implements UserDetailsService {
 		final BasicResponse result = new BasicResponse();
 
 		Optional<User> user = userDao.getUserByEmail(email);
-
+		System.out.println(user.get().toString());
+		System.out.println(1);
 		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+			System.out.println(2);
 			if (user.get().getAuthStatus() != 1) { // 인증이 안됬다면
 				result.status = false;
 				result.data = "이메일 인증 후 로그인 해주세요.";
