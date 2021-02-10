@@ -36,7 +36,7 @@
     <MyPageReview />
 
     <v-btn
-      class="user_delete_btn mt-8"
+      class="user_delete_btn mt-8 mb-12"
       color="#fc355d"
       dark
       small
