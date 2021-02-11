@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cozydo.jwt.JwtTokenProvider;
 import com.cozydo.model.BasicResponse;
 
 import com.cozydo.model.user.SignupRequest;
@@ -48,7 +49,7 @@ public class UserController {
 	@PostMapping("/user/login")
 	@ApiOperation(httpMethod = "POST", value = "email,password을 받아 로그인 성공여부 판단", notes = "insert user information")
 	public Object Login(@RequestParam(required = true) final String email,
-			@RequestParam(required = true) final String password) {	
+			@RequestParam(required = true) final String password) {
 		return userService.Login(email, password);
 	}
 
@@ -72,11 +73,18 @@ public class UserController {
 			@RequestParam(required = true) final String name) {
 		return userService.FindPW(email, name);
 	}
-	
+
 	@GetMapping("/user/authentication")
 	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
 	public Object Authentication(@RequestParam(required = true) final String email,
 			@RequestParam(required = true) final String authkey) {
 		return userService.FindAuthkey(email, authkey);
 	}
+
+	@GetMapping("/user/imsi")
+	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
+	public Object imsi() {
+		return 1;
+	}
+
 }

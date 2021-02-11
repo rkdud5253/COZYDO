@@ -36,72 +36,43 @@ import com.cozydo.model.crawling.CoronaInfomation;
 public class CoronaApi implements CoronaApiDao {
 
 	@Override
-	public List<String[]> Classification(String Classification) {
+	public List<ArrayList<String[]>> Classification() {
 		String eve = "";
-		String serviceKey1 = "KNAn2%2FZ4AHleCgBLRpkWG%2BSaaTMYFaEgKcFVpxEOgG7oLurUhSyFNykiFfPti%2Bj3DWIJ%2BShGa7gELJTMcu5yvg%3D%3D";
-		String serviceKey2 = "aXJ8BHN7sNEi101DUimfRvfH%2FRD73I9Fy9YUIyXtKDJO24g9N1IcSoz6mhiXiwVxxH7o0Lh7pxg5f3%2FPmkeYbw%3D%3D";
-		String serviceKey3 = "O8U8oKgWVITgeL0tyopjnlko2qLn6oOq2PNPE%2BzKvy2u49xTmiFUku%2FbfZDebH8ev9Bsq9TaLQuYaEo9t3DyvA%3D%3D";
-		if (Classification.equals("today")) { // 누적
-			eve = "-2";
-			try {
-				return Today(Confirmed(eve, serviceKey1));
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else if (Classification.equals("sido")) {
-			eve = "-2";
-			try {
-				return Sido(Confirmed(eve, serviceKey2));
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else { // 일주일
-			eve = "-8";
-			try {
-				return Week(Confirmed(eve, serviceKey3));
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		eve = "-8";
+		try {
+			return Week(Confirmed(eve));
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
 
-	private List<String[]> Today(List<String[]> infomation) {
-		List<String[]> list = new ArrayList<String[]>();
+	private List<ArrayList<String[]>> Week(List<String[]> infomation) {
+		List<ArrayList<String[]>> list = new ArrayList<ArrayList<String[]>>();
+		ArrayList<String[]> today = new ArrayList<String[]>();
+		ArrayList<String[]> sido = new ArrayList<String[]>();
+		ArrayList<String[]> week = new ArrayList<String[]>();
+
 		for (int i = 0; i < 38; i++) {
 			if (infomation.get(i)[0].equals("합계")) {
-				list.add(infomation.get(i));
-			}
+				today.add(infomation.get(i));
+			} else if (!infomation.get(i)[0].equals("합계"))
+				sido.add(infomation.get(i));
 		}
-		return list;
-	}
 
-	private List<String[]> Sido(List<String[]> infomation) {
-		List<String[]> list = new ArrayList<String[]>();
-		for (int i = 0; i < 38; i++) {
-			if (infomation.get(i)[0].equals("합계")) {
-				continue;
-			}
-			list.add(infomation.get(i));
-		}
-		return list;
-	}
-
-	private List<String[]> Week(List<String[]> infomation) {
-		List<String[]> list = new ArrayList<String[]>();
 		for (int i = 0; i < infomation.size(); i++) {
 			if (infomation.get(i)[0].equals("합계")) {
-				list.add(infomation.get(i));
+				week.add(infomation.get(i));
 			}
 		}
+		list.add(today);
+		list.add(sido);
+		list.add(week);
 		return list;
 	}
 
-	private List<String[]> Confirmed(String eve, String serviceKey)
-			throws ParserConfigurationException, SAXException, IOException {
+	private List<String[]> Confirmed(String eve) throws ParserConfigurationException, SAXException, IOException {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");
@@ -112,7 +83,7 @@ public class CoronaApi implements CoronaApiDao {
 
 		StringBuilder urlBuilder = new StringBuilder(
 				"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"); /* URL */
-//		String serviceKey = "aXJ8BHN7sNEi101DUimfRvfH%2FRD73I9Fy9YUIyXtKDJO24g9N1IcSoz6mhiXiwVxxH7o0Lh7pxg5f3%2FPmkeYbw%3D%3D";
+		String serviceKey = "aXJ8BHN7sNEi101DUimfRvfH%2FRD73I9Fy9YUIyXtKDJO24g9N1IcSoz6mhiXiwVxxH7o0Lh7pxg5f3%2FPmkeYbw%3D%3D";
 		String serviceKeyDecoded = URLDecoder.decode(serviceKey, "UTF-8");
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "="
 				+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* 공공데이터포털에서 받은 인증키 */
@@ -147,6 +118,8 @@ public class CoronaApi implements CoronaApiDao {
 						getTagValue("overFlowCnt", eElement) });
 			}
 		}
+		if (list.size() == 0)
+			return Confirmed(eve);
 		return list;
 	}
 
