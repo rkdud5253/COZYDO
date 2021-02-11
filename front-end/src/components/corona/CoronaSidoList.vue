@@ -128,12 +128,12 @@ export default {
 .card {
     /* background : rgb(245, 245, 245); */
     
-    background: #ffffff;
+    background: white;
 }
 
 .card.on {
     /* background: #fffcfc; */
-    background: #f2f5f7;
+    background: #fff1f5;
 }
 
 </style>
