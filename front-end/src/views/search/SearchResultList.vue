@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- 상단 메뉴  -->
-    <div class="search">
+    <div class="search mt-3">
       <v-icon class="goback" color="pink" large @click="goBack">
         mdi-chevron-left
       </v-icon>
@@ -10,10 +10,15 @@
         <v-spacer></v-spacer>
         지도
       </v-btn>
+     
       <v-text-field
+        hide-details
         class="searchText"
         v-model="keyword"
         solo
+        ma-0
+        pa-0
+        height="40"
         label="장소검색"
         clearable
         @keypress.enter="onInputKeyword"
@@ -43,43 +48,38 @@
 </template>
 <style scoped>
 .search {
+  margin-left: 3%;
   width: 95%;
-  margin: 10% auto;
-  margin-bottom: -2%;
   display: flex;
-  margin-top: 5%;
+  align-items: center;
+  /* margin-top: 5%;  */
 }
-
-.goback {
-  margin-bottom: 5%;
-}
-
 .searchButton {
   float: left;
-  width: 20%;
-  height: 45px !important;
-  box-sizing: border-box;
-  border: 0 auto;
+  width: 23%;
+  height: 40px !important;
   margin-left: 3%;
   margin-right: 7%;
-  margin-top: 0.5%;
+  box-sizing: border-box;
+  
 }
 
 .searchText {
+  align-items: center;
   float: left;
   width: 30%;
   box-sizing: border-box;
-  margin-right: 3% !important;
+  margin-right: 3% !important;  
 }
+
 
 .checkbox {
   width: 90%;
   display: flex;
   margin-left: 5%;
-  margin-top: -3%;
-}
-/* .theme--light.v-card {
-} */
+  margin-top: -1%;
+} 
+
 
 .v-divider {
   border-width: thin 0 0 0;
@@ -107,9 +107,9 @@ v-list-item-group {
   background: white;
 }
 
-.v-item-group {
+/* .v-item-group {
   background: lightgray;
-}
+} */
 </style>
 
 <script>
