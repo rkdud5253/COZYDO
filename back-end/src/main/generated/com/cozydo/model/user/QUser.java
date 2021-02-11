@@ -19,7 +19,9 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final StringPath arlam = createString("arlam");
+    public final StringPath authkey = createString("authkey");
+
+    public final NumberPath<Integer> authStatus = createNumber("authStatus", Integer.class);
 
     public final StringPath email = createString("email");
 
@@ -29,7 +31,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
-    public final NumberPath<Integer> userIdx = createNumber("userIdx", Integer.class);
+    public final NumberPath<Long> userIdx = createNumber("userIdx", Long.class);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

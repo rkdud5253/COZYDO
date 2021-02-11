@@ -6,13 +6,13 @@
       <v-list nav
         dense
         >
-        <v-subheader>장소</v-subheader>
-        <v-divider></v-divider>
+        <!-- <v-subheader>장소</v-subheader> -->
+        <!-- <v-divider></v-divider> -->
         <v-list-item-group class="pt-1 pb-1">
           <template v-for="(item, index) in items">
             <v-list-item v-if="index <= 30" :key="item.title">
               <template>
-                <v-list-item-content @click="onChangeDetail(item.placeIdx)">
+                <v-list-item-content style="color:black;" @click="onChangeDetail(item.placeIdx)">
                   {{ item.placeName }} 
                   <v-rating
                     background-color="red lighten-3"
@@ -32,14 +32,14 @@
                     v-text="item.headline"
                   ></v-list-item-subtitle>
                   
-                  <v-list-item-subtitle
+                  <v-list-item-subtitle style="color:black"
                     v-text="item.roadAddressName"
                   ></v-list-item-subtitle>
                   <v-list-item-action-text
                     v-text="item.action"
                   ></v-list-item-action-text>
 
-                  <v-list-item-subtitle
+                  <v-list-item-subtitle style="color:black"
                     class="text--primary"
                     v-text="item.tel"
                   ></v-list-item-subtitle>
@@ -47,11 +47,8 @@
 
 
                 <v-list-item-avatar>
-                  <v-list-item-subtitle v-if="item.distance.charAt(2) == '0'">{{
-                    item.distance.substring(3, 5) + "m"
-                  }}</v-list-item-subtitle>
-                  <v-list-item-subtitle v-if="item.distance.charAt(2) != '0'">{{
-                    item.distance.substring(2, 5) + "m"
+                  <v-list-item-subtitle style="color:black">
+                    {{Math.round(parseFloat(item.distance)*1000)+'m'
                   }}</v-list-item-subtitle>
                 </v-list-item-avatar>
               </template>
@@ -89,12 +86,19 @@ v-list-item-group {
 } */
 
 .v-list-item.v-list-item {
-  background: white;
+  /* background: rgb(253, 230, 234); */
+  border: 1px rgb(226, 220, 221) solid;
+  /* color: white; */
 }
 
-.v-item-group {
+/* .v-item-group {
   background: lightgray;
+} */
+
+.v-list-item__avatar {
+  width: 60px !important;
 }
+
 </style>
 
 <script>

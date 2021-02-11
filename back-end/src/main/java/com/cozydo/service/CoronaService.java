@@ -104,10 +104,10 @@ public class CoronaService {
 		final BasicResponse result = new BasicResponse();
 
 		List<String[]> list = coronaApi.Classification("today");
-		if (list == null) {
+		if (list.size() == 0) {
 			result.status = false;
 			result.data = "false";
-			result.object = "정보를 읽을 수 없습니다.";
+			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			String gubun = list.get(0)[0];
@@ -136,10 +136,10 @@ public class CoronaService {
 		final BasicResponse result = new BasicResponse();
 
 		List<String[]> list = coronaApi.Classification("sido");
-		if (list == null) {
+		if (list.size() == 0) {
 			result.status = false;
 			result.data = "false";
-			result.object = "정보를 읽을 수 없습니다.";
+			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
@@ -181,10 +181,10 @@ public class CoronaService {
 		final BasicResponse result = new BasicResponse();
 
 		List<String[]> list = coronaApi.Classification("week");
-		if (list == null) {
+		if (list.size() == 0) {
 			result.status = false;
 			result.data = "false";
-			result.object = "정보를 읽을 수 없습니다.";
+			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();

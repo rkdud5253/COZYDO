@@ -2,7 +2,7 @@
   <v-main>
     <v-container>
       <!-- 3단계 집합금지일 때, modal 창 구현 -->
-      <v-dialog v-if="this.level == '3'" width="500">
+      <v-dialog v-if="items.meetProhibition" width="500">
         <v-card>
           <v-card-title style="color:pink;" class="headline grey lighten-2">
             3단계 집합 금지
@@ -11,11 +11,9 @@
           <v-card-text style="margin-top:30px;">
             <div style="width:100%;padding-left:15px;">
               <h4>
-                <i style="color:#ff0055;" class="material-icons"
-                  >no_meeting_room</i
-                >
-                중점관리시설, 일반 및 기타 시설 중 필수시설 외 집합금지 이외
-                시설도 운영 제한 국공립 시설은 실내외 구분없이 운영 중단
+                <i style="color:#ff0055;" class="material-icons">no_meeting_room</i>
+                중점관리시설, 일반 및 기타 시설 중 필수시설 외 집합금지 이외 시설도 운영 제한 국공립
+                시설은 실내외 구분없이 운영 중단
               </h4>
             </div>
           </v-card-text>
@@ -67,11 +65,7 @@
                     <div
                       style="width:50%;float:left; padding-right:5px;border-right: 3px solid grey;"
                     >
-                      <i
-                        style="color:#ffa31a;float:left;"
-                        class="material-icons"
-                        >no_food</i
-                      >
+                      <i style="color:#ffa31a;float:left;" class="material-icons">no_food</i>
                       <h4
                         style="padding-top: 7px;
     padding-left: 42px;"
@@ -79,11 +73,7 @@
                         음식 섭취 금지
                       </h4>
                       <br />
-                      <i
-                        style="color:#3333cc;float:left;"
-                        class="material-icons"
-                        >6_ft_apart</i
-                      >
+                      <i style="color:#3333cc;float:left;" class="material-icons">6_ft_apart</i>
                       <h4
                         style="padding-top: 7px;
     padding-left: 42px;"
@@ -91,9 +81,7 @@
                         거리두기 (ex. 한칸 띄어 앉기, 인원제한)
                       </h4>
                       <br />
-                      <i style="color:black;float:left;" class="material-icons"
-                        >qr_code_2</i
-                      >
+                      <i style="color:black;float:left;" class="material-icons">qr_code_2</i>
                       <h4
                         style="padding-top: 7px;
     padding-left: 42px;"
@@ -102,9 +90,7 @@
                       </h4>
                     </div>
                     <div style="width:50%;float:left;padding-left:15px;">
-                      <i
-                        style="color:#ff0055;float:left;"
-                        class="material-icons"
+                      <i style="color:#ff0055;float:left;" class="material-icons"
                         >no_meeting_room</i
                       >
                       <h4
@@ -114,11 +100,7 @@
                         집합금지
                       </h4>
                       <br />
-                      <i
-                        style="color:#4d88ff;float:left;"
-                        class="material-icons"
-                        >bathtub</i
-                      >
+                      <i style="color:#4d88ff;float:left;" class="material-icons">bathtub</i>
                       <h4
                         style="padding-top: 7px;
     padding-left: 42px;"
@@ -127,9 +109,7 @@
                       </h4>
                       <br />
 
-                      <i
-                        style="color:#ffff1a;float:left;"
-                        class="material-icons"
+                      <i style="color:#ffff1a;float:left;" class="material-icons"
                         >family_restroom
                       </i>
                       <h4
@@ -170,52 +150,24 @@
         <tr>
           <td colspan="3" style="float:left;">
             <div style="margin-top:10px;">
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.meetProhibition"
-              >
-                <i style="color:#ff0055;" class="material-icons"
-                  >no_meeting_room</i
-                >
+              <li class="iconStyle" style="list-style: none;" v-if="items.meetProhibition">
+                <i style="color:#ff0055;" class="material-icons">no_meeting_room</i>
               </li>
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.notFood"
-              >
+              <li class="iconStyle" style="list-style: none;" v-if="items.notFood">
                 <i style="color:#ffa31a;" class="material-icons">no_food</i>
               </li>
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.seatOneApart"
-              >
+              <li class="iconStyle" style="list-style: none;" v-if="items.seatOneApart">
                 <i style="color:#3333cc;" class="material-icons">6_ft_apart</i>
               </li>
 
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.showerOnly"
-              >
+              <li class="iconStyle" style="list-style: none;" v-if="items.showerOnly">
                 <i style="color:#4d88ff;" class="material-icons">bathtub</i>
               </li>
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.qrCode"
-              >
+              <li class="iconStyle" style="list-style: none;" v-if="items.qrCode">
                 <i style="color:black;" class="material-icons">qr_code_2</i>
               </li>
-              <li
-                class="iconStyle"
-                style="list-style: none;"
-                v-if="items.familyOnly"
-              >
-                <i style="color:#ffff1a;" class="material-icons"
-                  >family_restroom
-                </i>
+              <li class="iconStyle" style="list-style: none;" v-if="items.familyOnly">
+                <i style="color:#ffff1a;" class="material-icons">family_restroom </i>
               </li>
             </div>
           </td>
@@ -302,14 +254,12 @@
                     <v-row>
                       <v-col cols="12">
                         <p>
-                          허위 정보는 제안이 거절될 수 있습니다. 서비스의 원할한
-                          운영을 위해 신중하게 정보를 제안해 주시기 바랍니다.
+                          허위 정보는 제안이 거절될 수 있습니다. 서비스의 원할한 운영을 위해
+                          신중하게 정보를 제안해 주시기 바랍니다.
                         </p>
                       </v-col>
                       <v-col cols="12">
-                        <div
-                          style="float: left; margin-top: 20px; margin-right: 13px"
-                        >
+                        <div style="float: left; margin-top: 20px; margin-right: 13px">
                           영업 시간
                         </div>
 
@@ -448,85 +398,96 @@
   </v-main>
 </template>
 <script>
-import axios from "axios";
-import "material-design-icons-iconfont/dist/material-design-icons.css";
+import axios from 'axios'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 export default {
   data() {
     return {
-      heartStyle: "color:grey",
-      openingHours: "10:00 - 21:00",
+      Publishers: {},
+      heartStyle: 'color:grey',
+      openingHours: '10:00 - 21:00',
       placeIdx: this.$route.params.placeIdx, // 검색 결과 list에서 넘어오는 장소 Idx
       level: this.$route.params.level,
       items: [],
       icons: {
-        iconfont: "md",
+        iconfont: 'md',
       },
       itemIcon: [],
       dialog: false,
       // 리뷰 modal관련 data
       reviewDialog: false,
-      content: "",
+      content: '',
       rating: 0,
       // 수정제안 modal 관련 data
       modifyDialog: false,
-      message1: "10:00 - 21:00",
+      message1: '10:00 - 21:00',
       toggle_exclusive: 1,
       rules: [
-        (value) =>
-          !value ||
-          value.size < 2000000 ||
-          "2 MB보다 작은 이미지 파일을 올려주세요",
+        (value) => !value || value.size < 2000000 || '2 MB보다 작은 이미지 파일을 올려주세요',
       ],
-    };
+    }
   },
 
-  created: function() {
-    axios
-      .get("https://i4a201.p.ssafy.io:8080/map/detail", {
-        //get방식, url 확인
-        params: {
-          // 넘겨줄 파라미터
-          placeIdx: this.placeIdx,
-          level: this.level,
-        },
-      })
-      .then((res) => {
-        // 통신 성공하면
-        console.log(res);
-        this.items = res.data; // 데이터 받아온다
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  created() {
+    this.loadPublishers()
   },
   methods: {
+    loadPublishers() {
+      axios
+        .get('https://i4a201.p.ssafy.io:8080/map/detail', {
+          //get방식, url 확인
+          params: {
+            // 넘겨줄 파라미터
+            placeIdx: this.placeIdx,
+            level: this.level,
+            userIdx: 1,
+          },
+        })
+        .then((res) => {
+          // 통신 성공하면
+          console.log(res)
+          this.items = res.data // 데이터 받아온다
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     heartBtn() {
-      if (this.heartStyle == "color:red") {
-        this.heartStyle = "color:grey";
+      if (this.heartStyle == 'color:red') {
+        this.heartStyle = 'color:grey'
       } else {
-        this.heartStyle = "color:red";
+        this.heartStyle = 'color:red'
       }
     },
     reviewSubmit() {
-      console.log(this.content + this.rating);
-      axios.post("https://i4a201.p.ssafy.io:8080/review/save", {
-        content: this.content,
-        placeIdx: this.placeIdx,
-        reviewScore: this.rating,
-        userIdx: 1,
-      });
+      console.log(this.content + this.rating)
+      axios
+        .post('https://i4a201.p.ssafy.io:8080/review/save', {
+          content: this.content,
+          placeIdx: this.placeIdx,
+          reviewScore: this.rating,
+          userIdx: 1,
+        })
+        .then(() => {
+          // 리뷰 등록하면 장소상세페이지 refresh
+          console.log('안녕')
+          this.$router.go({
+            name: 'PlaceDetail',
+            params: { placeIdx: this.placeIdx, level: this.level },
+          })
+        })
 
-      this.reviewDialog = false;
-      this.content = "";
-      this.rating = 0;
+      this.reviewDialog = false
+      this.content = ''
+      this.rating = 0
     },
     modifySubmit() {
       // 수정 제안 DB연동 후 데이터 저장 코드 추가
-      this.modifyDialog = false;
+      this.modifyDialog = false
     },
   },
-};
+}
 </script>
 <style>
 #place {

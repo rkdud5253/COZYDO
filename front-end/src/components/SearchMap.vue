@@ -77,11 +77,13 @@ export default {
 
           // 마커 커스텀 이미지
           var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
+          var imageSrc2 = 'https://ifh.cc/g/1iFQaF.png';
           var imageSize = new kakao.maps.Size(42, 43);
           var imageOption = {offset: new kakao.maps.Point(27, 69)};
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+          var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize, imageOption);
 
           // 마커 20개 생성
           for(var i=0; i< this.items.length; i++){
@@ -91,36 +93,59 @@ export default {
               tmpLng = Number(tmpLng);
              
               var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
-             
-              var marker = new kakao.maps.Marker({
+              var marker = null
+             if(this.items[i].meetProhibition === 0) {
+               marker = new kakao.maps.Marker({
                   map: this.map,
                   position: markerPosition,
                   title: this.items[i].placeName,
                   image: markerImage
               });
-
+             }
+             else if(this.items[i].meetProhibition === 1){
+               marker = new kakao.maps.Marker({
+                  map: this.map,
+                  position: markerPosition,
+                  title: this.items[i].placeName,
+                  image: markerImage2
+              });
+             }
               // var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
               // var content = '<div v-on:click="onChangeDetail('+this.items[i].placeIdx+')">'+this.items[i].placeName+'</div>';
-              var content = this.items[i].placeName;
-              // 마커에 표시할 인포윈도우를 생성합니다 
-              var infowindow = new kakao.maps.InfoWindow({
-                  content: content, // 인포윈도우에 표시할 내용
-                  removable : true // true 시 삭제 가능
+              var content = '<div class="overlay_info" style="background-color:#fff; border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;">'+
+                '<a onclick="javascript:onChangeDetail({1})" style="display: block; background: #d95050; background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center; text-decoration: none; color: #fff; padding:5px 30px 5px 10px; font-size: 14px; border-radius: 6px">'+
+                '<strong>'+'<router-link to="PlaceDetail">'+this.items[i].placeName +'</router-link>'+'</strong></a></div>';
+
+              // var content = '<div>'+this.items[i].placeName+'</div>';
+
+              var overlay = new kakao.maps.CustomOverlay({
+                content: content,
+                map: this.map,
+                position: markerPosition   
               });
+
+              overlay.setMap(null);
 
               this.markers.push(marker)
               // // 마커가 지도 위에 표시되도록 설정합니다
               // this.markers[i].setMap(this.map);
               marker.setMap(this.map);
-              kakao.maps.event.addListener(marker, 'click', this.makeOverListener(this.map, marker, infowindow));
+              
+              kakao.maps.event.addListener(marker, 'click', this.makeOverListener(overlay, content, this.map, markerPosition));
               
           }
 
 
     },
-   makeOverListener : function(map, marker, infowindow) {
-    return function() {
-        infowindow.open(map, marker);
+   makeOverListener : (overlay, content, map, markerPosition) => {
+     return () => {
+       overlay.setMap(null);
+       overlay = new kakao.maps.CustomOverlay({
+        content: content,
+        map: map,
+        position: markerPosition   
+      });
+      overlay.setMap(map);
     };
   },
   
@@ -184,12 +209,21 @@ export default {
         });
       }
     },
-    onChangeDetail(placeIdx) {
-      console.log('detail로 가기')
-      this.$router.push({
-        name: "PlaceDetail",
-        params: { placeIdx: placeIdx, level: this.level },
-      });
+    // onChangeDetail: function(placeIdx) {
+    //   // return () => {
+    //     console.log(placeIdx)
+    //   this.$router.push({
+    //     name: "PlaceDetail",
+    //     params: { placeIdx: placeIdx, level: this.level },
+    //   });
+    //   // }
+      
+    // }
+    
+    onChangeDetail : (placeIdx) => {
+      return () => {
+      console.log(placeIdx)
+      };
     }
   },
 };
@@ -220,4 +254,12 @@ input {
 .searchBar {
   width: 430px;
 }
+
+
+.overlay_info {border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;background-color:#fff;}
+.overlay_info:nth-of-type(n) {border:0; box-shadow: 0px 1px 2px #888;}
+.overlay_info a {display: block; background: #d95050; background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center; text-decoration: none; color: #fff; padding:12px 36px 12px 14px; font-size: 14px; border-radius: 6px 6px 0 0}
+.overlay_info a strong {background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place_icon.png) no-repeat; padding-left: 27px;}
+.overlay_info .desc {padding:14px;position: relative; min-width: 190px; height: 56px}
+.overlay_info:after {content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; width: 22px; height: 12px; background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png) no-repeat 0 bottom;}
 </style>

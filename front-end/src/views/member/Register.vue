@@ -54,7 +54,7 @@
       class="pt-3 pb-3"
       :rules="validatePasswordRules"
       required
-      v-model="member.validatePassword"
+      v-model="validatePassword"
       :counter="20"
       label="비밀번호 확인"
       type="password"
@@ -108,6 +108,7 @@
   </v-app>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -135,13 +136,11 @@ export default {
       ],
       member: {
         email: "",
-        password: "",
         name: "",
         nickname: "",
-        validatePassword: "",
-        // role: "USER",
+        password: "",
       },
-        
+      validatePassword: "",
       //   select: null,
       //   items: [
       //     'Item 1',
@@ -160,9 +159,21 @@ export default {
         if(this.$refs.form.validate()){
             // this.START_LOADING();
             // this.REQUEST_JOIN(this.member);
-            console.log('회원가입 가능')
-        }else{
-          console.log('회원가입 불가')
+          console.log(typeof(this.member.email))
+          console.log(this.member.email)
+          axios({
+            method: 'post',
+            url: 'https://i4a201.p.ssafy.io:8080/user/signup',
+            headers: {
+              contentType: 'application/json',
+            },
+            data: this.member
+          }).then((res) => {
+            console.log(res)
+          }).catch((err) => {
+            console.log(err)
+          })
+            
         }
     },
     //   reset () {
