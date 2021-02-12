@@ -1,13 +1,8 @@
 <template>
   <div>
-    <v-form
-      style="margin: 50px 40px;"
-      ref="form"
-      v-model="valid"
-      lazy-validation
-    >
+    <v-form style="margin: 50px 40px" ref="form" v-model="valid" lazy-validation>
       <v-text-field
-        v-model="email"
+        v-model="user.email"
         :rules="emailRules"
         label="이메일"
         required
@@ -17,31 +12,19 @@
       <v-text-field
         :rules="passwordRules"
         required
-        v-model="password"
+        v-model="user.password"
         label="비밀번호"
         type="password"
         prepend-icon="mdi-lock"
         @keypress.enter="loginRequest"
       ></v-text-field>
       <v-btn
-        style="width: 100%; margin-top: 45px; padding:25px 0;"
+        style="width: 100%; margin-top: 45px; padding: 25px 0"
         color="#F85F6A"
         dark
         @click="loginRequest"
         >로그인</v-btn
       >
-      <!--     
-<v-btn
-      style="width: 100%; margin-top: 20px; padding:25px 0;"
-      color="#2DB400"
-      dark
-      @click="naverLogin"
-      >네이버로 로그인</v-btn
-    > -->
-      <!-- <v-btn @click="redirect_to_login"><img src="../../../public/img/final-naver-login.png">
-        </v-btn> -->
-      <!-- style="height:50px; object-fit:contain;background-size: cover;" -->
-      <!-- <v-img style="" src="../../../public/img/final_naver_login.png"></v-img> -->
 
       <!-- <div id="kakao-login">
 
@@ -81,132 +64,80 @@
       @click="kakaoLogin"
       >카카오계정으로 로그인</v-btn
     > -->
-      <div style="width:100%; margin-top:30px;">
-        <v-btn style="width:49%;" text color="grey">
-          비밀번호 찾기
-        </v-btn>
-        <v-btn style="width:49%;" text color="#F85F6A">
-          회원가입
-        </v-btn>
+      <div style="width: 100%; margin-top: 30px">
+        <v-btn style="width: 49%" text color="grey"> 비밀번호 찾기 </v-btn>
+        <v-btn style="width: 49%" text color="#F85F6A"> 회원가입 </v-btn>
       </div>
-      <!-- <v-text-field
-      v-model="member.id"
-      :counter="12"
-      :rules="nameRules"
-      label="아이디"
-      required
-      type="text"
-      hint="영문, 숫자 6~12자 이내"
-      prepend-icon="mdi-account"
-    ></v-text-field> -->
-      <!-- <input placeholder="Enter your ID" v-model="uid" />
-      <input placeholder="Enter your password" v-model="password" /> -->
-      <!-- <v-btn @click="loginRequest">Login</v-btn> -->
     </v-form>
   </div>
 </template>
 <script>
-import axios from "axios";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 export default {
-  name: "Login",
   data() {
     return {
       valid: true,
-      name: "",
-      // nameRules: [
-      //   (v) => !!v || "Name is required",
-      //   (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
-      // ],
       emailRules: [
-        (v) => !!v || "이메일을 입력해주세요",
-        (v) => /.+@.+\..+/.test(v) || "유효한 이메일이 아닙니다",
+        (v) => !!v || '이메일을 입력해주세요',
+        (v) => /.+@.+\..+/.test(v) || '유효한 이메일이 아닙니다',
       ],
       passwordRules: [
-        (v) => !!v || "비밀번호를 입력해주세요",
+        (v) => !!v || '비밀번호를 입력해주세요',
         // (v) => (v && v.length >= 8 && v.length <= 20) || "8~20자리 입력",
         (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,20}$/.test(v) ||
-          "문자, 숫자 조합 8~20자리 입력",
+          '문자, 숫자 조합 8~20자리 입력',
       ],
-      // passwordRules: [(v) => !!v || "Password is required"],
-      // user: {
-      email: "",
-      password: "",
-      // name: "",
-      // nickname: "",
-      // role: "USER",
-      // },
-      message: "",
-    };
+
+      user: {
+        email: '',
+        password: '',
+      },
+      message: '',
+    }
   },
-
-  //   data: () => ({
-  //     uid: "",
-  //     password: "",
-  //   }),
-  // computed: {
-  //             nextRoute() {
-  //               console.log("하이");
-  //               // console.log(this.$route.params.nextRoute)
-  //                 return this.$route.params.nextRoute
-  //                     ? this.$route.params.nextRoute
-  //                     : "";
-  //             }
-  //         },
   methods: {
-    loginRequest: function() {
-      console.log(this.email);
-      // console.log(typeOf(this.email))
-      // LOGIN 액션 실행 서버와 통신(axios)을 해 토큰값을 얻어야 하므로 Actions를 호출.
-      // this
-      //     .$store
-      //     .dispatch("LOGIN", {email = this.email, password = this.password})
-      //     .then(() => (this.$store.state.loginChk == true)?this.$router.replace(`/${this.nextRoute}`):
-      //       this.$router.replace(`/`)
-      //     )
-      //     .catch(({message}) => (this.msg = message));
-      axios({
-        method: "post",
-        url: "https://i4a201.p.ssafy.io:8080/user/login",
+    loginRequest() {
+      this.$store
+        .dispatch('LOGIN', this.user)
+        .then(
+          () =>
+            // console.log('loginChk값은?' + this.$store.getters.getLoginChk)
+            //   console.log(this.$store.state.loginChk)
+            this.$store.getters.getLoginChk == true ? this.$router.replace(`/`) : history.go(0)
+          // this.$store.state.loginChk == true ? this.$router.replace(`/information`) : history.go(0)
+        )
+        .catch(({ message }) => (this.msg = message))
+      // this.$router.replace(`/login`)
 
-        params: {
-          email: this.email,
-          password: this.password,
-        },
-      })
-        .then((res) => {
-          // console.log(res);
-          // console.log(res.data.status);
-          // console.log("로그인 완료");
-          // this.$router.replace(`/`);
-          if (res.data.status == true) {
-            console.log("로그인 완료");
-            this.$router.replace(`/`);
-          } else if (res.data.status == false) {
-            // this.email = "";
-            // this.password = "";
-            alert("로그인 실패");
-            console.log("로그인 실패");
-            // this.$router.go(`/login`);
-           history.go(0);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // axios.post("https://i4a201.p.ssafy.io:8080/user/login", {
-      //         'email': this.email,
-      //         password: this.password,
-      //         // reviewScore: this.rating,
-      //         // userIdx: 1,
-      //       }).then(()=>{
-      //         console.log("로그인 완료");
-      //         this.$router.replace(`/`);
-      //       }).catch((err) => {
-      //           console.log(err);
-      //         });
+      // 로그인 DB와 연동해서 구현, store안썼을 때,
+      // axios({
+      //   method: "post",
+      //   url: "https://i4a201.p.ssafy.io:8080/user/login",
 
-      // },
+      //   params: {
+      //     email: this.email,
+      //     password: this.password,
+      //   },
+      // })
+      //   .then((res) => {
+
+      //     if (res.data.status == true) {
+      //       console.log("로그인 완료");
+      //       this.$router.replace(`/`);
+      //     } else if (res.data.status == false) {
+
+      //       alert("로그인 실패");
+      //       console.log("로그인 실패");
+      //       // this.$router.go(`/login`);
+      //       history.go(0);
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
 
       //     redirect(){
       //       const { search } = window.location
@@ -262,13 +193,7 @@ export default {
       //                 }
       //             })
       //         },
-      // onSubmit() {
-      //   console.log(this.uid);
-      //   console.log(this.password);
-      // },
-      // validate() {
-      //   this.$refs.form.validate();
     },
   },
-};
+}
 </script>
