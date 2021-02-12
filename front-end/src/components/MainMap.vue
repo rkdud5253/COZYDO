@@ -187,10 +187,10 @@ export default {
         });
     },
     initMap() {
-      var container = document.getElementById('map');
-      var options = {
+      let container = document.getElementById('map');
+      let options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
-        level: 3,
+        level: 5,
       };
       this.map = new kakao.maps.Map(container, options);
       
@@ -200,46 +200,42 @@ export default {
       }
           
      
-      var zoomControl = new kakao.maps.ZoomControl();
+      let zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
     
     },
     nowlocation(map) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      // GeoLocation을 이용해서 접속 위치 얻어오기
 
       // arrow function을 써야 함수 밖에서도 this값에 손댈 수 있음
       navigator.geolocation.getCurrentPosition((position) =>{
 
-        var lat = position.coords.latitude, // 위도
+        let lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
 
-        var moveLatLon = new kakao.maps.LatLng(lat, lon);
+        let moveLatLon = new kakao.maps.LatLng(lat, lon);
         map.setCenter(moveLatLon);
 
         this.centerLat = lat
         this.centerLon = lon
 
         kakao.maps.event.addListener(map, "dragend", () => {
-          // 지도 중심좌표를 얻어옵니다
-          var latlng = map.getCenter();
+          // 지도 중심좌표를 얻어옴
+          let latlng = map.getCenter();
 
           this.centerLat = latlng.getLat();
           this.centerLon = latlng.getLng();
           // console.log(this.centerLat, this.centerLon);
         });
-        var markerPosition = new kakao.maps.LatLng(lat, lon);
+        let markerPosition = new kakao.maps.LatLng(lat, lon);
         // console.log(markerPosition);
 
-        var marker = new kakao.maps.Marker({
+        let marker = new kakao.maps.Marker({
           map: map,
           position: markerPosition,
         });
-        // // 마커가 지도 위에 표시되도록 설정합니다
+        // // 마커가 지도 위에 표시되도록 설정
         marker.setMap(map);
-
-        // this.addMarker();
-        // var zoomControl = new kakao.maps.ZoomControl();
-        // map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
       });
 
       // 검색 페이지로 현재 경도 위도 넘기기
@@ -271,16 +267,13 @@ export default {
 
     // 카테고리 버튼 클릭했을 때
     onClinkCatecory: function(event) {
-      // console.log('클릭')
-      // console.log(event.target.innerText)
+
       this.keyword = event.target.innerText;
-      // console.log(this.keyword)
 
       // 1, 1.5, 2, 2.5, 3 -> 1, 2, 3, 4, 5
-      // console.log(this.currentLevel)
       // console.log(parseFloat(this.currentLevel)*2-1)
 
-      if (this.keyword != "") {
+      if (this.keyword !== "") {
         this.$router.push({
           name: "SearchResultList",
           query: {
@@ -297,8 +290,6 @@ export default {
 
     // 검색어 입력했을 때
     onInputKeyword() {
-
-      // console.log(this.centerLat, this.centerLon) 
 
       this.$router.push({
         name: "SearchResultList",

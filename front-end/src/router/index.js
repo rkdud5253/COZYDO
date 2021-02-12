@@ -21,54 +21,98 @@ const routes = [
   {
     path: "/searchResultList",
     name: "SearchResultList",
-    component: SearchResultList
+    component: SearchResultList,
+    meta: {
+      title: '코지도 | 장소검색',
+    },
   },
   {
     path: "/searchResultMap",
     name: "SearchResultMap",
-    component: SearchResultMap
+    component: SearchResultMap,
+    meta: {
+      title: '코지도 | 장소검색',
+    },
   },
   {
     path: "/placeDetail/:placeIdx/:level",
     name: "PlaceDetail",
-    component: PlaceDetail
+    component: PlaceDetail,
+    meta: {
+      title: '코지도 | 장소상세',
+    },
   },
   {
     path: "/placeModify",
     name: "PlaceModify",
-    component: PlaceModify
+    component: PlaceModify,
+    meta: {
+      title: '코지도 | 수정제안',
+    },
   },
   {
     path: "/placeReview",
     name: "PlaceReview",
-    component: PlaceReview
+    component: PlaceReview,
+    meta: {
+      title: '코지도 | 리뷰작성',
+    },
   },
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
+    meta: {
+      title: '코지도 | 회원가입',
+    },
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
+    meta: {
+      title: '코지도 | 로그인',
+    },
   },
   {
     path: "/information",
     name: "Information",
-    component: Information
+    component: Information,
+    meta: {
+      title: '코지도 | 코로나정보',
+    },
   },
   {
     path: "/myPage",
     name: "MyPage",
-    component: MyPage
+    component: MyPage,
+    meta: {
+      title: '코지도 | 마이페이지',
+    },
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
+  linkActiveClass: 'active-link',
+    linkExactActiveClass: 'exact-active-link',
+    scrollBehavior (to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition;
+      } else {
+        return { x: 0, y: 0 };
+      }
+    },
+});
+router.beforeEach((to, from, next) => {
+  /* It will change the title when the router is change*/
+  /* 페이지 제목 바꾸기 */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
 });
 
 export default router;
