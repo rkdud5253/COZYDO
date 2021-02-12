@@ -1,17 +1,16 @@
 <template>
   <v-app>
-
-    <v-card
-    class="mx-5 mt-4 mb-2"
-    outlined
-    >
+    <v-card class="mx-5 mt-4 mb-2" outlined>
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline" style="color: #fc355d">
             My Page
           </div>
           <v-list-item-title>
-            <p style="font-size: small; font-weight: bolder;"><span style="font-size: x-large;">갓싸피</span>님, 안녕하세요!</p>
+            <p style="font-size: small; font-weight: bolder;">
+              <span style="font-size: x-large;">{{ nickname }}</span
+              >님, 안녕하세요!
+            </p>
           </v-list-item-title>
           <v-list-item-subtitle>
             <h5>godssafy@naver.com</h5>
@@ -19,16 +18,10 @@
         </v-list-item-content>
 
         <v-card-actions>
-          <v-btn
-            outlined
-            text
-            small
-            class="mb-13"
-          >
+          <v-btn @click="onClickLogout" outlined text small class="mb-13">
             로그아웃
           </v-btn>
         </v-card-actions>
-
       </v-list-item>
     </v-card>
 
@@ -47,10 +40,7 @@
     </v-btn>
 
     <!-- 탈퇴 모달창 -->
-    <v-dialog
-      v-model="dialog"
-      max-width="290"
-    >
+    <v-dialog v-model="dialog" max-width="290">
       <v-card>
         <v-card-title></v-card-title>
 
@@ -59,60 +49,53 @@
         </v-card-text>
 
         <v-card-actions class="user_delete_modal_btn">
-          <v-btn
-            class="mb-3"
-            color="grey lighten-1"
-            dark
-            depressed
-            small
-            @click="dialog = false"
-          >
+          <v-btn class="mb-3" color="grey lighten-1" dark depressed small @click="dialog = false">
             취소하기
           </v-btn>
 
-          <v-btn
-            class="mb-3"
-            color="#fc355d"
-            dark
-            depressed
-            small
-            @click="dialog = false"
-          >
+          <v-btn class="mb-3" color="#fc355d" dark depressed small @click="dialog = false">
             탈퇴하기
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
   </v-app>
 </template>
 
 <script>
-import MyPagePlace from "@/components/mypage/MyPagePlace.vue"
-import MyPageReview from "@/components/mypage/MyPageReview.vue"
+import MyPagePlace from '@/components/mypage/MyPagePlace.vue'
+import MyPageReview from '@/components/mypage/MyPageReview.vue'
 export default {
-  name: "MyPage",
+  name: 'MyPage',
   components: {
     MyPagePlace,
     MyPageReview,
   },
-  data () {
-      return {
-        dialog: false,
-      }
+  data() {
+    return {
+      dialog: false,
+      nickname: this.$store.getters.getUserName, // 회원 닉네임 store에서 불러오기
+    }
   },
-};
+  methods: {
+    // 로그아웃 기능 구현
+    onClickLogout() {
+      localStorage.clear()
+      this.$store.dispatch('LOGOUT').then(() => this.$router.replace(`/`))
+    },
+  },
+}
 </script>
 
 <style scoped>
-  .user_delete_btn {
-    max-width: 70px;
-    align-self: center;
-  }
-  .user_delete_modal_text {
-    text-align: center;
-  }
-  .user_delete_modal_btn {
-    justify-content: center;
-  }
+.user_delete_btn {
+  max-width: 70px;
+  align-self: center;
+}
+.user_delete_modal_text {
+  text-align: center;
+}
+.user_delete_modal_btn {
+  justify-content: center;
+}
 </style>

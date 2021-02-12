@@ -43,8 +43,7 @@
         </v-btn>
       </div>
       </v-container> -->
-    </v-main
-  >
+  </v-main>
 </template>
 <script>
 // import axios from "axios";
@@ -76,14 +75,22 @@
 //       });
 //   },
 //   methods: {
-    // onChangeDetail() {
-    //   this.$router.push({
-    //     name: "PlaceDetail",
-    //     params: { placeIdx: this.placeIdx, level: this.level },
-    //   });
-    // },
-  // },
+// onChangeDetail() {
+//   this.$router.push({
+//     name: "PlaceDetail",
+//     params: { placeIdx: this.placeIdx, level: this.level },
+//   });
+// },
+// },
 // };
+export default {
+  // data() {
+  //     return {isLogin: false};
+  // },
+  // computed: {
+  //   ...mapGetters(['getAccessToken', 'getUserId', 'getUserName']),
+  // },
+}
 </script>
 <style>
 /* .goback {

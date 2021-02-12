@@ -1,88 +1,92 @@
-// import Vue from "vue";
-// import Vuex from "vuex";
-// import axios from "axios";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
 // // import router from "../router/index"
 
-// Vue.use(Vuex);
+Vue.use(Vuex)
 
-// // const SERVER_URL = "https://localhost:3000"
+export default new Vuex.Store({
+  state: {
+    // email: '',
+    userNickname: '',
+    //     accessToken:null,
+    loginChk: false,
+  },
+  getters: {
+    //   getAccessToken(state) {
+    //     if (localStorage.accessToken && typeof localStorage.accessToken != "undefined")
+    //         return localStorage.accessToken;
+    //     else
+    //         return state.accessToken;
+    //     }
+    // ,
+    getLoginChk(state) {
+      if (localStorage.loginChk) return localStorage.loginChk
+      return state.loginChk
+    },
+    // getEmail(state) {
+    //   console.log('로그인 email')
+    //   if (localStorage.email) return localStorage.email
+    //   return state.email
+    // },
+    getUserName(state) {
+      console.log("state.userNicname은"+state.userNickname)
+      if (localStorage.userNickname) return localStorage.userNickname
+      return state.userNickname
+    },
+  },
+  mutations: {
+    // payload 가 response
+    LOGIN(state, payload) {
+      // state.accessToken = accessToken
+      if (payload['status'] === false) {
+        // 로그인 실패
+        console.log('로그인 실패')
+        this.loginChk = false
+      } else {
+        console.log('로그인 성공')
+        state.loginChk = true
+        //   state.accessToken = payload["auth-token"];
+        // state.email = payload["email"];
+        state.userNickname = payload['data']
+        //   localStorage.accessToken = state.accessToken;
+        localStorage.email = state.email
+        localStorage.userNickname = state.userNickname
+      }
+    },
+    LOGOUT(state) {
+      // state.accessToken = null;
+      state.userNickName = ''
+      localStorage.clear()
+      state.loginChk = false
+    },
+  },
+  actions: {
+    LOGIN(context, user) {
+      return axios({
+        method: 'post',
+        url: 'https://i4a201.p.ssafy.io:8080/user/login',
 
-// export default new Vuex.Store({
-//   state: {
-//     accessToken:null,
-//     // userId:"",
-//     // userNickName:"",
-//     loginChk:false,
-//   },
-//   getters:{
-//     getAccessToken(state) {
-//       if (localStorage.accessToken && typeof localStorage.accessToken != "undefined") 
-//           return localStorage.accessToken;
-//       else 
-//           return state.accessToken;
-//       }
-//   ,
-//   // getUserId(state) {
-//   //   console.log("로그인 상태")
-//   //     if (localStorage.userId) 
-//   //         return localStorage.userId;
-//   //     return state.userId;
-//   // },
-//   // getUserName(state) {
-//   //     if (localStorage.userNickName) 
-//   //         return localStorage.userNickName;
-//   //     return state.userNickName;
-//   // }
-//   },
-//   mutations: {
-//     LOGIN(state, payload) {
-//       console.log(payload);
-//       // state.accessToken = accessToken
-//       if (payload["message"] == "false") { // 로그인 실패
-//           this.$router.replace(`/`);
-//           this.loginChk = false;
-//       } else {
-//           this.loginChk = true;
-//           state.accessToken = payload["auth-token"];
-//           // state.userId = payload["email"];
-//           // state.userNickName = payload["user-nickname"];
-//           localStorage.accessToken = state.accessToken;
-//           // localStorage.userId = state.userId;
-//           // localStorage.userNickName = state.userNickName;
-//       }
-//   },
-//   LOGOUT(state) {
-//       state.accessToken = null;
-//       // state.userId = "";
-//       // state.userNickName = "";
-//       localStorage.clear();
-//       this.loginChk = false;
-//   },
-//   },
-//   actions: {
-//     LOGIN(context, user) {
-//       // axios     .defaults     .headers     .post['Access-Control-Allow-Origin'] =
-//       // '*';
-//       return axios
-      
-//           .post("https://i4a201.p.ssafy.io:8080/user/login", user)
-//           .then((response) => {
-//             console.log("로그인됨");
-//               context.commit("LOGIN", response.data);
-//               axios
-//                   .defaults
-//                   .headers
-//                   .common["auth-token"] = `${response
-//                   .data["auth-token"]}`;
-//           });
-//   },
-//   LOGOUT(context) {
-//       context.commit("LOGOUT");
-//       axios
-//           .defaults
-//           .headers
-//           .common["auth-token"] = undefined;
-//   }
-//   },
-//   modules: {}
-// });
+        params: {
+          email: user.email,
+          password: user.password,
+        },
+      }).then((response) => {
+        context.commit('LOGIN', response.data)
+        // axios
+        //     .defaults
+        //     .headers
+        //     .common["auth-token"] = `${response
+        //     .data["auth-token"]}`;
+      })
+    },
+    LOGOUT(context) {
+      context.commit('LOGOUT')
+      // axios
+      //     .defaults
+      //     .headers
+      //     .common["auth-token"] = undefined;
+    },
+  },
+  modules: {},
+})
