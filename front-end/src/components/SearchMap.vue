@@ -13,6 +13,7 @@ export default {
   data: function() {
     return {
       map: '',
+      clicked_overlay: null,
       initPos: { lat: '37.5013068', lng: '127.0385654' },
       items: [
       ],
@@ -23,6 +24,7 @@ export default {
       centerLon: this.$route.query.centerLon,
       level: this.$route.query.currentLevel,
       markers: [],
+      
     };
   },
   props: ['value'],
@@ -33,10 +35,10 @@ export default {
   },
   methods: {
     initMap() {
-      var container = document.getElementById('map');
-      var options = {
+      let container = document.getElementById('map');
+      let options = {
         center: new kakao.maps.LatLng(this.initPos.lat, this.initPos.lng),
-        level: 4,
+        level: 3,
       };
       this.map = new kakao.maps.Map(container, options);
       
@@ -46,20 +48,20 @@ export default {
       }
           
      
-      var zoomControl = new kakao.maps.ZoomControl();
+      let zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
     
     },
     nowlocation(map) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
           navigator.geolocation.getCurrentPosition(function(position) {
-              var lat = position.coords.latitude, // 위도
+              let lat = position.coords.latitude, // 위도
                   lon = position.coords.longitude; // 경도
         
-              var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+              let markerPosition  = new kakao.maps.LatLng(lat, lon); 
              
             
-               var marker = new kakao.maps.Marker({
+              let marker = new kakao.maps.Marker({
                   map: map,
                   position: markerPosition
               });
@@ -70,30 +72,30 @@ export default {
     addMarker(lat, lon) {
       // 검색결과 마커 추가
         
-          var moveLatLon = new kakao.maps.LatLng(lat, lon);
+          let moveLatLon = new kakao.maps.LatLng(lat, lon);
           // 지도 중심을 이동 시킵니다
           this.map.setCenter(moveLatLon);
 
 
           // 마커 커스텀 이미지
-          var imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
-          var imageSrc2 = 'https://ifh.cc/g/1iFQaF.png';
-          var imageSize = new kakao.maps.Size(42, 43);
-          var imageOption = {offset: new kakao.maps.Point(27, 69)};
+          let imageSrc = 'https://ifh.cc/g/kvQ1zL.png';
+          let imageSrc2 = 'https://ifh.cc/g/1iFQaF.png';
+          let imageSize = new kakao.maps.Size(42, 43);
+          let imageOption = {offset: new kakao.maps.Point(27, 69)};
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-          var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize, imageOption);
+          let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+          let markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize, imageOption);
 
           // 마커 20개 생성
-          for(var i=0; i< this.items.length; i++){
-              var tmpLat = this.items[i].placeLat;
-              var tmpLng = this.items[i].placeLon;
+          for(let i=0; i< this.items.length; i++){
+              let tmpLat = this.items[i].placeLat;
+              let tmpLng = this.items[i].placeLon;
               tmpLat = Number(tmpLat);
               tmpLng = Number(tmpLng);
              
-              var markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
-              var marker = null
+              let markerPosition  = new kakao.maps.LatLng(tmpLat, tmpLng); 
+              let marker = null
              if(this.items[i].meetProhibition === 0) {
                marker = new kakao.maps.Marker({
                   map: this.map,
@@ -110,15 +112,13 @@ export default {
                   image: markerImage2
               });
              }
-              // var content = '<div style="padding:5px;">'+this.items[i].placeName+'</div>';
-              // var content = '<div v-on:click="onChangeDetail('+this.items[i].placeIdx+')">'+this.items[i].placeName+'</div>';
-              var content = '<div class="overlay_info" style="background-color:#fff; border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;">'+
+              
+              let content = '<div class="overlay_info" style="background-color:#fff; border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;">'+
                 '<a onclick="javascript:onChangeDetail({1})" style="display: block; background: #d95050; background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center; text-decoration: none; color: #fff; padding:5px 30px 5px 10px; font-size: 14px; border-radius: 6px">'+
                 '<strong>'+'<router-link to="PlaceDetail">'+this.items[i].placeName +'</router-link>'+'</strong></a></div>';
 
-              // var content = '<div>'+this.items[i].placeName+'</div>';
-
-              var overlay = new kakao.maps.CustomOverlay({
+              
+              let overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: this.map,
                 position: markerPosition   
@@ -130,25 +130,22 @@ export default {
               // // 마커가 지도 위에 표시되도록 설정합니다
               // this.markers[i].setMap(this.map);
               marker.setMap(this.map);
-              
-              kakao.maps.event.addListener(marker, 'click', this.makeOverListener(overlay, content, this.map, markerPosition));
+             
+              kakao.maps.event.addListener(marker, 'click', () => {
+                
+                // 클릭한 오버레이가 있으면 오버레이 삭제
+                if(this.clicked_overlay !== null){
+                  this.clicked_overlay.setMap(null)
+                }
+
+                overlay.setMap(this.map)
+                this.clicked_overlay = overlay
+              });
               
           }
 
 
-    },
-   makeOverListener : (overlay, content, map, markerPosition) => {
-     return () => {
-       overlay.setMap(null);
-       overlay = new kakao.maps.CustomOverlay({
-        content: content,
-        map: map,
-        position: markerPosition   
-      });
-      overlay.setMap(map);
-    };
-  },
-  
+    }, 
     addScript() {
       const script = document.createElement('script');
       /* global kakao */
@@ -160,7 +157,7 @@ export default {
     },
     onChangeMap(value){
         
-      if(value=='mapcenter'){
+      if(value==='mapcenter'){
           axios.get('https://i4a201.p.ssafy.io:8080/map/list', {
           params: {
             keyword: this.keyword,
@@ -172,11 +169,11 @@ export default {
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          var size = this.items.length
+          let size = this.items.length
           // this.addMarker();
           this.addMarker(this.centerLat, this.centerLon);
           // 최근 받아온 마커들을 제외한 모든 마커 삭제
-           for(var j=0; j<this.markers.length-size; j++){
+           for(let j=0; j<this.markers.length-size; j++){
              this.markers[j].setMap(null)
            }
         })
@@ -184,7 +181,7 @@ export default {
           console.log(err);
         });
       }
-      else if(value=='mylocation'){
+      else if(value==='mylocation'){
          axios.get('https://i4a201.p.ssafy.io:8080/map/list', {
           params: {
             keyword: this.keyword,
@@ -196,11 +193,11 @@ export default {
         .then((res) => {
           // console.log(res);
           this.items = res.data;
-          var size = this.items.length
+          let size = this.items.length
           // this.addMarker();
           this.addMarker(this.lat, this.lon);
           // 최근 받아온 마커들을 제외한 모든 마커 삭제
-           for(var j=0; j<this.markers.length-size; j++){
+           for(let j=0; j<this.markers.length-size; j++){
              this.markers[j].setMap(null)
            }
         })

@@ -56,7 +56,7 @@
 }
 .searchButton {
   float: left;
-  width: 23%;
+  width: 20%;
   height: 40px !important;
   margin-left: 3%;
   margin-right: 7%;
