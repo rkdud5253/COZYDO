@@ -128,14 +128,14 @@ export default {
       });
     },
     onList(value){
-        if(value != this.oldValue){
+        if(value !== this.oldValue){
             console.log(value + " " + this.oldValue)
             this.onChangeList(value)
             this.oldValue = value;
         }
     },
     onChangeList(value){
-      if(value=='mapcenter'){
+      if(value==='mapcenter'){
         this.items = [],
         axios
         .get("https://i4a201.p.ssafy.io:8080/map/list", {
@@ -156,7 +156,7 @@ export default {
 
 
       }
-      else if(value=='mylocation'){
+      else if(value==='mylocation'){
         this.items = [],
         axios
         .get("https://i4a201.p.ssafy.io:8080/map/list", {

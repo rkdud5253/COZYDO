@@ -8,7 +8,7 @@
       <v-btn color="#FF8199" class="searchButton" dark @click="onChangeList">
         <v-icon>mdi-format-list-bulleted-square</v-icon>
         <v-spacer></v-spacer>
-        리스트
+        목록
       </v-btn>
      
       <v-text-field
@@ -57,7 +57,7 @@
 }
 .searchButton {
   float: left;
-  width: 23%;
+  width: 20%;
   height: 40px !important;
   margin-left: 3%;
   margin-right: 7%;

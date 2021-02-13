@@ -170,6 +170,7 @@ export default {
             data: this.member
           }).then((res) => {
             console.log(res)
+            this.$router.go('/login')
           }).catch((err) => {
             console.log(err)
           })

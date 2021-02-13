@@ -20,7 +20,7 @@
             </div>
           </v-card>
         <v-col
-          v-for="(item, i) in items"
+          v-for="(sido, i) in sidoList"
           :key="i"
           cols="12"
           
@@ -31,15 +31,15 @@
           >
             <div class="d-flex flex-no-wrap">
               <div class="card-sub" style="flex: 1.5 1 0%;">
-                <v-card-subtitle v-text="item.gubun" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
+                <v-card-subtitle v-text="sido.gubun" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
               </div>
 
               <div class="card-sub" style="flex: 1.8 1 0%;">
-                <v-card-subtitle v-text="item.decideCnt" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
+                <v-card-subtitle v-text="sido.decideCnt" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
               </div>
 
               <div class="card-sub" style="flex: 1.0 1 0%;">
-                <v-card-subtitle v-text="item.today_DecideCnt" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
+                <v-card-subtitle v-text="sido.today_DecideCnt" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
               </div>
 
             </div>
@@ -48,13 +48,14 @@
     </div>
 </template>
 <script>
-import axios from "axios";
+
 export default {
   name: "CoronaSidoList",
   components: {},
+  props:['sidoList'],
   data: function() {
     return {
-      items: [
+      // items: [
       //   {'gubun':'서울', 'decideCnt':'100', 'today_DecideCnt':'23232'}, 
       // {'gubun':'경기', 'decideCnt':'8', 'today_DecideCnt':'232132'},
       // {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
@@ -64,7 +65,7 @@ export default {
       //     {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
       //      {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
       //       {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      ],
+      // ],
       colors: ['#fcfcfc', '#f5f2f2']
     };
   },
@@ -75,25 +76,25 @@ export default {
             }
   },
   mounted() {
-      axios.get('https://i4a201.p.ssafy.io:8080/crawling/sidoconfirmed')
-            .then((res) => {
-              this.items = res.data.object
+      // axios.get('https://i4a201.p.ssafy.io:8080/crawling/sidoconfirmed')
+      //       .then((res) => {
+      //         this.items = res.data.object
               
-              // 총 확진자 수 내림차순 정렬
-              this.items.sort(function(a, b) { 
-                return a.decideCnt > b.decideCnt ? -1 : a.decideCnt < b.decideCnt ? 1 : 0; 
-              });
+      //         // 총 확진자 수 내림차순 정렬
+      //         this.items.sort(function(a, b) { 
+      //           return a.decideCnt > b.decideCnt ? -1 : a.decideCnt < b.decideCnt ? 1 : 0; 
+      //         });
 
-              // gubun이 '검역'인 field 삭제
-              const itemToFind = this.items.find(function(item) {return item.gubun === '검역'}) 
-              const idx = this.items.indexOf(itemToFind) 
-              if (idx > -1) this.items.splice(idx, 1)
+      //         // gubun이 '검역'인 field 삭제
+      //         const itemToFind = this.items.find(function(item) {return item.gubun === '검역'}) 
+      //         const idx = this.items.indexOf(itemToFind) 
+      //         if (idx > -1) this.items.splice(idx, 1)
 
 
-              console.log(this.items)
-          }).catch((err) => {
-            console.log(err)
-          })
+      //         console.log(this.items)
+      //     }).catch((err) => {
+      //       console.log(err)
+      //     })
   }
 
 }

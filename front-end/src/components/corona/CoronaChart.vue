@@ -8,18 +8,19 @@
 
 <script>
   import BarChart from '@/components/corona/BarChart'
-  import axios from "axios";
   export default {
     name: 'CoronaChart',
     components: {
       BarChart,
     },
+    props: ['chartList'],
     data: function() {
     return {
             local: [],
             overflow: [],
             datetime: [],
             loaded: false
+
         }
     },
     methods: {
@@ -32,24 +33,32 @@
         //   })
         // }
     },
-    mounted() {
-        // this.getData()
-    },
-   created() {
-     axios.get('https://i4a201.p.ssafy.io:8080/crawling/weekconfirmed')
-            .then((res) => {
-              console.log(res)
-              const len = res.data.object.length
-              for(var i=0; i<len; i++){
-                this.local[i] = res.data.object[len-i-1].local
-                this.overflow[i] = res.data.object[len-i-1].overflow
-                this.datetime[i] = res.data.object[len-i-1].createDt
-              }
-              this.loaded = true
-          }).catch((err) => {
-            console.log(err)
-          })
-   }
-    
+    watch: {
+      chartList()  {
+        console.log(this.chartList)
+        const len = this.chartList.length
+        for(let i=0; i<len; i++){
+          this.local[i] = this.chartList[len-i-1].local
+          this.overflow[i] = this.chartList[len-i-1].overflow
+          this.datetime[i] = this.chartList[len-i-1].createDt
+        }
+        this.loaded = true
+      }
+    }
+  //  created() {
+  //    axios.get('https://i4a201.p.ssafy.io:8080/crawling/weekconfirmed')
+  //           .then((res) => {
+  //             console.log(res)
+  //             const len = res.data.object.length
+  //             for(let i=0; i<len; i++){
+  //               this.local[i] = res.data.object[len-i-1].local
+  //               this.overflow[i] = res.data.object[len-i-1].overflow
+  //               this.datetime[i] = res.data.object[len-i-1].createDt
+  //             }
+  //             this.loaded = true
+  //         }).catch((err) => {
+  //           console.log(err)
+  //         })
+  //  }
   }
 </script>
