@@ -80,9 +80,6 @@
                   >
                     <p style="font-size: small; color: #616161;">
                       일일확진자
-                      <!-- <span class="mx-1" style="font-weight: bolder; color: #F50057;">
-                        {{ today_DecideCnt }}
-                      </span> -->
                     </p>
                   </div>
               </v-card>
@@ -137,9 +134,9 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: "CoronaInformation",
+  props: ['todayInfo'],
   data: function() {
     return {
       crawlingTodayConfirmed: [],
@@ -151,54 +148,52 @@ export default {
       today_DeathCnt: '', // 일일 사망자 수
       local: '', // 일일 확진자 중 국내발생
       overflow: '', // 일일 확진자 중 해외유입
-
-      /* 
-      "object": {
-        "gubun": "합계",                         
-        "createDt": "2021-02-08",        - 정보 제공 날짜
-        "decideCnt": 81185,              - 누적 확진자수
-        "clearcnt": 71218,               - 누적 격리해제수
-        "deathCnt": 1474,                - 누적 사망자수
-        "today_DecideCnt": 289,          - 일일 확진자수
-        "today_Clearcnt": 353,           - 일일 격리해제수
-        "today_DeathCnt": 3,             - 일일 사망자수
-        "local": 264                     - 일일확진자/국내발생
-        "overflow": 25,                  - 일일확진자/해외유입
-      }
-      */
     };
   },
   created() {
-    this.loadCoronaTodayInfo();
+    // this.loadCoronaTodayInfo();
   },
   methods: {
-    loadCoronaTodayInfo() {
-      // console.log('코로나 정보 가져오기')
-      axios
-        .get("https://i4a201.p.ssafy.io:8080/crawling/todayconfirmed", {
-          params: {
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          this.crawlingTodayConfirmed = res.data.object
-          // console.log(this.crawlingTodayConfirmed.decideCnt.toLocaleString('ko-KR'))
+    // loadCoronaTodayInfo() {
+    //   // console.log('코로나 정보 가져오기')
+    //   axios
+    //     .get("https://i4a201.p.ssafy.io:8080/crawling/todayconfirmed", {
+    //       params: {
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.crawlingTodayConfirmed = res.data.object
+    //       // console.log(this.crawlingTodayConfirmed.decideCnt.toLocaleString('ko-KR'))
           
-          // 따로따로 천의자리마다 ,찍어서 넣어주기!
-          this.decideCnt = res.data.object.decideCnt.toLocaleString('ko-KR')
-          this.clearcnt = res.data.object.clearcnt.toLocaleString('ko-KR')
-          this.deathCnt = res.data.object.deathCnt.toLocaleString('ko-KR')
-          this.today_DecideCnt = res.data.object.today_DecideCnt.toLocaleString('ko-KR')
-          this.today_Clearcnt = res.data.object.today_Clearcnt.toLocaleString('ko-KR')
-          this.today_DeathCnt = res.data.object.today_DeathCnt.toLocaleString('ko-KR')
-          this.local = res.data.object.local.toLocaleString('ko-KR')
-          this.overflow = res.data.object.overflow.toLocaleString('ko-KR')
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    //       // 따로따로 천의자리마다 ,찍어서 넣어주기!
+    //       this.decideCnt = res.data.object.decideCnt.toLocaleString('ko-KR')
+    //       this.clearcnt = res.data.object.clearcnt.toLocaleString('ko-KR')
+    //       this.deathCnt = res.data.object.deathCnt.toLocaleString('ko-KR')
+    //       this.today_DecideCnt = res.data.object.today_DecideCnt.toLocaleString('ko-KR')
+    //       this.today_Clearcnt = res.data.object.today_Clearcnt.toLocaleString('ko-KR')
+    //       this.today_DeathCnt = res.data.object.today_DeathCnt.toLocaleString('ko-KR')
+    //       this.local = res.data.object.local.toLocaleString('ko-KR')
+    //       this.overflow = res.data.object.overflow.toLocaleString('ko-KR')
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   },
+  watch: {
+    todayInfo() {
+      // 천의자리마다 쉼표(,) 찍어서 넣어주기
+      this.decideCnt = this.todayInfo[0].decideCnt.toLocaleString('ko-KR')
+      this.clearcnt = this.todayInfo[0].clearcnt.toLocaleString('ko-KR')
+      this.deathCnt = this.todayInfo[0].deathCnt.toLocaleString('ko-KR')
+      this.today_DecideCnt = this.todayInfo[0].today_DecideCnt.toLocaleString('ko-KR')
+      this.today_Clearcnt = this.todayInfo[0].today_Clearcnt.toLocaleString('ko-KR')
+      this.today_DeathCnt = this.todayInfo[0].today_DeathCnt.toLocaleString('ko-KR')
+      this.local = this.todayInfo[0].local.toLocaleString('ko-KR')
+      this.overflow = this.todayInfo[0].overflow.toLocaleString('ko-KR')
+    }
+  }
 };
 </script>
 

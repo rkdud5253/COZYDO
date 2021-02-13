@@ -16,9 +16,7 @@ export default {
   name: 'CoronaTopNav',
   data: function() {
     return {
-      crawlingTodayConfirmed: [],
       today_DecideCnt: '',
-      createDt: '',
     }
   },
   created() {
@@ -27,20 +25,12 @@ export default {
   methods: {
     loadInfo() {
       axios
-        .get('https://i4a201.p.ssafy.io:8080/crawling/todayconfirmed', {
+        .get('https://i4a201.p.ssafy.io:8080/crawling/confirmed', {
           params: {},
         })
         .then((res) => {
           console.log(res)
-          this.crawlingTodayConfirmed = res.data.object
-
-          // 일일 확진자 수
-          this.createDt = res.data.object.createDt
-          this.today_DecideCnt = res.data.object.today_DecideCnt.toLocaleString('ko-KR')
-
-          //   var moment = require('moment')
-          //   var date = this.createDt
-          //   this.createDt = moment(date).format("M") + '월 ' + moment(date).format("D") + '일'
+          this.today_DecideCnt = res.data.object[0][0].today_DecideCnt.toLocaleString('ko-KR')
         })
         .catch((err) => {
           console.log(err)

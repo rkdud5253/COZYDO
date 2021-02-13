@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <CoronaInformation />
+    <CoronaInformation :todayInfo="this.items[0]"/>
     <CoronaChart :chartList="this.items[2]"/>
     <CoronaSidoList :sidoList="this.items[1]"/>
   </v-app>
