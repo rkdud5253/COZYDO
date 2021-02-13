@@ -2,6 +2,7 @@ package com.cozydo.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -99,126 +100,110 @@ public class CoronaService {
 		}
 	}
 
-	public Object TodayConfirmed(String Classification) {
+	public Object Confirmed() {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 
-		List<String[]> list = coronaApi.Classification("today");
+		List<ArrayList<String[]>> list = coronaApi.Classification();
 		if (list.size() == 0) {
 			result.status = false;
 			result.data = "false";
 			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
-			String gubun = list.get(0)[0];
-			String date = list.get(0)[1];
-			int DeathCnt = Integer.parseInt(list.get(0)[2]);
-			int DecideCnt = Integer.parseInt(list.get(0)[3]);
-			int Clearcnt = Integer.parseInt(list.get(0)[5]);
-			int Today_DeathCnt = Integer.parseInt(list.get(0)[2]) - Integer.parseInt(list.get(1)[2]);
-			int Today_DecideCnt = Integer.parseInt(list.get(0)[4]);
-			int Today_Clearcnt = Integer.parseInt(list.get(0)[5]) - Integer.parseInt(list.get(1)[5]);
-			int Local = Integer.parseInt(list.get(0)[6]);
-			int Overflow = Integer.parseInt(list.get(0)[7]);
-			CoronaInfomation corona = new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt,
-					Today_DecideCnt, Today_Clearcnt, Local, Overflow);
+
+			List<CoronaInfomation> today = TodayConfirmed(list.get(0));
+			List<CoronaInfomation> sido = SidoConfirmed(list.get(1));
+			List<CoronaInfomation> week = WeekConfirmed(list.get(2));
+			List<List<CoronaInfomation>> AllList = new ArrayList<List<CoronaInfomation>>();
+			AllList.add(today);
+			AllList.add(sido);
+			AllList.add(week);
 
 			result.status = true;
 			result.data = "success";
-			result.object = corona;
+			result.object = AllList;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
 	}
 
-	public Object SidoConfirmed(String Classification) {
-		ResponseEntity response = null;
-		final BasicResponse result = new BasicResponse();
-
-		List<String[]> list = coronaApi.Classification("sido");
-		if (list.size() == 0) {
-			result.status = false;
-			result.data = "false";
-			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
-			response = new ResponseEntity<>(result, HttpStatus.OK);
-		} else {
-			List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
-			String gubun = "";
-			String date = "";
-			int DeathCnt = 0;
-			int DecideCnt = 0;
-			int Clearcnt = 0;
-			int Today_DeathCnt = 0;
-			int Today_DecideCnt = 0;
-			int Today_Clearcnt = 0;
-			int Local = 0;
-			int Overflow = 0;
-
-			for (int i = 0; i < 18; i++) {
-				gubun = list.get(i)[0];
-				date = list.get(i)[1];
-				DeathCnt = Integer.parseInt(list.get(i)[2]);
-				DecideCnt = Integer.parseInt(list.get(i)[3]);
-				Clearcnt = Integer.parseInt(list.get(i)[5]);
-				Local = Integer.parseInt(list.get(i)[6]);
-				Overflow = Integer.parseInt(list.get(i)[7]);
-				Today_DeathCnt = Integer.parseInt(list.get(i)[2]) - Integer.parseInt(list.get(i + 18)[2]);
-				Today_DecideCnt = Integer.parseInt(list.get(i)[4]);
-				Today_Clearcnt = Integer.parseInt(list.get(i)[5]) - Integer.parseInt(list.get(i + 18)[5]);
-				info.add(new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt,
-						Today_DecideCnt, Today_Clearcnt, Local, Overflow));
-			}
-			result.status = true;
-			result.data = "success";
-			result.object = info;
-			response = new ResponseEntity<>(result, HttpStatus.OK);
-		}
-		return response;
+	private List<CoronaInfomation> TodayConfirmed(List<String[]> list) {
+		List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
+		String gubun = list.get(0)[0];
+		String date = list.get(0)[1];
+		int DeathCnt = Integer.parseInt(list.get(0)[2]);
+		int DecideCnt = Integer.parseInt(list.get(0)[3]);
+		int Clearcnt = Integer.parseInt(list.get(0)[5]);
+		int Today_DeathCnt = Integer.parseInt(list.get(0)[2]) - Integer.parseInt(list.get(1)[2]);
+		int Today_DecideCnt = Integer.parseInt(list.get(0)[4]);
+		int Today_Clearcnt = Integer.parseInt(list.get(0)[5]) - Integer.parseInt(list.get(1)[5]);
+		int Local = Integer.parseInt(list.get(0)[6]);
+		int Overflow = Integer.parseInt(list.get(0)[7]);
+		info.add(new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt, Today_DecideCnt,
+				Today_Clearcnt, Local, Overflow));
+		return info;
 	}
 
-	public Object WeekConfirmed(String Classification) {
-		ResponseEntity response = null;
-		final BasicResponse result = new BasicResponse();
+	private List<CoronaInfomation> SidoConfirmed(List<String[]> list) {
+		List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
+		String gubun = "";
+		String date = "";
+		int DeathCnt = 0;
+		int DecideCnt = 0;
+		int Clearcnt = 0;
+		int Today_DeathCnt = 0;
+		int Today_DecideCnt = 0;
+		int Today_Clearcnt = 0;
+		int Local = 0;
+		int Overflow = 0;
 
-		List<String[]> list = coronaApi.Classification("week");
-		if (list.size() == 0) {
-			result.status = false;
-			result.data = "false";
-			result.object = "트레픽 초과 또는 정보를 읽을 수 없습니다.";
-			response = new ResponseEntity<>(result, HttpStatus.OK);
-		} else {
-			List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
-			int size = 7;
-			String gubun = "";
-			String date = "";
-			int DeathCnt = 0;
-			int DecideCnt = 0;
-			int Clearcnt = 0;
-			int Today_DeathCnt = 0;
-			int Today_DecideCnt = 0;
-			int Today_Clearcnt = 0;
-			int Local = 0;
-			int Overflow = 0;
-
-			for (int i = 0; i < size; i++) {
-				gubun = list.get(i)[0];
-				date = list.get(i)[1];
-				DeathCnt = Integer.parseInt(list.get(i)[2]);
-				DecideCnt = Integer.parseInt(list.get(i)[3]);
-				Clearcnt = Integer.parseInt(list.get(i)[5]);
-				Local = Integer.parseInt(list.get(i)[6]);
-				Overflow = Integer.parseInt(list.get(i)[7]);
-				Today_DecideCnt = Integer.parseInt(list.get(i)[4]);
-				Today_DeathCnt = Integer.parseInt(list.get(i)[2]) - Integer.parseInt(list.get(i + 1)[2]);
-				Today_Clearcnt = Integer.parseInt(list.get(i)[5]) - Integer.parseInt(list.get(i + 1)[5]);
-				info.add(new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt,
-						Today_DecideCnt, Today_Clearcnt, Local, Overflow));
-			}
-			result.status = true;
-			result.data = "success";
-			result.object = info;
-			response = new ResponseEntity<>(result, HttpStatus.OK);
+		for (int i = 0; i < 18; i++) {
+			gubun = list.get(i)[0];
+			date = list.get(i)[1];
+			DeathCnt = Integer.parseInt(list.get(i)[2]);
+			DecideCnt = Integer.parseInt(list.get(i)[3]);
+			Clearcnt = Integer.parseInt(list.get(i)[5]);
+			Local = Integer.parseInt(list.get(i)[6]);
+			Overflow = Integer.parseInt(list.get(i)[7]);
+			Today_DeathCnt = Integer.parseInt(list.get(i)[2]) - Integer.parseInt(list.get(i + 18)[2]);
+			Today_DecideCnt = Integer.parseInt(list.get(i)[4]);
+			Today_Clearcnt = Integer.parseInt(list.get(i)[5]) - Integer.parseInt(list.get(i + 18)[5]);
+			info.add(new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt, Today_DecideCnt,
+					Today_Clearcnt, Local, Overflow));
 		}
-		return response;
+
+		return info;
+	}
+
+	private List<CoronaInfomation> WeekConfirmed(List<String[]> list) {
+		List<CoronaInfomation> info = new ArrayList<CoronaInfomation>();
+		int size = 7;
+		String gubun = "";
+		String date = "";
+		int DeathCnt = 0;
+		int DecideCnt = 0;
+		int Clearcnt = 0;
+		int Today_DeathCnt = 0;
+		int Today_DecideCnt = 0;
+		int Today_Clearcnt = 0;
+		int Local = 0;
+		int Overflow = 0;
+
+		for (int i = 0; i < size; i++) {
+			gubun = list.get(i)[0];
+			date = list.get(i)[1];
+			DeathCnt = Integer.parseInt(list.get(i)[2]);
+			DecideCnt = Integer.parseInt(list.get(i)[3]);
+			Clearcnt = Integer.parseInt(list.get(i)[5]);
+			Local = Integer.parseInt(list.get(i)[6]);
+			Overflow = Integer.parseInt(list.get(i)[7]);
+			Today_DecideCnt = Integer.parseInt(list.get(i)[4]);
+			Today_DeathCnt = Integer.parseInt(list.get(i)[2]) - Integer.parseInt(list.get(i + 1)[2]);
+			Today_Clearcnt = Integer.parseInt(list.get(i)[5]) - Integer.parseInt(list.get(i + 1)[5]);
+			info.add(new CoronaInfomation(gubun, date, DeathCnt, DecideCnt, Clearcnt, Today_DeathCnt, Today_DecideCnt,
+					Today_Clearcnt, Local, Overflow));
+		}
+		return info;
 	}
 }
