@@ -4,8 +4,6 @@ import Main from "../views/Main.vue";
 import SearchResultList from "../views/search/SearchResultList.vue";
 import SearchResultMap from "../views/search/SearchResultMap.vue";
 import PlaceDetail from "../components/place/PlaceDetail.vue";
-import PlaceModify from "../components/place/PlaceModify.vue";
-import PlaceReview from "../components/place/PlaceReview.vue";
 import Register from "../views/member/Register.vue";
 import Login from "../views/member/Login.vue";
 import Information from "../views/Information.vue";
@@ -40,22 +38,6 @@ const routes = [
     component: PlaceDetail,
     meta: {
       title: '코지도 | 장소상세',
-    },
-  },
-  {
-    path: "/placeModify",
-    name: "PlaceModify",
-    component: PlaceModify,
-    meta: {
-      title: '코지도 | 수정제안',
-    },
-  },
-  {
-    path: "/placeReview",
-    name: "PlaceReview",
-    component: PlaceReview,
-    meta: {
-      title: '코지도 | 리뷰작성',
     },
   },
   {

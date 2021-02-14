@@ -66,7 +66,7 @@
     > -->
       <div style="width: 100%; margin-top: 30px">
         <v-btn style="width: 49%" text color="grey"> 비밀번호 찾기 </v-btn>
-        <v-btn style="width: 49%" text color="#F85F6A"> 회원가입 </v-btn>
+        <v-btn style="width: 49%" @click="goRegister" text color="#F85F6A"> 회원가입 </v-btn>
       </div>
     </v-form>
   </div>
@@ -193,6 +193,13 @@ export default {
       //                 }
       //             })
       //         },
+    },
+    // reset() {
+    //   alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다. 다시 로그인해주세요')
+    //   history.go(0)
+    // },
+    goRegister() {
+      this.$router.replace(`/register`)
     },
   },
 }

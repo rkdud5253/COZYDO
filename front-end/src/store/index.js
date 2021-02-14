@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-// // import router from "../router/index"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // email: '',
+    email: '',
     userNickname: '',
+    userIdx: '',
     //     accessToken:null,
     loginChk: false,
   },
@@ -24,11 +24,16 @@ export default new Vuex.Store({
       if (localStorage.loginChk) return localStorage.loginChk
       return state.loginChk
     },
-    // getEmail(state) {
-    //   console.log('로그인 email')
-    //   if (localStorage.email) return localStorage.email
-    //   return state.email
-    // },
+    getEmail(state) {
+      console.log('로그인 email')
+      if (localStorage.email) return localStorage.email
+      return state.email
+    },
+    getUserIdx(state) {
+      console.log('로그인 userIdx')
+      if (localStorage.userIdx) return localStorage.userIdx
+      return state.userIdx
+    },
     getUserName(state) {
       console.log("state.userNicname은"+state.userNickname)
       if (localStorage.userNickname) return localStorage.userNickname
@@ -47,11 +52,15 @@ export default new Vuex.Store({
         console.log('로그인 성공')
         state.loginChk = true
         //   state.accessToken = payload["auth-token"];
-        // state.email = payload["email"];
-        state.userNickname = payload['data']
-        //   localStorage.accessToken = state.accessToken;
+        state.email = payload['object'].email;
         localStorage.email = state.email
+        state.userNickname = payload['object'].nickname;
         localStorage.userNickname = state.userNickname
+        state.userIdx = payload['object'].idx
+        console.log(payload['object'].idx)
+        console.log(state.userIdx)
+        localStorage.userIdx = state.idx
+        //   localStorage.accessToken = state.accessToken;
       }
     },
     LOGOUT(state) {
