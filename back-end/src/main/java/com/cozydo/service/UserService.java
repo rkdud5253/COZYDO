@@ -1,7 +1,9 @@
 package com.cozydo.service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,7 @@ public class UserService {
 	public Object Login(String email, String password) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
+		Map<String, String> map = new HashMap<String, String>();
 
 		Optional<User> user = userDao.getUserByEmail(email);
 		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
@@ -79,9 +82,12 @@ public class UserService {
 				result.data = "이메일 인증 후 로그인 해주세요.";
 				response = new ResponseEntity<>(result, HttpStatus.OK);
 			} else { // 인증이 된 아이디라면
+				map.put("idx", Long.toString(user.get().getUserIdx()));
+				map.put("nickname", user.get().getNickname());
+				map.put("email", user.get().getEmail());
 				result.status = true;
-				result.data = user.get().getNickname();
-				result.object = jwtTokenProvider.createToken(user.get().getUsername(), user.get().getRoles());
+				result.data = jwtTokenProvider.createToken(user.get().getUsername(), user.get().getRoles());
+				result.object = map;
 				response = new ResponseEntity<>(result, HttpStatus.OK);
 			}
 		} else {
