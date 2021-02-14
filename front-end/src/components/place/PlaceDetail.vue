@@ -25,7 +25,10 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <table id="place">
+      <table
+        id="place"
+        style="border: 1px solid black; padding-left:18px; border-radius:4px; margin-bottom:10px;"
+      >
         <tr>
           <td></td>
           <td>
@@ -180,7 +183,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   style="padding:0 35px; width:45%;"
-                  color="primary"
+                  color="#fc355d"
                   dark
                   v-bind="attrs"
                   v-on="on"
@@ -189,7 +192,7 @@
                 </v-btn>
               </template>
               <v-card>
-                <v-card-title>
+                <v-card-title class="justify-center">
                   <span class="headline">리뷰 작성</span>
                 </v-card-title>
                 <v-card-text>
@@ -198,6 +201,7 @@
                       <v-col cols="12">
                         <v-rating
                           v-model="rating"
+                          style="text-align:center;"
                           background-color="orange lighten-3"
                           color="orange"
                           medium
@@ -237,16 +241,17 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   style="margin-left:25px;width:33%;width:45%;"
-                  color="primary"
+                  color="#fc355d"
                   dark
                   v-bind="attrs"
                   v-on="on"
+                  @click="dialog = false"
                 >
                   가게 정보 수정
                 </v-btn>
               </template>
               <v-card>
-                <v-card-title>
+                <v-card-title class="justify-center">
                   <span class="headline">수정 제안</span>
                 </v-card-title>
                 <v-card-text>
@@ -354,8 +359,8 @@
       </table>
     </v-container>
 
-    <div style="margin-left:20px;padding-left:10px;">
-      <h3>
+    <div style="margin-left:20px;padding-left:13px;">
+      <h3 style="margin-left: 4px;">
         영업시간
         <span style="margin-left:30px;color:grey;">{{ openingHours }}</span>
       </h3>
@@ -363,7 +368,7 @@
     </div>
 
     <br />
-    <h4 style="margin-left:20px;padding-left:10px;margin-bottom:10px;">
+    <h4 style="margin-left:25px;padding-left:10px;margin-bottom:10px;">
       장소 리뷰
     </h4>
     <!-- 리뷰 불러오기 부분 -->
@@ -389,7 +394,7 @@
           <h4 style="margin-bottom:5px;">{{ item.content }}</h4>
 
           <span style="margin-right:10px;">
-            닉네임
+            {{ item.userNickname }}
           </span>
           {{ item.writeTime }}
         </v-card-text>
@@ -416,6 +421,7 @@ export default {
       itemIcon: [],
       dialog: false,
       // 리뷰 modal관련 data
+      userIdx: this.$store.getters.getUserIdx, // 회원 닉네임 store에서 불러오기
       reviewDialog: false,
       content: '',
       rating: 0,
@@ -430,29 +436,32 @@ export default {
   },
 
   created() {
-    this.loadPublishers()
+    // this.loadPublishers()
+    console.log(this.$store.getters.getUserIdx)
+    console.log(this.$store.getters.getUserName)
+    axios
+      .get('https://i4a201.p.ssafy.io:8080/map/detail', {
+        //get방식, url 확인
+        params: {
+          // 넘겨줄 파라미터
+          placeIdx: this.placeIdx,
+          level: this.level,
+          userIdx: 1,
+        },
+      })
+      .then((res) => {
+        // 통신 성공하면
+        console.log(res)
+        this.items = res.data // 데이터 받아온다
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   methods: {
-    loadPublishers() {
-      axios
-        .get('https://i4a201.p.ssafy.io:8080/map/detail', {
-          //get방식, url 확인
-          params: {
-            // 넘겨줄 파라미터
-            placeIdx: this.placeIdx,
-            level: this.level,
-            userIdx: 1,
-          },
-        })
-        .then((res) => {
-          // 통신 성공하면
-          console.log(res)
-          this.items = res.data // 데이터 받아온다
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+    // loadPublishers() {
+
+    // },
     heartBtn() {
       if (this.heartStyle == 'color:red') {
         this.heartStyle = 'color:grey'
@@ -471,7 +480,6 @@ export default {
         })
         .then(() => {
           // 리뷰 등록하면 장소상세페이지 refresh
-          console.log('안녕')
           this.$router.go({
             name: 'PlaceDetail',
             params: { placeIdx: this.placeIdx, level: this.level },

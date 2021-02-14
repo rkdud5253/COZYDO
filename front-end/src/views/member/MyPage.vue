@@ -13,7 +13,7 @@
             </p>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <h5>godssafy@naver.com</h5>
+            <h5>{{ email }}</h5>
           </v-list-item-subtitle>
         </v-list-item-content>
 
@@ -75,6 +75,7 @@ export default {
     return {
       dialog: false,
       nickname: this.$store.getters.getUserName, // 회원 닉네임 store에서 불러오기
+      email: this.$store.getters.getEmail,
     }
   },
   methods: {
