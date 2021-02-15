@@ -32,7 +32,7 @@
           <v-expansion-panel-header disable-icon-rotate>
             <h4>{{ likePlace.placeName }}</h4>
             <template v-slot:actions>
-              <v-icon color="white">
+              <v-icon color="#fc355d">
                 mdi-arrow-right
               </v-icon>
             </template>
