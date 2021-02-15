@@ -31,8 +31,9 @@
           <v-expansion-panel-header>
             <h4>{{ placeReview.placeName }}</h4>
           </v-expansion-panel-header>
-          <v-expansion-panel-content class="mt-1">
+          <v-expansion-panel-content class="contentStyle mt-1">
             {{ placeReview.content }}
+            <v-icon @click="onChangeDetail(placeReview.placeIdx)" color="#fc355d">mdi-arrow-right</v-icon>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -46,9 +47,10 @@
 import axios from 'axios';
 export default {
   name: "MyPageReview",
+  props: ['level'],
   data: function() {
     return {
-      userIdx: 1,
+      userIdx: this.$store.getters.getUserIdx,
       placeReviews: [],
     }
   },
@@ -69,7 +71,13 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    }
+    },
+    onChangeDetail(placeIdx) {
+      this.$router.push({
+        name: "PlaceDetail",
+        params: { placeIdx: placeIdx, level: this.level },
+      });
+    },
   },
 };
 </script>
@@ -83,5 +91,8 @@ export default {
   }
   .v-card__subtitle, .v-card__text, .v-card__title {
     padding: 12px;
+  }
+  .contentStyle {
+    text-align-last: justify;
   }
 </style>

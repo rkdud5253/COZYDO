@@ -25,8 +25,8 @@
       </v-list-item>
     </v-card>
 
-    <MyPagePlace />
-    <MyPageReview />
+    <MyPagePlace :level="currentLevel"/>
+    <MyPageReview :level="currentLevel"/>
 
     <v-btn
       class="user_delete_btn mt-8 mb-12"
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import MyPagePlace from '@/components/mypage/MyPagePlace.vue'
 import MyPageReview from '@/components/mypage/MyPageReview.vue'
 export default {
@@ -76,7 +77,27 @@ export default {
       dialog: false,
       nickname: this.$store.getters.getUserName, // 회원 닉네임 store에서 불러오기
       email: this.$store.getters.getEmail,
+      currentLevel: '',
     }
+  },
+  created() {
+    axios
+        .get("https://i4a201.p.ssafy.io:8080/crawling/location", {
+          params: {
+            lat: 37.5002441,
+            lon: 127.0354716,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            // 서울 지역 레벨 받아오기 (1,2,3,4,5)
+            this.currentLevel = parseFloat(res.data.object.level)*2-1
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   },
   methods: {
     // 로그아웃 기능 구현
