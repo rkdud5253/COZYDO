@@ -42,4 +42,11 @@
 		LEFT JOIN user u on u.user_idx = r.user_idx
 		WHERE place_idx = #{placeIdx}
 	</select>
+	
+	<select id="findRatingByIdx" parameterType="map" resultType="String">
+		SELECT AVG(review_score) as rating
+		FROM review 
+		WHERE place_idx = #{placeIdx}
+		GROUP BY(place_idx);
+	</select>
 </mapper>
