@@ -114,7 +114,7 @@ export default {
              }
               
               let content = '<div class="overlay_info" style="background-color:#fff; border-radius: 6px; margin-bottom: 12px; float:left;position: relative; border: 1px solid #ccc; border-bottom: 2px solid #ddd;">'+
-                '<a onclick="javascript:onChangeDetail({1})" style="display: block; background: #d95050; background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center; text-decoration: none; color: #fff; padding:5px 30px 5px 10px; font-size: 14px; border-radius: 6px">'+
+                '<a href="/placeDetail/'+this.items[i].placeIdx+'/'+this.level+'" style="display: block; background: #d95050; background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center; text-decoration: none; color: #fff; padding:5px 30px 5px 10px; font-size: 14px; border-radius: 6px">'+
                 '<strong>'+'<router-link to="PlaceDetail">'+this.items[i].placeName +'</router-link>'+'</strong></a></div>';
 
               

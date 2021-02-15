@@ -30,7 +30,7 @@
             class="card" :class="{'on':isStateTwo(i)}"
           >
             <div class="d-flex flex-no-wrap">
-              <div class="card-sub" style="flex: 1.5 1 0%;">
+              <div class="" style="flex: 1.5 1 0%;">
                 <v-card-subtitle v-text="sido.gubun" style="color:black; font-size:14px; font-weight:700;"></v-card-subtitle>
               </div>
 
@@ -55,17 +55,6 @@ export default {
   props:['sidoList'],
   data: function() {
     return {
-      // items: [
-      //   {'gubun':'서울', 'decideCnt':'100', 'today_DecideCnt':'23232'}, 
-      // {'gubun':'경기', 'decideCnt':'8', 'today_DecideCnt':'232132'},
-      // {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //  {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //   {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //    {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //     {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //      {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      //       {'gubun':'부산', 'decideCnt':'13', 'today_DecideCnt':'232232'},
-      // ],
       colors: ['#fcfcfc', '#f5f2f2']
     };
   },
