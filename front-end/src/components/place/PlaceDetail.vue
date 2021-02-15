@@ -33,15 +33,31 @@
           <td></td>
           <td>
             <!-- 가게 상세페이지 정보 좋아요버튼, 아이콘 버튼, 장소상세정보, 거리두기 단계별 아이콘 -->
+            
+            <!-- 좋아요 버튼 안눌렀을 때 -->
             <v-btn
               style="float:right;"
               id="heartIcon"
+              v-if="this.items.isLike === 0"
               v-on:click="heartBtn"
               icon
               v-bind:style="heartStyle"
             >
               <v-icon>mdi-heart</v-icon>
             </v-btn>
+
+            <!-- 좋아요 버튼 눌렀을 때 -->
+            <v-btn
+              style="float:right;"
+              id="heartIcon"
+              v-if="this.items.isLike === 1"
+              v-on:click="heartBtn"
+              icon
+              v-bind:style="clickedHeartStyle"
+            >
+              <v-icon>mdi-heart</v-icon>
+            </v-btn>
+
           </td>
           <td style="width:27px;">
             <div style="float:right;" class="text-center">
@@ -276,7 +292,7 @@
                         ></v-text-field>
                       </v-col>
 
-                      <v-col cols="12">
+                      <!-- <v-col cols="12">
                         <div style="float: left; margin: 10px 13px 20px 0">
                           사진 첨부
                         </div>
@@ -291,7 +307,8 @@
                           show-size
                           truncate-length="15"
                         ></v-file-input
-                      ></v-col>
+                      ></v-col> -->
+
                       <v-col cols="12">
                         <div style="float: left; margin: 13px 13px 20px 0">
                           폐업 여부
@@ -303,11 +320,11 @@
                           color="primary"
                           style="width: 70%; margin-bottom: 15px"
                         >
-                          <v-btn :value="1" flat style="width: 50%">
+                          <v-btn :value="1" style="width: 50%">
                             운영중
                           </v-btn>
 
-                          <v-btn :value="2" flat style="width: 50%">
+                          <v-btn :value="2" style="width: 50%">
                             폐업
                           </v-btn>
                         </v-btn-toggle>
@@ -411,6 +428,7 @@ export default {
     return {
       Publishers: {},
       heartStyle: 'color:grey',
+      clickedHeartStyle: 'color:red',
       openingHours: '10:00 - 21:00',
       placeIdx: this.$route.params.placeIdx, // 검색 결과 list에서 넘어오는 장소 Idx
       level: this.$route.params.level,
@@ -439,6 +457,10 @@ export default {
     // this.loadPublishers()
     console.log(this.$store.getters.getUserIdx)
     console.log(this.$store.getters.getUserName)
+    if(this.userIdx === null) {
+      this.userIdx = 0
+    }
+      
     axios
       .get('https://i4a201.p.ssafy.io:8080/map/detail', {
         //get방식, url 확인
@@ -446,7 +468,7 @@ export default {
           // 넘겨줄 파라미터
           placeIdx: this.placeIdx,
           level: this.level,
-          userIdx: 1,
+          userIdx: this.userIdx
         },
       })
       .then((res) => {
@@ -463,22 +485,33 @@ export default {
 
     // },
     heartBtn() {
-      if (this.heartStyle == 'color:red') {
+      // 장소 찜을 삭제하려고 할 경우
+      if (this.items.isLike === 1) {
         this.heartStyle = 'color:grey'
+
+        axios.delete('https://i4a201.p.ssafy.io:8080/likes/delete', {  
+          params: {                                        
+            placeIdx: this.placeIdx,
+            userIdx: this.userIdx
+          }
+        })
+        .then(() => {
+          // 새로고침
+          history.go(0)
+        });
+
+      // 장소 찜을 하려는 경우
       } else {
         this.heartStyle = 'color:red'
 
         axios
-        .post('https://i4a201.p.ssafy.io:8080/like/save', {
+        .post('https://i4a201.p.ssafy.io:8080/likes/save', {
           placeIdx: this.placeIdx,
-          userIdx: 1,
+          userIdx: this.userIdx
         })
         .then(() => {
-          // 리뷰 등록하면 장소상세페이지 refresh
-          this.$router.go({
-            name: 'PlaceDetail',
-            params: { placeIdx: this.placeIdx, level: this.level },
-          })
+          // 새로고침
+          history.go(0)
         })
 
       }
@@ -490,7 +523,7 @@ export default {
           content: this.content,
           placeIdx: this.placeIdx,
           reviewScore: this.rating,
-          userIdx: 1,
+          userIdx: this.userIdx
         })
         .then(() => {
           // 리뷰 등록하면 장소상세페이지 refresh
