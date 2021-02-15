@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cozydo.dao.ClinicDao;
-import com.cozydo.dao.CoronaLevelDao;
-import com.cozydo.dao.PlaceDao;
-import com.cozydo.mapper.PlaceMapper;
-
 import com.cozydo.model.BasicResponse;
 import com.cozydo.model.place.Place;
 import com.cozydo.model.place.PlaceDto;
+import com.cozydo.model.place.PlaceResponseDto;
 import com.cozydo.service.PlaceService;
 
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +32,11 @@ public class MapController {
 
 	@GetMapping("/map/list")
 	@ApiOperation(httpMethod = "GET", value = "Place 리스트 조회", notes = "Select Place List", response = Place.class, responseContainer = "ArrayList")
-	public List<PlaceDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword,
+	public List<PlaceResponseDto> getPlaceListUsingMybatis(@RequestParam(required = true) final String keyword,
 			@RequestParam(required = true) final String level, @RequestParam(required = true) final String lat,
 			@RequestParam(required = true) final String lon) {
 
-		List<PlaceDto> response = null;
+		List<PlaceResponseDto> response = null;
 
 		response = service.findByLatAndLon(keyword, level, lat, lon);
 

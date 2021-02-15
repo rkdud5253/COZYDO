@@ -18,5 +18,7 @@ public interface PlaceMapper {
 	int getLikes(@Param("userIdx") int userIdx, @Param("placeIdx") int placeIdx);
 
 	List<ReviewResponseDto> getReview(int placeIdx);
+	
+	String findRatingByIdx(int placeIdx);
 
 }
