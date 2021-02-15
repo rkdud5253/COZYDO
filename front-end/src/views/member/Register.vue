@@ -102,9 +102,13 @@
       Reset Validation
     </v-btn> -->
   </v-form>
-    <p style="margin: 0 auto;" class="text--secondary">
+      <div style="width: 100%; margin-left:20%">
+        이미 회원이신가요?
+        <v-btn style="width:30%" @click="goLogin" text color="#fc355d"> 로그인 </v-btn>
+      </div>
+    <!-- <p style="margin: 0 auto;" class="text--secondary">
       이미 회원이신가요? <a> 로그인 </a>
-    </p>
+    </p> -->
   </v-app>
 </template>
 <script>
@@ -159,8 +163,6 @@ export default {
         if(this.$refs.form.validate()){
             // this.START_LOADING();
             // this.REQUEST_JOIN(this.member);
-          console.log(typeof(this.member.email))
-          console.log(this.member.email)
           axios({
             method: 'post',
             url: 'https://i4a201.p.ssafy.io:8080/user/signup',
@@ -176,6 +178,9 @@ export default {
           })
             
         }
+    },
+    goLogin() {
+      this.$router.push('/login')
     },
     //   reset () {
     //     this.$refs.form.reset()
