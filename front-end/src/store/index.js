@@ -59,7 +59,7 @@ export default new Vuex.Store({
         state.userIdx = payload['object'].idx
         console.log(payload['object'].idx)
         console.log(state.userIdx)
-        localStorage.userIdx = state.idx
+        localStorage.userIdx = state.userIdx
         //   localStorage.accessToken = state.accessToken;
       }
     },

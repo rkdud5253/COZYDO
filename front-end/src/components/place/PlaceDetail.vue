@@ -467,6 +467,20 @@ export default {
         this.heartStyle = 'color:grey'
       } else {
         this.heartStyle = 'color:red'
+
+        axios
+        .post('https://i4a201.p.ssafy.io:8080/like/save', {
+          placeIdx: this.placeIdx,
+          userIdx: 1,
+        })
+        .then(() => {
+          // 리뷰 등록하면 장소상세페이지 refresh
+          this.$router.go({
+            name: 'PlaceDetail',
+            params: { placeIdx: this.placeIdx, level: this.level },
+          })
+        })
+
       }
     },
     reviewSubmit() {
