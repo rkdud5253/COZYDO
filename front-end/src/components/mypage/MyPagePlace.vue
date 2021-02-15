@@ -27,6 +27,7 @@
         <v-expansion-panel
           v-for="(likePlace,i) in likePlaces"
           :key="i"
+          @click="onChangeDetail(likePlace.placeIdx)"
         >
           <v-expansion-panel-header disable-icon-rotate>
             <h4>{{ likePlace.placeName }}</h4>
@@ -49,9 +50,10 @@
 import axios from 'axios';
 export default {
   name: "MyPagePlace",
+  props: ['level'],
   data: function() {
     return {
-      userIdx: 1,
+      userIdx: this.$store.getters.getUserIdx,
       likePlaces: [],
     }
   },
@@ -72,7 +74,13 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    }
+    },
+    onChangeDetail(placeIdx) {
+      this.$router.push({
+        name: "PlaceDetail",
+        params: { placeIdx: placeIdx, level: this.level },
+      });
+    },
   },
 };
 </script>
