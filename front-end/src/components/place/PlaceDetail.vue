@@ -195,7 +195,7 @@
         <tr>
           <td colspan="3">
             <!-- 리뷰 modal -->
-            <v-dialog v-model="reviewDialog" persistent max-width="400px">
+            <v-dialog v-if="this.userIdx !== 0" v-model="reviewDialog" persistent max-width="400px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   style="padding:0 35px; width:45%;"
@@ -253,7 +253,7 @@
               </v-card>
             </v-dialog>
             <!-- 수정제안 modal -->
-            <v-dialog v-model="modifyDialog" persistent max-width="400px">
+            <v-dialog v-if="this.userIdx !== 0" v-model="modifyDialog" persistent max-width="400px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   style="margin-left:25px;width:33%;width:45%;"
@@ -393,7 +393,7 @@
       <v-card
         style="margin-bottom:10px; margin-left:20px !important; margin-right:20px !important;"
         class="mx-auto"
-        :key="item.userIdx"
+        :key="item.reviewIdx"
         outlined
       >
         <v-rating
@@ -405,8 +405,11 @@
           size="20"
           readonly
           style="padding-left: 15px;
-    padding-top: 10px;"
+                padding-top: 10px;"
         ></v-rating>
+        <v-icon style="float: right" v-if="item.userIdx == userIdx" @click.stop="reviewDeleteDialog = true">
+            mdi-delete
+          </v-icon>
         <v-card-text>
           <h4 style="margin-bottom:5px;">{{ item.content }}</h4>
 
@@ -414,7 +417,32 @@
             {{ item.userNickname }}
           </span>
           {{ item.writeTime }}
+          
+
+          <!-- 리뷰 삭제 모달창 -->
+          <v-dialog v-model="reviewDeleteDialog" max-width="290">
+            <v-card>
+              <v-card-title></v-card-title>
+
+              <v-card-text class="review_delete_modal_text">
+                <h4>정말 삭제하시겠습니까?</h4>
+              </v-card-text>
+
+              <v-card-actions class="review_delete_modal_btn">
+                <v-btn class="mb-3" color="grey lighten-1" dark depressed small @click="reviewDeleteDialog = false">
+                  취소하기
+                </v-btn>
+
+                <v-btn class="mb-3" color="#fc355d" dark depressed small @click="[reviewDeleteDialog = false, reviewDelete(item.reviewIdx)]">
+                  삭제하기
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-card-text>
+
+        
+
       </v-card>
     </template>
   </v-main>
@@ -438,9 +466,10 @@ export default {
       },
       itemIcon: [],
       dialog: false,
+      reviewDialog : false,
+      reviewDeleteDialog : false,
       // 리뷰 modal관련 data
       userIdx: this.$store.getters.getUserIdx, // 회원 닉네임 store에서 불러오기
-      reviewDialog: false,
       content: '',
       rating: 0,
       // 수정제안 modal 관련 data
@@ -457,10 +486,10 @@ export default {
     // this.loadPublishers()
     console.log(this.$store.getters.getUserIdx)
     console.log(this.$store.getters.getUserName)
-    if(this.userIdx === null) {
+    if(this.userIdx === null || this.userIdx === '') {
       this.userIdx = 0
     }
-      
+
     axios
       .get('https://i4a201.p.ssafy.io:8080/map/detail', {
         //get방식, url 확인
@@ -541,7 +570,22 @@ export default {
       // 수정 제안 DB연동 후 데이터 저장 코드 추가
       this.modifyDialog = false
     },
+    reviewDelete(reviewIdx) {
+      
+      axios
+      .delete('https://i4a201.p.ssafy.io:8080/review/delete/' + reviewIdx, {
+      })
+      .then(() => {
+        history.go(0)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+
+    }
   },
+  
 }
 </script>
 <style>
@@ -566,5 +610,22 @@ export default {
 }
 .v-application p {
   margin-bottom: 7px;
+}
+
+.v-rating{
+  max-width: 50%;
+  white-space: none;
+  margin-right:0%;
+}
+
+.review_delete_btn {
+  max-width: 70px;
+  align-self: center;
+}
+.review_delete_modal_text {
+  text-align: center;
+}
+.review_delete_modal_btn {
+  justify-content: center;
 }
 </style>
