@@ -30,8 +30,4 @@ public class Coronalevel {
 	@NonNull
 	@NotNull
 	private String level; // //코로나 단계
-
-	@NonNull
-	@NotNull
-	private String enddate;
 }
