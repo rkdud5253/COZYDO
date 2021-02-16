@@ -97,6 +97,25 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+        }),
+         axios
+        .get("https://i4a201.p.ssafy.io:8080/mypage/review/list", {
+          params: {
+            userIdx: this.$store.getters.getUserIdx
+          },
+          headers:{
+            "X-AUTH-TOKEN": localStorage.accessToken
+          }
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("로그인 후 이용가능합니다.")
+          this.$router.go(this.$router.push({ name: 'Login' }))
+          localStorage.clear()
+          
         });
   },
   methods: {

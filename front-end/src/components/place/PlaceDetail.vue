@@ -407,9 +407,7 @@
           style="padding-left: 15px;
                 padding-top: 10px;"
         ></v-rating>
-        <v-icon style="float: right" v-if="item.userIdx == userIdx" @click.stop="reviewDeleteDialog = true">
-            mdi-delete
-          </v-icon>
+        
         <v-card-text>
           <h4 style="margin-bottom:5px;">{{ item.content }}</h4>
 
@@ -417,7 +415,9 @@
             {{ item.userNickname }}
           </span>
           {{ item.writeTime }}
-          
+          <v-icon style="float: right; color:#e6e3e3" v-if="item.userIdx == userIdx" @click.stop="reviewDeleteDialog = true">
+            mdi-delete
+          </v-icon>
 
           <!-- 리뷰 삭제 모달창 -->
           <v-dialog v-model="reviewDeleteDialog" max-width="290">
