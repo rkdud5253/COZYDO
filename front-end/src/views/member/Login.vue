@@ -20,7 +20,7 @@
       ></v-text-field>
       <v-btn
         style="width: 100%; margin-top: 45px; padding: 25px 0"
-        color="#F85F6A"
+        color="#fc355d"
         dark
         @click="loginRequest"
         >로그인</v-btn
@@ -66,7 +66,7 @@
     > -->
       <div style="width: 100%; margin-top: 30px">
         <v-btn style="width: 49%" text color="grey"> 비밀번호 찾기 </v-btn>
-        <v-btn style="width: 49%" @click="goRegister" text color="#F85F6A"> 회원가입 </v-btn>
+        <v-btn style="width: 49%" @click="goRegister" text color="#fc355d"> 회원가입 </v-btn>
       </div>
     </v-form>
   </div>
@@ -103,11 +103,16 @@ export default {
       this.$store
         .dispatch('LOGIN', this.user)
         .then(
-          () =>
-            // console.log('loginChk값은?' + this.$store.getters.getLoginChk)
-            //   console.log(this.$store.state.loginChk)
-            this.$store.getters.getLoginChk == true ? this.$router.replace(`/`) : history.go(0)
-          // this.$store.state.loginChk == true ? this.$router.replace(`/information`) : history.go(0)
+          () => {
+          if(this.$store.getters.getLoginChk == true){
+              alert(localStorage.userNickname + " 님 환영합니다.")
+              this.$router.replace(`/`)
+            }
+            else{
+              alert("아이디와 비밀번호를 확인하세요.")
+              this.user.password = ''
+            }
+          }
         )
         .catch(({ message }) => (this.msg = message))
       // this.$router.replace(`/login`)

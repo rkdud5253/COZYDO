@@ -5,7 +5,7 @@
       <v-icon class="goback" color="pink" large @click="goBack">
         mdi-chevron-left
       </v-icon>
-      <v-btn color="#FF8199" class="searchButton" dark @click="onChangeList">
+      <v-btn color="#fc355d" class="searchButton" dark @click="onChangeList">
         <v-icon>mdi-format-list-bulleted-square</v-icon>
         <v-spacer></v-spacer>
         목록

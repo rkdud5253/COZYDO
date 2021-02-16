@@ -39,6 +39,7 @@ export default new Vuex.Store({
       if (localStorage.userNickname) return localStorage.userNickname
       return state.userNickname
     },
+
   },
   mutations: {
     // payload 가 response
@@ -48,6 +49,7 @@ export default new Vuex.Store({
         // 로그인 실패
         console.log('로그인 실패')
         this.loginChk = false
+        this.message = payload['data']
       } else {
         console.log('로그인 성공')
         state.loginChk = true
@@ -60,14 +62,12 @@ export default new Vuex.Store({
         console.log(payload['object'].idx)
         console.log(state.userIdx)
         localStorage.userIdx = state.userIdx
-        //   localStorage.accessToken = state.accessToken;
+        localStorage.accessToken = payload['data']
+        console.log(localStorage.accessToken)
       }
     },
     LOGOUT(state) {
-      // state.accessToken = null;
       state.userNickName = ''
-      state.email = ''
-      state.userIdx = ''
       localStorage.clear()
       state.loginChk = false
     },
@@ -83,6 +83,7 @@ export default new Vuex.Store({
           password: user.password,
         },
       }).then((response) => {
+        console.log(response)
         context.commit('LOGIN', response.data)
         // axios
         //     .defaults

@@ -66,6 +66,9 @@ export default {
           params: {
             userIdx: this.userIdx,
           },
+           headers:{
+            "X-AUTH-TOKEN": localStorage.accessToken
+          }
         })
         .then((res) => {
           console.log(res);

@@ -2,10 +2,10 @@
   <v-app>
     <!-- 상단 메뉴  -->
     <div class="search mt-3">
-      <v-icon class="goback" color="pink" large @click="goBack">
+      <v-icon class="goback" color="#fc355d" large @click="goBack">
         mdi-chevron-left
       </v-icon>
-      <v-btn color="#FF8199" class="searchButton" dark @click="onChangeMap">
+      <v-btn color="#fc355d" class="searchButton" dark @click="onChangeMap">
         <v-icon>mdi-map</v-icon>
         <v-spacer></v-spacer>
         지도
