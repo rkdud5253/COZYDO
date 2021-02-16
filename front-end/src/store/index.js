@@ -66,6 +66,8 @@ export default new Vuex.Store({
     LOGOUT(state) {
       // state.accessToken = null;
       state.userNickName = ''
+      state.email = ''
+      state.userIdx = ''
       localStorage.clear()
       state.loginChk = false
     },

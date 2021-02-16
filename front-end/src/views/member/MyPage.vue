@@ -103,7 +103,7 @@ export default {
     // 로그아웃 기능 구현
     onClickLogout() {
       localStorage.clear()
-      this.$store.dispatch('LOGOUT').then(() => this.$router.replace(`/`))
+      this.$store.dispatch('LOGOUT').then(() => this.$router.go(this.$router.replace(`/`)))
     },
   },
 }
