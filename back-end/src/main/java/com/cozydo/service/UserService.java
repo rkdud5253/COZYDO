@@ -155,7 +155,7 @@ public class UserService {
 			String imsipw = emailUtil.GetRandom();
 
 			user.ifPresent(UpdateUser -> {// 비번 임시비번으로 변경
-				UpdateUser.setPassword(imsipw);
+				UpdateUser.setPassword(passwordEncoder.encode(imsipw));
 				User newUser = userDao.save(UpdateUser);
 			});
 			emailUtil.sendEmailTOPW(email, "Cozydo홈페이지에서 " + name + "님께 보낸 임시비밀번호 입니다.", imsipw);
