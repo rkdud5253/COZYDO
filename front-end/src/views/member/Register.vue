@@ -119,9 +119,14 @@ export default {
             },
             data: this.member
           }).then((res) => {
-            console.log(res)
-            alert('회원가입 완료')
-            this.$router.go('/')
+            // alert(res.data.data)
+            alert(res.data.data)
+            if(res.data.status == true){
+               this.$router.replace(`/`)
+            }
+            if(res.data.status == false){
+              location.reload();
+            }
           }).catch((err) => {
             console.log(err)
           })
