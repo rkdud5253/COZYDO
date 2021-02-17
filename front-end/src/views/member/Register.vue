@@ -1,3 +1,4 @@
+<!-- 회원가입 -->
 <template>
   <v-app>
   <v-form style="margin: 50px 50px;" ref="form" v-model="valid" lazy-validation>
@@ -33,12 +34,6 @@
       type="text"
       prepend-icon="mdi-face"
     ></v-text-field>
-    <!-- <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required
-    ></v-text-field> -->
     <v-text-field
       class="pt-3 pb-3"
       :rules="passwordRules"
@@ -60,24 +55,6 @@
       type="password"
       prepend-icon="mdi-lock"
     ></v-text-field>
-    <!-- <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'Item is required']"
-      label="Item"
-      required
-    ></v-select> -->
-
-    <!-- <v-checkbox
-      v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
-      required
-    ></v-checkbox> -->
-
-    <!-- <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      회원가입
-    </v-btn> -->
     <v-btn
       style="width:100%; height:40px; margin-top: 30px;"
       color="#fc355d"
@@ -85,30 +62,11 @@
       @click="joinRequest"
       >회원가입</v-btn
     >
-    <!-- :loading="loadingState" -->
-
-    <!-- <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >
-      Reset Form
-    </v-btn> -->
-
-    <!-- <v-btn
-      color="warning"
-      @click="resetValidation"
-    >
-      Reset Validation
-    </v-btn> -->
   </v-form>
       <div style="width: 100%; margin-left:20%">
         이미 회원이신가요?
         <v-btn style="width:30%" @click="goLogin" text color="#fc355d"> 로그인 </v-btn>
       </div>
-    <!-- <p style="margin: 0 auto;" class="text--secondary">
-      이미 회원이신가요? <a> 로그인 </a>
-    </p> -->
   </v-app>
 </template>
 <script>
@@ -145,14 +103,6 @@ export default {
         password: "",
       },
       validatePassword: "",
-      //   select: null,
-      //   items: [
-      //     'Item 1',
-      //     'Item 2',
-      //     'Item 3',
-      //     'Item 4',
-      //   ],
-      //   checkbox: false,
     };
   },
   methods: {
@@ -161,8 +111,6 @@ export default {
     },
     joinRequest(){
         if(this.$refs.form.validate()){
-            // this.START_LOADING();
-            // this.REQUEST_JOIN(this.member);
           axios({
             method: 'post',
             url: 'https://i4a201.p.ssafy.io:8080/user/signup',
@@ -172,7 +120,8 @@ export default {
             data: this.member
           }).then((res) => {
             console.log(res)
-            this.$router.go('/login')
+            alert('회원가입 완료')
+            this.$router.go('/')
           }).catch((err) => {
             console.log(err)
           })
@@ -182,12 +131,6 @@ export default {
     goLogin() {
       this.$router.push('/login')
     },
-    //   reset () {
-    //     this.$refs.form.reset()
-    //   },
-    //   resetValidation () {
-    //     this.$refs.form.resetValidation()
-    //   },
   },
 };
 </script>

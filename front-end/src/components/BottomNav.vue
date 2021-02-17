@@ -1,3 +1,4 @@
+<!-- 고정된 하단바 -->
 <template>
   <div>
     <!-- v-app으로 감싸버리면 wrap적용돼서 빈칸생겨서 div로 감쌌다 -->
@@ -36,9 +37,6 @@
 
 <script>
 export default {
-  // computed: {
-  // ...mapGetters(['getUserName']),
-  // },
   name: 'BottomNav',
   data: () => ({ value: 1 }),
   methods: {

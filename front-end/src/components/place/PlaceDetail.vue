@@ -1,3 +1,4 @@
+<!-- 상세페이지  -->
 <template>
   <v-main>
     <v-container>
@@ -292,23 +293,6 @@
                         ></v-text-field>
                       </v-col>
 
-                      <!-- <v-col cols="12">
-                        <div style="float: left; margin: 10px 13px 20px 0">
-                          사진 첨부
-                        </div>
-                        <v-file-input
-                          style="padding-top: 0px !important;margin-right: 25px;
-    min-width: 172px;"
-                          prepend-icon="mdi-camera"
-                          :rules="rules"
-                          accept="image/png, image/jpeg, image/bmp"
-                          counter
-                          multiple
-                          show-size
-                          truncate-length="15"
-                        ></v-file-input
-                      ></v-col> -->
-
                       <v-col cols="12">
                         <div style="float: left; margin: 13px 13px 20px 0">
                           폐업 여부
@@ -346,31 +330,6 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-
-            <!--        <v-btn
-              id="reviewBtn"
-              style="padding:0 35px; width:45%;"
-              rounded
-              color="secondary"
-              dark
-              depressed
-              outlined
-              @click="onClickReview()"
-            >
-              리뷰 남기기
-            </v-btn>
-            <v-btn
-              id="modifyBtn"
-              style="margin-left:10px;width:33%;width:45%;"
-              rounded
-              color="secondary"
-              dark
-              depressed
-              outlined
-              @click="onClickModify()"
-            >
-              가게 정보 수정 요청
-            </v-btn> -->
           </td>
         </tr>
       </table>
@@ -440,8 +399,6 @@
             </v-card>
           </v-dialog>
         </v-card-text>
-
-        
 
       </v-card>
     </template>

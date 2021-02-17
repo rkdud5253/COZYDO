@@ -1,3 +1,4 @@
+<!-- 마이페이지 좋아요한 장소 리스트 -->
 <template>
   <div class="mx-5 my-3">
 

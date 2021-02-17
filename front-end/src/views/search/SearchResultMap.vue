@@ -1,3 +1,4 @@
+<!-- 검색결과 맵 -->
 <template>
   <v-app>
     <!-- 상단 메뉴 -->
@@ -53,7 +54,6 @@
   width: 95%;
   display: flex;
   align-items: center;
-  /* margin-top: 5%;  */
 }
 .searchButton {
   float: left;
@@ -81,11 +81,6 @@
   margin-top: -1%;
 } 
 
-/* .v-btn:not(.v-btn--round).v-size--default {
-    height: 36px;
-    min-width: 80px;
-    padding: 0 16px;
-} */
 </style>
 
 <script>

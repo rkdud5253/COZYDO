@@ -9,17 +9,10 @@ export default new Vuex.Store({
     email: '',
     userNickname: '',
     userIdx: '',
-    //     accessToken:null,
     loginChk: false,
   },
   getters: {
-    //   getAccessToken(state) {
-    //     if (localStorage.accessToken && typeof localStorage.accessToken != "undefined")
-    //         return localStorage.accessToken;
-    //     else
-    //         return state.accessToken;
-    //     }
-    // ,
+    
     getLoginChk(state) {
       if (localStorage.loginChk) return localStorage.loginChk
       return state.loginChk
@@ -53,7 +46,6 @@ export default new Vuex.Store({
       } else {
         console.log('로그인 성공')
         state.loginChk = true
-        //   state.accessToken = payload["auth-token"];
         state.email = payload['object'].email;
         localStorage.email = state.email
         state.userNickname = payload['object'].nickname;
@@ -85,19 +77,10 @@ export default new Vuex.Store({
       }).then((response) => {
         console.log(response)
         context.commit('LOGIN', response.data)
-        // axios
-        //     .defaults
-        //     .headers
-        //     .common["auth-token"] = `${response
-        //     .data["auth-token"]}`;
       })
     },
     LOGOUT(context) {
       context.commit('LOGOUT')
-      // axios
-      //     .defaults
-      //     .headers
-      //     .common["auth-token"] = undefined;
     },
   },
   modules: {},

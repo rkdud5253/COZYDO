@@ -1,3 +1,4 @@
+<!-- 검색결과 페이지 리스트 -->
 <template>
   <v-app>
      {{ onList(value) }}
@@ -6,8 +7,6 @@
       <v-list nav
         dense
         >
-        <!-- <v-subheader>장소</v-subheader> -->
-        <!-- <v-divider></v-divider> -->
         <v-list-item-group class="pt-1 pb-1">
           <template v-for="(item, index) in items">
             <v-list-item v-if="index <= 30" :key="item.title">
@@ -22,7 +21,7 @@
                     size="20"
                     readonly
                   ></v-rating>
-                  <p style="max-width:20px; font-size:12px; ">3.5</p>
+                  <p style="max-width:20px; font-size:12px; ">{{ Math.round(item.rating * 10) / 10 }}</p>
                   
                   <v-list-item-title >
                   </v-list-item-title>
@@ -54,7 +53,6 @@
               </template>
             </v-list-item>
 
-            <!-- <v-divider v-if="index <= 30 - 1" :key="index"></v-divider> -->
           </template>
         </v-list-item-group>
       </v-list>
@@ -80,20 +78,11 @@
 v-list-item-group {
   margin-top: 10px;
 }
-/* .v-list--nav.v-list--dense {
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-} */
 
 .v-list-item.v-list-item {
-  /* background: rgb(253, 230, 234); */
   border: 1px rgb(226, 220, 221) solid;
-  /* color: white; */
 }
 
-/* .v-item-group {
-  background: lightgray;
-} */
 
 .v-list-item__avatar {
   width: 60px !important;
@@ -177,8 +166,6 @@ export default {
       }
     },
   },
-  created() {
-    // this.onMapCenter();
-  },
+  
 };
 </script>

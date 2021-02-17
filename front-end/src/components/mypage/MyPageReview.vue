@@ -1,3 +1,4 @@
+<!-- 마이페이지 내가 쓴 리뷰 -->
 <template>
   <div class="mx-5 my-3">
 

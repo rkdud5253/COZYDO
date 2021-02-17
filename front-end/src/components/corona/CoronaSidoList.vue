@@ -1,3 +1,4 @@
+<!-- 코로나 시도별 일일 확진자 수 리스트 -->
 <template>
     <div class="sidolist mx-7">
       <v-card
@@ -64,28 +65,6 @@ export default {
                 else false;
             }
   },
-  mounted() {
-      // axios.get('https://i4a201.p.ssafy.io:8080/crawling/sidoconfirmed')
-      //       .then((res) => {
-      //         this.items = res.data.object
-              
-      //         // 총 확진자 수 내림차순 정렬
-      //         this.items.sort(function(a, b) { 
-      //           return a.decideCnt > b.decideCnt ? -1 : a.decideCnt < b.decideCnt ? 1 : 0; 
-      //         });
-
-      //         // gubun이 '검역'인 field 삭제
-      //         const itemToFind = this.items.find(function(item) {return item.gubun === '검역'}) 
-      //         const idx = this.items.indexOf(itemToFind) 
-      //         if (idx > -1) this.items.splice(idx, 1)
-
-
-      //         console.log(this.items)
-      //     }).catch((err) => {
-      //       console.log(err)
-      //     })
-  }
-
 }
 </script>
 <style scoped>
@@ -116,13 +95,10 @@ export default {
     }
 }
 .card {
-    /* background : rgb(245, 245, 245); */
-    
     background: white;
 }
 
 .card.on {
-    /* background: #fffcfc; */
     background: #fff1f5;
 }
 

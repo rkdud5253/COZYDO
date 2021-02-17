@@ -1,3 +1,4 @@
+<!-- 메인 맵 -->
 <template>
   <v-app>
     <!-- 지역 및 거리두기 단계 -->
@@ -111,8 +112,6 @@
 
       <!-- 지도 -->
       <div class="map pa-4" id="map"></div>
-      <!-- <div id="result" style="color: white">여기</div> -->
-      <!-- {{ currentLat }} -->
     </div>
   </v-app>
 </template>
@@ -176,7 +175,6 @@ export default {
           console.log(res);
           this.crawlingLocations = res.data;
           if (this.crawlingLocations) {
-            // console.log(this.crawlingLocations.object)
             // 내 위도, 경도 보내면 지금 현재 지역과 레벨 받아오기
             this.currentRegion = this.crawlingLocations.object.city;
             this.currentLevel = this.crawlingLocations.object.level;
@@ -225,11 +223,9 @@ export default {
 
           this.centerLat = latlng.getLat();
           this.centerLon = latlng.getLng();
-          // console.log(this.centerLat, this.centerLon);
         });
         let markerPosition = new kakao.maps.LatLng(lat, lon);
-        // console.log(markerPosition);
-
+      
         let marker = new kakao.maps.Marker({
           map: map,
           position: markerPosition,
@@ -243,7 +239,7 @@ export default {
         (pos) => {
           this.gettingLocation = false;
           this.location = pos;
-          // console.log(this.location.coords.latitude)
+        
           this.currentLat = this.location.coords.latitude;
           this.currentLon = this.location.coords.longitude;
 
@@ -308,9 +304,6 @@ export default {
 </script>
 <style scoped>
 #map {
-  /* float: right;
-  margin-right: 100px;
-  margin-top: 15px; */
   width: 0 auto;
   height: 640px;
   z-index: 1;
