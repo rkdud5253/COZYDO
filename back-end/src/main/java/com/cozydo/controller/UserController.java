@@ -68,14 +68,14 @@ public class UserController {
 	}
 
 	@GetMapping("/user/findpw")
-	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
+	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "비밀번호 이메일로 전송")
 	public Object FindPassword(@RequestParam(required = true) final String email,
 			@RequestParam(required = true) final String name) {
 		return userService.FindPW(email, name);
 	}
 
 	@GetMapping("/user/authentication")
-	@ApiOperation(httpMethod = "GET", value = "email과 name을 받아 임시비밀번호 이메일로 전송", notes = "delete user")
+	@ApiOperation(httpMethod = "GET", value = "email과 email인증키를 받아 인증 요청", notes = "이메일인증 번호와 이메일을 받아 승인 요청")
 	public Object Authentication(@RequestParam(required = true) final String email,
 			@RequestParam(required = true) final String authkey) {
 		return userService.FindAuthkey(email, authkey);

@@ -21,8 +21,6 @@ public class QCoronalevel extends EntityPathBase<Coronalevel> {
 
     public final StringPath city = createString("city");
 
-    public final StringPath enddate = createString("enddate");
-
     public final StringPath level = createString("level");
 
     public QCoronalevel(String variable) {
