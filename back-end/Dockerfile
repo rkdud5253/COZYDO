@@ -9,6 +9,8 @@ EXPOSE 8080
 
 # JAR 파일의 경로를 적고, 이름을 붙여준다. (여기서는 app.jar)
 ADD build/libs/back-end-0.0.1-SNAPSHOT.jar app.jar
+ADD ./keystore.pkcs12 keystore.pkcs12
+ADD ./trust.pkcs12 trust.pkcs12
 
 # 앱을 실행시키기 위한 명령어
 ENTRYPOINT ["java", "-jar", "/app.jar"]

@@ -52,9 +52,10 @@ public class EmailUtilImpl implements EmailUtil {
 		msg += "<div style='font-size: 130%'>";
 		msg += "회원님께 전송된 이메일 인증 링크입니다.<br/>";
 		msg += "<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p><br/>";
-		msg += "<a href='https://localhost:8080/user/authentication?email="; //우리의 주소를 쓰자.
+		msg += "<a href='https://i4a201.p.ssafy.io/user/authentication?email="; //우리의 주소를 쓰자.
 		msg += toAddress;
 		msg += "&authkey=" + authkey;
+//		msg += "<a href='https://i4a201.p.ssafy.io/"; //우리의 주소를 쓰자.
 		msg +="' target='_blenk'>이메일 인증 확인</a></div>";
 		try {
 			helper.setTo(toAddress);
