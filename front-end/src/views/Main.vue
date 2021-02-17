@@ -1,3 +1,4 @@
+<!-- 메인 화면 -->
 <template>
   <v-app>
     <div class="mainmap">

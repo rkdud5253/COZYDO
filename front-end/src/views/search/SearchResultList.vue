@@ -1,3 +1,4 @@
+<!-- 검색결과 리스트 -->
 <template>
   <v-app>
     <!-- 상단 메뉴  -->
@@ -98,18 +99,11 @@
 v-list-item-group {
   margin-top: 10px;
 }
-/* .v-list--nav.v-list--dense {
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-} */
 
 .v-list-item.v-list-item {
   background: white;
 }
 
-/* .v-item-group {
-  background: lightgray;
-} */
 </style>
 
 <script>

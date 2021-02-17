@@ -1,3 +1,4 @@
+<!-- vue chart.js를 이용하여 bar chart 생성 -->
 <script>
   import { Bar } from 'vue-chartjs'
   import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -24,9 +25,6 @@
                 "rgba(252, 53, 93, 0.8)",
                 "rgba(252, 53, 93, 0.8)",
               ],
-            //   pointBackgroundColor: 'white',
-            //   borderWidth: 1,
-            //   pointBorderColor: '#249EBF',
               barThickness : 10,
               data: this.local,
               datalabels: {
@@ -44,9 +42,6 @@
                 "rgba(211, 211, 211, 0.4)",
                 "rgba(211, 211, 211, 0.4)",
               ],
-            //   pointBackgroundColor: 'white',
-            //   borderWidth: 1,
-            //   pointBorderColor: '#249EBF',
               barThickness : 10,
               data: this.overflow,
               datalabels: {

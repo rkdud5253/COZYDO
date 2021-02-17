@@ -1,3 +1,4 @@
+<!-- 마이페이지 -->
 <template>
   <v-app>
     <v-card class="mx-5 mt-4 mb-2" outlined>
