@@ -67,11 +67,11 @@ export default {
         .then(
           () => {
           if(this.$store.getters.getLoginChk == true){
-              alert(localStorage.userNickname + " 님 환영합니다.")
+              alert(this.$store.getters.getUserName + "님 환영합니다.")
               this.$router.replace(`/`)
             }
             else{
-              alert("아이디와 비밀번호를 확인하세요.")
+              alert(this.$store.getters.getMessage)
               this.user.password = ''
             }
           }
