@@ -8,6 +8,7 @@ import Register from "../views/member/Register.vue";
 import Login from "../views/member/Login.vue";
 import Information from "../views/Information.vue";
 import MyPage from "../views/member/MyPage.vue";
+import Authentication from "../views/member/Authentication.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -71,6 +72,11 @@ const routes = [
     meta: {
       title: '코지도 | 마이페이지',
     },
+  },
+  {
+    path: "/authentication",
+    name: "Authentication",
+    component: Authentication,
   },
 ];
 

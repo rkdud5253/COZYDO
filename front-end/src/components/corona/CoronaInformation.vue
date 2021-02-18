@@ -1,4 +1,5 @@
-<template>
+<!-- 코로나 누적, 일일 확진자 정보 -->
+ <template>
   <div class="mx-2 my-3">
 
     <!-- 코로나 일일 정보(확진환자, 격리해제, 사망자) -->
@@ -149,37 +150,6 @@ export default {
       local: '', // 일일 확진자 중 국내발생
       overflow: '', // 일일 확진자 중 해외유입
     };
-  },
-  created() {
-    // this.loadCoronaTodayInfo();
-  },
-  methods: {
-    // loadCoronaTodayInfo() {
-    //   // console.log('코로나 정보 가져오기')
-    //   axios
-    //     .get("https://i4a201.p.ssafy.io:8080/crawling/todayconfirmed", {
-    //       params: {
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       this.crawlingTodayConfirmed = res.data.object
-    //       // console.log(this.crawlingTodayConfirmed.decideCnt.toLocaleString('ko-KR'))
-          
-    //       // 따로따로 천의자리마다 ,찍어서 넣어주기!
-    //       this.decideCnt = res.data.object.decideCnt.toLocaleString('ko-KR')
-    //       this.clearcnt = res.data.object.clearcnt.toLocaleString('ko-KR')
-    //       this.deathCnt = res.data.object.deathCnt.toLocaleString('ko-KR')
-    //       this.today_DecideCnt = res.data.object.today_DecideCnt.toLocaleString('ko-KR')
-    //       this.today_Clearcnt = res.data.object.today_Clearcnt.toLocaleString('ko-KR')
-    //       this.today_DeathCnt = res.data.object.today_DeathCnt.toLocaleString('ko-KR')
-    //       this.local = res.data.object.local.toLocaleString('ko-KR')
-    //       this.overflow = res.data.object.overflow.toLocaleString('ko-KR')
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
   watch: {
     todayInfo() {

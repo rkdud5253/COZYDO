@@ -1,5 +1,5 @@
+<!-- 지난 일주일 간 코로나 일일 확진자 수 차트  -->
 <template>
-    
    <div class="column" style="margin:20px;">
         <bar-chart style="height:350px;" v-bind:local="local" v-bind:overflow="overflow" v-bind:datetime="datetime" v-if="loaded"></bar-chart>
    </div>     
@@ -24,14 +24,6 @@
         }
     },
     methods: {
-        // getData: () => {
-        //     axios.get('https://i4a201.p.ssafy.io:8080/crawling/weekconfirmed')
-        //     .then((res) => {
-        //       console.log(res)
-        //   }).catch((err) => {
-        //     console.log(err)
-        //   })
-        // }
     },
     watch: {
       chartList()  {
@@ -45,20 +37,5 @@
         this.loaded = true
       }
     }
-  //  created() {
-  //    axios.get('https://i4a201.p.ssafy.io:8080/crawling/weekconfirmed')
-  //           .then((res) => {
-  //             console.log(res)
-  //             const len = res.data.object.length
-  //             for(let i=0; i<len; i++){
-  //               this.local[i] = res.data.object[len-i-1].local
-  //               this.overflow[i] = res.data.object[len-i-1].overflow
-  //               this.datetime[i] = res.data.object[len-i-1].createDt
-  //             }
-  //             this.loaded = true
-  //         }).catch((err) => {
-  //           console.log(err)
-  //         })
-  //  }
   }
 </script>

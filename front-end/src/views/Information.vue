@@ -1,3 +1,4 @@
+<!-- 코로나 정보-->
 <template>
   <v-app>
     <CoronaInformation :todayInfo="this.items[0]"/>

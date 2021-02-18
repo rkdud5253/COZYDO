@@ -1,3 +1,4 @@
+<!-- 검색결과 페이지 지도 -->
 <template>
   <v-app>
       <!-- 지도 -->
@@ -128,7 +129,6 @@ export default {
 
               this.markers.push(marker)
               // // 마커가 지도 위에 표시되도록 설정합니다
-              // this.markers[i].setMap(this.map);
               marker.setMap(this.map);
              
               kakao.maps.event.addListener(marker, 'click', () => {
@@ -167,7 +167,6 @@ export default {
           }
         })
         .then((res) => {
-          // console.log(res);
           this.items = res.data;
           let size = this.items.length
           // this.addMarker();
@@ -191,10 +190,8 @@ export default {
           }
         })
         .then((res) => {
-          // console.log(res);
           this.items = res.data;
           let size = this.items.length
-          // this.addMarker();
           this.addMarker(this.lat, this.lon);
           // 최근 받아온 마커들을 제외한 모든 마커 삭제
            for(let j=0; j<this.markers.length-size; j++){
@@ -206,16 +203,6 @@ export default {
         });
       }
     },
-    // onChangeDetail: function(placeIdx) {
-    //   // return () => {
-    //     console.log(placeIdx)
-    //   this.$router.push({
-    //     name: "PlaceDetail",
-    //     params: { placeIdx: placeIdx, level: this.level },
-    //   });
-    //   // }
-      
-    // }
     
     onChangeDetail : (placeIdx) => {
       return () => {
@@ -227,9 +214,6 @@ export default {
 </script>
 <style scoped>
 #map {
-  /* float: right;
-  margin-right: 100px;
-  margin-top: 15px; */
   width: 480px;
   height: 650px;
   z-index: 1;

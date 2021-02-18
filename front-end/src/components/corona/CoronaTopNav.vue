@@ -1,3 +1,4 @@
+<!-- 로고 밑 일일 확진자 정보-->
 <template>
   <div class="infomation">
     <div>
