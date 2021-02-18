@@ -54,7 +54,7 @@
             취소하기
           </v-btn>
 
-          <v-btn class="mb-3" color="#fc355d" dark depressed small @click="dialog = false">
+          <v-btn class="mb-3" color="#fc355d" dark depressed small @click="deleteUser">
             탈퇴하기
           </v-btn>
         </v-card-actions>
@@ -125,6 +125,24 @@ export default {
       localStorage.clear()
       this.$store.dispatch('LOGOUT').then(() => this.$router.go(this.$router.replace(`/`)))
     },
+    deleteUser(){
+      axios.delete('https://i4a201.p.ssafy.io:8080/user/delete', {  
+          params: {                                        
+            email: this.$store.getters.getEmail
+          }
+        })
+        .then((res) => {
+          if(res.data.status == true){
+               alert(res.data.data + "님 탈퇴 완료")
+               this.$router.replace(`/`)
+            }
+            if(res.data.status == false){
+              alert(res.data.data)
+              this.$router.replace(`/`)
+            }
+          history.go(0)
+        });
+    }
   },
 }
 </script>
