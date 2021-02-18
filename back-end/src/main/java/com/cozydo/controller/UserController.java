@@ -61,10 +61,9 @@ public class UserController {
 	}
 
 	@DeleteMapping("/user/delete")
-	@ApiOperation(httpMethod = "DELETE", value = "회원 아이디와 비밀번호를 받아 회원 삭제", notes = "delete user")
-	public Object Delete(@RequestParam(required = true) final String email,
-			@RequestParam(required = true) final String password) {
-		return userService.Delete(email, password);
+	@ApiOperation(httpMethod = "DELETE", value = "회원 아이디를 받아 회원 삭제", notes = "delete user")
+	public Object Delete(@RequestParam(required = true) final String email) {
+		return userService.Delete(email);
 	}
 
 	@GetMapping("/user/findpw")
