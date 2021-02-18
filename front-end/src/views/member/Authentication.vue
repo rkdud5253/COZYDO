@@ -25,7 +25,6 @@ export default {
               authkey:this.authkey
             }
           }).then((res) => {
-            console.log(res)
             alert(res.data.data)
             this.$router.push('/')
           }).catch((err) => {

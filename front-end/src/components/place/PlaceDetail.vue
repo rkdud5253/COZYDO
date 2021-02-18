@@ -374,7 +374,7 @@
             {{ item.userNickname }}
           </span>
           {{ item.writeTime.substring(0, 10) }}
-          <v-icon style="float: right; color:#e6e3e3" v-if="item.userIdx == userIdx" @click.stop="reviewDeleteDialog = true">
+          <v-icon style="float: right; color:#e6e3e3" v-if="item.userIdx == userIdx" @click.stop="[reviewDeleteDialog = true, reviewIndex = item.reviewIdx]">
             mdi-delete
           </v-icon>
 
@@ -392,7 +392,7 @@
                   취소하기
                 </v-btn>
 
-                <v-btn class="mb-3" color="#fc355d" dark depressed small @click="[reviewDeleteDialog = false, reviewDelete(item.reviewIdx)]">
+                <v-btn class="mb-3" color="#fc355d" dark depressed small @click="[reviewDeleteDialog = false, reviewDelete(reviewIndex)]">
                   삭제하기
                 </v-btn>
               </v-card-actions>
@@ -436,13 +436,12 @@ export default {
       rules: [
         (value) => !value || value.size < 2000000 || '2 MB보다 작은 이미지 파일을 올려주세요',
       ],
+      reviewIndex: 0,
     }
   },
 
   created() {
     // this.loadPublishers()
-    console.log(this.$store.getters.getUserIdx)
-    console.log(this.$store.getters.getUserName)
     if(this.userIdx === null || this.userIdx === '') {
       this.userIdx = 0
     }
@@ -459,7 +458,6 @@ export default {
       })
       .then((res) => {
         // 통신 성공하면
-        console.log(res)
         this.items = res.data // 데이터 받아온다
       })
       .catch((err) => {
@@ -503,7 +501,6 @@ export default {
       }
     },
     reviewSubmit() {
-      console.log(this.content + this.rating)
       axios
         .post('https://i4a201.p.ssafy.io:8080/review/save', {
           content: this.content,
@@ -528,7 +525,6 @@ export default {
       this.modifyDialog = false
     },
     reviewDelete(reviewIdx) {
-      console.log("============"+ reviewIdx)
       axios
       .delete('https://i4a201.p.ssafy.io:8080/review/delete/' + reviewIdx, {
       })

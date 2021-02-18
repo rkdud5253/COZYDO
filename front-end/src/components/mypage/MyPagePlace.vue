@@ -72,7 +72,6 @@ export default {
           }
         })
         .then((res) => {
-          console.log(res);
           this.likePlaces = res.data
         })
         .catch((err) => {

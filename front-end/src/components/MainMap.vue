@@ -172,7 +172,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.crawlingLocations = res.data;
           if (this.crawlingLocations) {
             // 내 위도, 경도 보내면 지금 현재 지역과 레벨 받아오기
