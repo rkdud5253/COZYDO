@@ -373,7 +373,7 @@
           <span style="margin-right:10px;">
             {{ item.userNickname }}
           </span>
-          {{ item.writeTime }}
+          {{ item.writeTime.substring(0, 10) }}
           <v-icon style="float: right; color:#e6e3e3" v-if="item.userIdx == userIdx" @click.stop="reviewDeleteDialog = true">
             mdi-delete
           </v-icon>
@@ -528,7 +528,7 @@ export default {
       this.modifyDialog = false
     },
     reviewDelete(reviewIdx) {
-      
+      console.log("============"+ reviewIdx)
       axios
       .delete('https://i4a201.p.ssafy.io:8080/review/delete/' + reviewIdx, {
       })
