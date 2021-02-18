@@ -41,6 +41,7 @@
 		FROM review r
 		LEFT JOIN user u on u.user_idx = r.user_idx
 		WHERE place_idx = #{placeIdx}
+		ORDER BY r.review_idx desc;
 	</select>
 	
 	<select id="findRatingByIdx" parameterType="map" resultType="String">
