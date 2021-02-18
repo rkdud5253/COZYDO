@@ -129,7 +129,7 @@ public class UserService {
 		return response;
 	}
 
-	public Object Delete(String email, String password) {
+	public Object Delete(String email) {
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 		Optional<User> user = userDao.getUserByEmail(email);
@@ -137,11 +137,11 @@ public class UserService {
 		if (user.isPresent()) {
 			userDao.deleteById((long) user.get().getUserIdx());
 			result.status = true;
-			result.data = "success";
+			result.data = user.get().getNickname();
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			result.status = false;
-			result.data = "false";
+			result.data = "존재하지 않는 아이디입니다.";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;
