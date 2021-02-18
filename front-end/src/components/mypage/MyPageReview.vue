@@ -34,7 +34,7 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content class="contentStyle mt-1">
             {{ placeReview.content }}
-            <v-icon @click="onChangeDetail(placeReview.placeIdx)" color="#fc355d">mdi-arrow-right</v-icon>
+            <v-icon @click="onChangeDetail(placeReview.placeIdx)" style="float:right;" color="#fc355d">mdi-arrow-right</v-icon>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -94,8 +94,5 @@ export default {
   }
   .v-card__subtitle, .v-card__text, .v-card__title {
     padding: 12px;
-  }
-  .contentStyle {
-    text-align-last: justify;
   }
 </style>
