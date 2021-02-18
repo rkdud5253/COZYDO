@@ -69,7 +69,6 @@ export default {
           }
         })
         .then((res) => {
-          console.log(res);
           this.placeReviews = res.data
         })
         .catch((err) => {

@@ -90,7 +90,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           if (res.data) {
             // 서울 지역 레벨 받아오기 (1,2,3,4,5)
             this.currentLevel = parseFloat(res.data.object.level)*2-1
@@ -108,8 +107,7 @@ export default {
             "X-AUTH-TOKEN": localStorage.accessToken
           }
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
         })
         .catch((err) => {
           console.log(err);

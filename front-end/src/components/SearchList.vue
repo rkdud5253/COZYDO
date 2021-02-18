@@ -118,7 +118,6 @@ export default {
     },
     onList(value){
         if(value !== this.oldValue){
-            console.log(value + " " + this.oldValue)
             this.onChangeList(value)
             this.oldValue = value;
         }
@@ -136,7 +135,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.items = res.data;
         })
         .catch((err) => {
@@ -157,7 +155,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.items = res.data;
         })
         .catch((err) => {

@@ -27,7 +27,6 @@
     },
     watch: {
       chartList()  {
-        console.log(this.chartList)
         const len = this.chartList.length
         for(let i=0; i<len; i++){
           this.local[i] = this.chartList[len-i-1].local

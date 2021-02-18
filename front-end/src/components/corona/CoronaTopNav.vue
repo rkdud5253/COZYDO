@@ -30,7 +30,6 @@ export default {
           params: {},
         })
         .then((res) => {
-          console.log(res)
           this.today_DecideCnt = res.data.object[0][0].today_DecideCnt.toLocaleString('ko-KR')
         })
         .catch((err) => {
