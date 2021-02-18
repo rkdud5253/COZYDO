@@ -12,18 +12,18 @@
             <v-list-item v-if="index <= 30" :key="item.title">
               <template>
                 <v-list-item-content style="color:black;" @click="onChangeDetail(item.placeIdx)">
-                  {{ item.placeName }} 
+                  {{ item.placeName }}
                   <v-rating
                     background-color="red lighten-3"
                     length="1"
                     :value=1
                     color="red"
                     size="20"
-                    readonly
+                    readonly 
                   ></v-rating>
-                  <p style="max-width:20px; font-size:12px; ">{{ Math.round(item.rating * 10) / 10 }}</p>
-                  
-                  <v-list-item-title >
+                  <p v-if="Math.round(item.rating * 10) / 10 !== 0" style="max-width:20px; font-size:12px;">{{ Math.round(item.rating * 10) / 10 }}</p>
+                  <p v-if="Math.round(item.rating * 10) / 10 === 0" style="max-width:50px; font-size:8px;">(리뷰없음)</p>
+                  <v-list-item-title>
                   </v-list-item-title>
 
                   <v-list-item-subtitle
